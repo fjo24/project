@@ -6,11 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class AddOrdersTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
@@ -27,15 +23,20 @@ class AddOrdersTable extends Migration
             
             $table->timestamps();
         });
+
+        Schema::create('order_product', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('order_id')->unsigned();
+            $table->integer('product_id')->unsigned();
+            $table->string('description');
+            $table->string('quantity');
+            $table->timestamps();
+        });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
+        Schema::dropIfExists('order_product');
         Schema::dropIfExists('orders');
     }
 }
