@@ -431,7 +431,7 @@ folder instead of downloading all of them to reduce the load. -->
                         <i class="fa fa-dashboard">
                         </i>
                         <span>
-                                    Ingreso y Egreso
+                                    Entrada y Salida
                                 </span>
                         <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right">

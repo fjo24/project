@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Lista de productos')
+@section('title', 'Registros de entrada y salida')
 
 @section('contenido')
     <div class="box">
@@ -9,12 +9,12 @@
 
         <div class="box-header with-border">
             <h3 class="box-title">
-                Lista de productos
+                Lista de registros
             </h3>
             <div class="box-tools">
                 <div class="text-center">
                     <a class="btn btn-primary btn-sm" href="{{ route('registers.create') }}">
-                        NUEVO PRODUCTO
+                        REGISTRAR NUEVA ENTRADA O SALIDA
                     </a>
                 </div>
             </div>
