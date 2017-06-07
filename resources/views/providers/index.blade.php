@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Lista de usuarios')
+@section('title', 'Lista de proveedores')
 
 @section('contenido')
     <div class="box">
@@ -9,15 +9,12 @@
 
         <div class="box-header with-border">
             <h3 class="box-title">
-                Lista de usuarios
+                Lista de Proveedores
             </h3>
             <div class="box-tools">
                 <div class="text-center">
-                    <a class="btn btn-primary btn-sm" href="{{ route('users.create') }}">
-                        NUEVO REGISTRO
-                    </a>
-                    <a class="btn btn-success btn-sm" href="{{route('exportusers')}}">
-                        IMPRIMIR REPORTE
+                    <a class="btn btn-primary btn-sm" href="{{ route('providers.create') }}">
+                        NUEVO PROVEEDOR
                     </a>
                 </div>
             </div>
@@ -30,62 +27,34 @@
                             <thead>
                             <tr>
                                 <th>NOMBRE</th>
-                                <th>APELLIDO</th>
-                                <th>CEDULA</th>
-                                <th>TELEFONO</th>
-                                <th>CORREO ELECTRONICO</th>
-                                <th>MIEMBRO DESDE</th>
-                                <th>TIPO</th>
+                                <th>RIF</th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($users as $user)
+                            @foreach($providers as $provider)
                                 <tr>
                                     <td>
-                                       {{ $user->name }}
+                                       {{ $provider->name }}
                                     </td>
                                     <td>
-                                        {{ $user->last_name }}
-                                    </td>
-                                    <td>
-                                        {{ $user->identification }}
+                                        {{ $provider->rif }}
                                     </td>                                    
                                     <td>
-                                        {{ $user->telephone }}
-                                    </td>
-                                    <td>
-                                        {{ $user->email }}
-                                    </td>
-                                    <td>
-                                        {{ $user->created_at }}
-                                    </td>
-                                    <td>
-                                    @if($user->type == "admin")
-                                    <span class="label label-danger">
-                                        Admin
-                                    </span>
-                                    @else
-                                    <span class="label label-primary">
-                                        Miembro
-                                    </span>
-                                    @endif
-                                    </td>
-                                    <td>
-                                            <a href="{{ route('users.show', $user->id) }}">
+                                            <a href="{{ route('providers.show', $provider->id) }}">
                                                 <i class="fa fa-eye" aria-hidden="true"></i>
                                             </a>
                                     </td>
                                     <td>
-                                            <a href="{{ route('users.edit', $user->id) }}">
+                                            <a href="{{ route('providers.edit', $provider->id) }}">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                             </a>
                                     </td>
                                     <td>
-                                        {!! Form::open(['route' => ['users.destroy', $user->id], 'method' => 'DELETE']) !!}
-                                                    <button class="glyphicon glyphicon-remove" onclick="return confirm('¿Realmente deseas borrar el usuario?')"">
+                                        {!! Form::open(['route' => ['providers.destroy', $provider->id], 'method' => 'DELETE']) !!}
+                                                    <button class="glyphicon glyphicon-remove" onclick="return confirm('¿Realmente deseas borrar el proveedor?')"">
                                                     </button>                           
                                         {!! Form::close() !!}
                                     </td>

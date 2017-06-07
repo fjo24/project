@@ -27,13 +27,13 @@ class EditUsersRequest extends FormRequest
         return [
             'name'              => 'max:15|required',   
             'last_name'              => 'max:15|required',   
-            'email'        => 'email|required|unique:users'.$this->get('id'),
-            'cedula' => 'required|numeric|min:7',
-            'telefono' => 'required|numeric|min:11',
+            'email'        => 'email|required|unique:users',
+            'identification' => 'required|numeric|min:7',
+            'telephone' => 'required|numeric|min:11',
             //$this->route->getParameter('user'),
             'type'        => 'required',
             //. $this->route->getParameter('user'),
-            'password' => 'required|confirmed|min:6', 
+
         ];
     }
 

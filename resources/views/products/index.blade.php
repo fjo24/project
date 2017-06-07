@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Lista de usuarios')
+@section('title', 'Lista de productos')
 
 @section('contenido')
     <div class="box">
@@ -9,15 +9,12 @@
 
         <div class="box-header with-border">
             <h3 class="box-title">
-                Lista de usuarios
+                Lista de productos
             </h3>
             <div class="box-tools">
                 <div class="text-center">
-                    <a class="btn btn-primary btn-sm" href="{{ route('users.create') }}">
-                        NUEVO REGISTRO
-                    </a>
-                    <a class="btn btn-success btn-sm" href="{{route('exportusers')}}">
-                        IMPRIMIR REPORTE
+                    <a class="btn btn-primary btn-sm" href="{{ route('products.create') }}">
+                        NUEVO PRODUCTO
                     </a>
                 </div>
             </div>
@@ -30,62 +27,50 @@
                             <thead>
                             <tr>
                                 <th>NOMBRE</th>
-                                <th>APELLIDO</th>
-                                <th>CEDULA</th>
-                                <th>TELEFONO</th>
-                                <th>CORREO ELECTRONICO</th>
-                                <th>MIEMBRO DESDE</th>
-                                <th>TIPO</th>
+                                <th>DESCRIPCION DEL PRODUCTO</th>
+                                <th>VALOR DEL PRODUCTO</th>
+                                <th>CANTIDAD DISPONIBLE EN ALMACEN</th>
+                                <th>CANTIDAD MINIMA NECESARIA EN ALMACEN</th>
+                                <th>FECHA DE REGISTRO</th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($users as $user)
+                            @foreach($products as $product)
                                 <tr>
                                     <td>
-                                       {{ $user->name }}
+                                       {{ $product->name }}
                                     </td>
                                     <td>
-                                        {{ $user->last_name }}
+                                        {{ $product->info }}
                                     </td>
                                     <td>
-                                        {{ $user->identification }}
+                                        {{ $product->cost_c }}
+                                    </td>
+                                    <td>
+                                        cantidad
+                                    </td>
+                                    <td>
+                                        {{ $product->min }}
+                                    </td>
+                                    <td>
+                                        {{ $product->created_at }}
                                     </td>                                    
                                     <td>
-                                        {{ $user->telephone }}
-                                    </td>
-                                    <td>
-                                        {{ $user->email }}
-                                    </td>
-                                    <td>
-                                        {{ $user->created_at }}
-                                    </td>
-                                    <td>
-                                    @if($user->type == "admin")
-                                    <span class="label label-danger">
-                                        Admin
-                                    </span>
-                                    @else
-                                    <span class="label label-primary">
-                                        Miembro
-                                    </span>
-                                    @endif
-                                    </td>
-                                    <td>
-                                            <a href="{{ route('users.show', $user->id) }}">
+                                            <a href="{{ route('products.show', $product->id) }}">
                                                 <i class="fa fa-eye" aria-hidden="true"></i>
                                             </a>
                                     </td>
                                     <td>
-                                            <a href="{{ route('users.edit', $user->id) }}">
+                                            <a href="{{ route('products.edit', $product->id) }}">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                             </a>
                                     </td>
                                     <td>
-                                        {!! Form::open(['route' => ['users.destroy', $user->id], 'method' => 'DELETE']) !!}
-                                                    <button class="glyphicon glyphicon-remove" onclick="return confirm('¿Realmente deseas borrar el usuario?')"">
+                                        {!! Form::open(['route' => ['products.destroy', $product->id], 'method' => 'DELETE']) !!}
+                                                    <button class="glyphicon glyphicon-remove" onclick="return confirm('¿Realmente deseas borrar el producto?')"">
                                                     </button>                           
                                         {!! Form::close() !!}
                                     </td>

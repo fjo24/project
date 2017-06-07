@@ -24,3 +24,5 @@ Route::resource('orders','OrdersController');
 Route::resource('providers','ProvidersController');
 Route::resource('products','ProductsController');
 Route::resource('registers','RegistersController');
+
+Route::get('excelusers',  'UsersController@export')->name('exportusers');

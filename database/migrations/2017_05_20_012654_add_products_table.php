@@ -17,8 +17,7 @@ class AddProductsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('info');
-            $table->integer('quantity')->nullable();
-            $table->string('cost')->nullable();
+            $table->string('cost_c')->nullable();
             $table->string('min')->nullable();
 
             $table->timestamps();

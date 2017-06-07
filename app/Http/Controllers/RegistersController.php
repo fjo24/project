@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+Use App\Register;
 
 class RegistersController extends Controller
 {
@@ -13,7 +14,8 @@ class RegistersController extends Controller
      */
     public function index()
     {
-        //
+        $registers = Register::orderBy('id', 'DESC')->get();
+        return view('registers.index', compact('registers'));
     }
 
     /**

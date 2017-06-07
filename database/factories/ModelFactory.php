@@ -16,12 +16,12 @@ $factory->define(App\User::class, function (Faker\Generator $faker)  {
     static $password;
 
     return [
-        'name' => $faker->name,
+        'name' => $faker->firstName,
         'last_name' => $faker->lastName,
         //'type' => randomElement(['member', 'admin']),
         'email' => $faker->unique()->safeEmail,
-        'cedula' => $faker->ean8,
-        'telefono' => $faker->ean8,
+        'identification' => $faker->ean8,
+        'telephone' => $faker->ean8,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
     ];
@@ -29,96 +29,44 @@ $factory->define(App\User::class, function (Faker\Generator $faker)  {
 
 $factory->define(App\Article::class, function (Faker\Generator $faker) use ($factory) {
     return [
-        'title' => $faker->title,
+        'title' => $faker->word,
 		'content' => $faker->paragraph,
-		'user_id' => $factory->create(App\User::class)->id,
+		'updated_by' => $factory->create(App\User::class)->id,
+        'created_by' => $factory->create(App\User::class)->id,
     ];
 });
 
-
-$factory->define(sisVentas\Personal::class, function (Faker\Generator $faker) use ($factory) {
-    return [
-        'FIRST_NAME' => $faker->firstName,
-        'SECOND_NAME' => $faker->firstName,
-        'first_LAST_NAME' => $faker->lastName,
-        'SECOND_LAST_NAME' => $faker->lastName,
-        'DATE_OF_BIRTH' => $faker->date(),
-        'SEX' => array_rand(['M', 'F']),
-        'EMPLOYEE_NUMBER' => random_int(1, 100),
-        'EFFECTIVE_START_DATE' => $faker->date(),
-        'EFFECTIVE_END_DATE' => $faker->date(),
-        'SALARY' => random_int(1, 100),
-        'SOLD_MIN' => random_int(1, 100),
-        'DISCCOUNT' => random_int(1, 100),
-        'EMAIL_ADDRESS' => $faker->email,
-        'COUNTRY' => $faker->country,
-        'TELEF1' => $faker->phoneNumber,
-        'TELEF2' => $faker->phoneNumber,
-        'ADDRESS' => $faker->address,
-        'idtipo_doc' => $factory->create(sisVentas\Tipo_docs::class)->id,
-        'idposition' => $factory->create(sisVentas\Position::class)->id,
-    ];
-});
-
-$factory->define(sisVentas\Per_ventas::class, function (Faker\Generator $faker) use ($factory) {
-    return [
-
-        'date' => $faker->date(),
-        'amount' => $faker->randomDigit,
-        'invoice_id' => $faker->randomDigit,
-        'status' => $faker->randomElement(['v', 'c']),
-        'personal_id' => $factory->create(sisVentas\Personal::class)->PERSON_ID,
-
-    ];
-});
-
-$factory->define(sisVentas\User::class, function (Faker\Generator $faker) {
+$factory->define(App\Provider::class, function (Faker\Generator $faker)  use ($factory) {
     return [
         'name' => $faker->name,
-        'email' => $faker->email,
-        'password' => bcrypt('admin')
+        'rif' => $faker->ean8,
     ];
 });
 
-//factories de vehiculo:
-
-$factory->define(sisVentas\Cliente::class, function (Faker\Generator $faker) {
+$factory->define(App\Product::class, function (Faker\Generator $faker) use ($factory) {
     return [
-        'full_name' => $faker->name,
-        'effective_end_date' => $faker->date,
+        'name' => $faker->word,
+        'info' => $faker->country,
+        'cost_c' => random_int(1000, 25000),
+        'min' => random_int(1, 120),
     ];
 });
 
-$factory->define(sisVentas\Marca::class, function (Faker\Generator $faker) {
+$factory->define(App\Order::class, function (Faker\Generator $faker) use ($factory) {
     return [
-        'nombre' => $faker->name,
-        'condicion' => rand(0, 1),
+        'date' => $faker->date(),
+        'info' => $faker->country,
+        'updated' => $factory->create(App\User::class)->id,
+        'created' => $factory->create(App\User::class)->id,
     ];
 });
 
-$factory->define(sisVentas\Modelo::class, function (Faker\Generator $faker) use ($factory) {
+$factory->define(App\Register::class, function (Faker\Generator $faker) use ($factory) {
     return [
-
-        'idmarca' => $factory->create(sisVentas\Marca::class)->idmarca,
-        'nombre' => $faker->name,
-        'condicion' => rand(0, 1),
-    ];
-});
-
-$factory->define(sisVentas\Vehiculo::class, function (Faker\Generator $faker) use ($factory) {
-    return [
-        'placa' => $faker->firstName,
-        'idmarca' => $factory->create(sisVentas\Marca::class)->idmarca,
-        'idmodelo' => $factory->create(sisVentas\Modelo::class)->idmodelo,
-        'año' => $faker->date(),
-        'color' => $faker->firstName,
-        'num_motor' => random_int(1, 200000),
-        'km' => random_int(1, 200000),
-        'proxima_visita' => $faker->date(),
-        'no_atender' => array_rand(['atendido', 'no_atendido']),
-        'idcliente' => $factory->create(sisVentas\Cliente::class)->idcliente,
-        'motivo_no_atencion' => $faker->text,
-        'CREATED_BY' => $factory->create(sisVentas\User::class)->id,
-        'LAST_UPDATED_BY' => $factory->create(sisVentas\User::class)->id,
+        'provider_id' => $factory->create(App\Provider::class)->id,
+        'product_id' => $factory->create(App\Product::class)->id,
+        'info' => $faker->country,
+        'quantity' => random_int(1, 200),
+        'cost' => random_int(30000, 2500000),
     ];
 });

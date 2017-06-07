@@ -339,6 +339,122 @@ folder instead of downloading all of them to reduce the load. -->
                         </li>
                     </ul>
                 </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-dashboard">
+                        </i>
+                        <span>
+                                    Articulos
+                                </span>
+                        <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right">
+                                    </i>
+                                </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="{{route('articles.index')}}">
+                                <i class="fa fa-circle-o">
+                                </i>
+                                Listado
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('articles.create')}}">
+                                <i class="fa fa-circle-o">
+                                </i>
+                                Nuevo
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-dashboard">
+                        </i>
+                        <span>
+                                    Provedores
+                                </span>
+                        <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right">
+                                    </i>
+                                </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="{{route('providers.index')}}">
+                                <i class="fa fa-circle-o">
+                                </i>
+                                Listado
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('providers.create')}}">
+                                <i class="fa fa-circle-o">
+                                </i>
+                                Registrar
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-dashboard">
+                        </i>
+                        <span>
+                                    Productos
+                                </span>
+                        <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right">
+                                    </i>
+                                </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="{{route('products.index')}}">
+                                <i class="fa fa-circle-o">
+                                </i>
+                                Listado
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('products.create')}}">
+                                <i class="fa fa-circle-o">
+                                </i>
+                                Registrar
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-dashboard">
+                        </i>
+                        <span>
+                                    Ingreso y Egreso
+                                </span>
+                        <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right">
+                                    </i>
+                                </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="{{route('registers.index')}}">
+                                <i class="fa fa-circle-o">
+                                </i>
+                                Historial
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('registers.create')}}">
+                                <i class="fa fa-circle-o">
+                                </i>
+                                Nueva Entrada o Salida
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </section>
         <!-- /.sidebar -->

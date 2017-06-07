@@ -11,15 +11,15 @@ class AddOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
+            //$table->integer('user_id')->unsigned();
             $table->date('date');
-            $table->enum('condition', ['confirmada', 'en_espera', 'rechazada']);
-            $table->integer('last_updated_by')->unsigned();
-            $table->integer('created_by')->unsigned();
+            $table->enum('condition', ['confirmed', 'on_hold', 'Rejected'])->default('on_hold');
+            $table->integer('created')->unsigned();
+            $table->integer('updated')->unsigned();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('created_by')->references('id')->on('users');
-            $table->foreign('last_updated_by')->references('id')->on('users');
+            $table->foreign('created')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('updated')->references('id')->on('users')->onDelete('cascade');
+         //   $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             
             $table->timestamps();
         });
@@ -30,6 +30,8 @@ class AddOrdersTable extends Migration
             $table->integer('product_id')->unsigned();
             $table->string('description');
             $table->string('quantity');
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();
         });
     }

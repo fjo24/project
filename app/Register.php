@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Register extends Model
 {
 	protected $table    = "registers";
-    protected $fillable = ['provider_id', 'product_id', 'type', 'date', 'content', 'quantity', 'cost'];
+    protected $fillable = ['provider_id', 'product_id', 'type', 'content', 'quantity', 'cost'];
 
     public function provider()
     {

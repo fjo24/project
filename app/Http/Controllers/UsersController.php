@@ -9,6 +9,7 @@ use Validator;
 use App\Http\Requests\UsersRequest;
 use App\Http\Requests\EditUsersRequest;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 class UsersController extends Controller
 {
 
@@ -28,8 +29,7 @@ class UsersController extends Controller
         $request = $request->all();
         $user = new User($request);
         $user->password = bcrypt($request['password']);
-        $user->save(); ///falta request
-
+        $user->save();
         Flash::success('Se ha registrado el usuario '. $user->name. ' '. $user->last_name.' de manera exitosa!')->important();
         return redirect()->route('users.index');
     }
@@ -48,25 +48,28 @@ class UsersController extends Controller
 
     public function update(EditUsersRequest $request, $id)
     {   
-        /*$validator = Validator::make($request->all(), [
-        'email'    => 'email|required|unique:users',
-        ]);*/
-
         $user = User::find($id);
         $user->fill($request->all());
         $user->save();
-
         flash('El usuario '. $user->name. ' '. $user->last_name.' ha sido editado con exito!!', 'success')->important();
         return redirect()->route('users.index');
+    }
+
+    public function export(Request $request, User $users)
+    {
+       Excel::create('Listado de usuarios', function($excel) {
+            $excel->sheet('listado', function($sheet) {
+                 $users = User::orderBy('name', 'ASC')->get();
+                $sheet->loadView('users.excel.export')->with('users', $users);
+            });
+        })->export('xls');
     }
 
     public function destroy($id)
     {
         $user = User::find($id);
         $user->delete();
-
         flash('El usuario '. $user->name. ' '. $user->last_name.' ha sido eliminado con exito!!', 'danger')->important();
         return redirect()->route('users.index');
-
     }
 }

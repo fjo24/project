@@ -3,18 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+Use App\Article;
+use Laracasts\Flash\Flash;
+use App\Http\Requests\ArticlesRequest;
+use App\Http\Controllers\Controller;
 
 class ArticlesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $article = Article::orderBy('title', 'DESC')->get();
-        return view('users.index', compact('users', $users));
+        $articles = Article::orderBy('title', 'DESC')->get();
+        return view('articles.index', compact('articles'));
     }
 
     public function create()
@@ -24,51 +23,41 @@ class ArticlesController extends Controller
 
     public function store(Request $request)
     {
-        //
+        $request = $request->all();
+        $request['created_by'] = Auth()->user()->id;
+        $request['updated_by'] = Auth()->user()->id;
+        $article = new Article($request);
+        $article->save();
+        Flash::success('Se ha registrado el articulo '. $article->title. ' de manera exitosa!')->important();
+        return redirect()->route('articles.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+        $article = Article::find($id);
+        return view('articles.show', compact('article'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
+        $article = Article::find($id);
+        return view('articles.edit', compact('article'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, article $article)
     {
-        //
+        $request = $request->all();
+        $request['updated_by'] = Auth()->user()->id;
+        $article->update($request);
+        flash('El articulo '. $article->title. ' ha sido editado con exito!!', 'success')->important();
+        return redirect()->route('articles.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        $article = Article::find($id);
+        $article->delete();
+        flash('El articulo '. $article->title.' ha sido eliminado con exito!!', 'danger')->important();
+        return redirect()->route('articles.index');
     }
 }

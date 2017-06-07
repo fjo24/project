@@ -17,13 +17,12 @@ class AddRegistersTable extends Migration
             $table->increments('id');
             $table->integer('provider_id')->unsigned();
             $table->integer('product_id')->unsigned();
-            $table->enum('type', ['member', 'admin'])->default('member');
-            $table->date('date');
-            $table->text('content');
+            $table->enum('type', ['entry', 'discharge'])->default('entry');
+            $table->text('info');
             $table->string('quantity');
             $table->string('cost');
             $table->foreign('provider_id')->references('id')->on('providers')->onDelete('cascade');
-            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();
         });
     }

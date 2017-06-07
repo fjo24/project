@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Lista de usuarios')
+@section('title', 'Lista de articulos')
 
 @section('contenido')
     <div class="box">
@@ -9,15 +9,12 @@
 
         <div class="box-header with-border">
             <h3 class="box-title">
-                Lista de usuarios
+                Lista de Articulos
             </h3>
             <div class="box-tools">
                 <div class="text-center">
-                    <a class="btn btn-primary btn-sm" href="{{ route('users.create') }}">
-                        NUEVO REGISTRO
-                    </a>
-                    <a class="btn btn-success btn-sm" href="{{route('exportusers')}}">
-                        IMPRIMIR REPORTE
+                    <a class="btn btn-primary btn-sm" href="{{ route('articles.create') }}">
+                        NUEVO ARTICULO
                     </a>
                 </div>
             </div>
@@ -29,63 +26,43 @@
                         <table class="table table-hover display table-responsive table-condensed" id="table">
                             <thead>
                             <tr>
-                                <th>NOMBRE</th>
-                                <th>APELLIDO</th>
-                                <th>CEDULA</th>
-                                <th>TELEFONO</th>
-                                <th>CORREO ELECTRONICO</th>
-                                <th>MIEMBRO DESDE</th>
-                                <th>TIPO</th>
+                                <th>TITULO</th>
+                                <th>CREADO POR</th>
+                                <th>EDITADO POR</th>
+                                <th>FECHA DE CREACION</th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($users as $user)
+                            @foreach($articles as $article)
                                 <tr>
                                     <td>
-                                       {{ $user->name }}
+                                       {{ $article->title }}
                                     </td>
                                     <td>
-                                        {{ $user->last_name }}
+                                        {{ $article->user->name }}  {{ $article->user->last_name }}
                                     </td>
                                     <td>
-                                        {{ $user->identification }}
+                                        {{ $article->updatedby->name }} {{ $article->updatedby->last_name }}
+                                    </td>
+                                    <td>
+                                        {{ $article->created_at }}
                                     </td>                                    
                                     <td>
-                                        {{ $user->telephone }}
-                                    </td>
-                                    <td>
-                                        {{ $user->email }}
-                                    </td>
-                                    <td>
-                                        {{ $user->created_at }}
-                                    </td>
-                                    <td>
-                                    @if($user->type == "admin")
-                                    <span class="label label-danger">
-                                        Admin
-                                    </span>
-                                    @else
-                                    <span class="label label-primary">
-                                        Miembro
-                                    </span>
-                                    @endif
-                                    </td>
-                                    <td>
-                                            <a href="{{ route('users.show', $user->id) }}">
+                                            <a href="{{ route('articles.show', $article->id) }}">
                                                 <i class="fa fa-eye" aria-hidden="true"></i>
                                             </a>
                                     </td>
                                     <td>
-                                            <a href="{{ route('users.edit', $user->id) }}">
+                                            <a href="{{ route('articles.edit', $article->id) }}">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                             </a>
                                     </td>
                                     <td>
-                                        {!! Form::open(['route' => ['users.destroy', $user->id], 'method' => 'DELETE']) !!}
-                                                    <button class="glyphicon glyphicon-remove" onclick="return confirm('¿Realmente deseas borrar el usuario?')"">
+                                        {!! Form::open(['route' => ['articles.destroy', $article->id], 'method' => 'DELETE']) !!}
+                                                    <button class="glyphicon glyphicon-remove" onclick="return confirm('¿Realmente deseas borrar el articulo?')"">
                                                     </button>                           
                                         {!! Form::close() !!}
                                     </td>

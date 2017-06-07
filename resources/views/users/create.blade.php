@@ -5,6 +5,29 @@
 @section('contenido')
     {!! Form::open(['route' => 'users.store', 'class' => 'form', 'method' => 'POST']) !!}
         @include('users.partials.fields')
+        <div class="form-group">
+                                            {!! Form::label('password', 'Contraseña') !!}
+                                                {!! Form::password('password', ['class' => 'form-control', 'placeholder' => 'Ingrese contraseña', 'required']) !!}
+                                        </div>
+
+                                        <div class="form-group">
+                                            {!! Form::label('password', 'Contraseña') !!}
+                                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirme contraseña" required>
+                                        </div>
+                                    </div>
+                                    <div class="for text-center">
+                                        {!! Form::submit('Registrar', ['class'=> 'btn btn-primary']) !!}
+                                        <a class="btn btn-success btn-sm" href="{{route('users.index')}}">
+                                        ATRAS
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     {!! Form::close() !!}
         @endsection
             
