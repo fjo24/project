@@ -1,6 +1,7 @@
+
 @extends('layouts.admin')
 
-@section('title', 'Lista de productos')
+@section('title', 'Lista de eventos')
 
 @section('contenido')
     <div class="box">
@@ -9,12 +10,12 @@
 
         <div class="box-header with-border">
             <h3 class="box-title">
-                Lista de productos
+                Lista de eventos
             </h3>
             <div class="box-tools">
                 <div class="text-center">
-                    <a class="btn btn-primary btn-sm" href="{{ route('products.create') }}">
-                        NUEVO PRODUCTO
+                    <a class="btn btn-primary btn-sm" href="{{ route('orders.create') }}">
+                        NUEVO EVENTO
                     </a>
                 </div>
             </div>
@@ -26,50 +27,46 @@
                         <table class="table table-hover display table-responsive table-condensed" id="table">
                             <thead>
                             <tr>
-                                <th>NOMBRE</th>
-                                <th>DESCRIPCION DEL PRODUCTO</th>
-                                <th>VALOR DEL PRODUCTO</th>
-                                <th>CANTIDAD EN ALMACEN</th>
-                                <th>CANTIDAD MINIMA NECESARIA EN ALMACEN</th>
-                                <th>FECHA DE REGISTRO</th>
+                                <th>CLIENTE</th>
+                                <th>FECHA</th>
+                                <th>MONTO TOTAL</th>
+                                <th>UBICACION</th>
+                                <th>ESTADO</th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($products as $product)
+                            @foreach($orders as $order)
                                 <tr>
                                     <td>
-                                       {{ $product->name }}
+                                       {{ $order->user->name }} {{ $order->user->last_name }}
                                     </td>
                                     <td>
-                                        {{ $product->info }}
+                                        {{ $order->date }}
                                     </td>
                                     <td>
-                                        {{ $product->cost_c }}
+                                        monto total
                                     </td>
                                     <td>
-                                        {{ $product->quantity }} 
+                                        {{ $order->locale }} 
                                     </td>
                                     <td>
-                                        {{ $product->min }}
-                                    </td>
-                                    <td>
-                                        {{ $product->created_at }}
+                                        {{ $order->status }}
                                     </td>                                    
                                     <td>
-                                            <a href="{{ route('products.show', $product->id) }}">
+                                            <a href="{{ route('orders.show', $order->id) }}">
                                                 <i class="fa fa-eye" aria-hidden="true"></i>
                                             </a>
                                     </td>
                                     <td>
-                                            <a href="{{ route('products.edit', $product->id) }}">
+                                            <a href="{{ route('orders.edit', $order->id) }}">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                             </a>
                                     </td>
                                     <td>
-                                        {!! Form::open(['route' => ['products.destroy', $product->id], 'method' => 'DELETE']) !!}
+                                        {!! Form::open(['route' => ['orders.destroy', $order->id], 'method' => 'DELETE']) !!}
                                                     <button class="glyphicon glyphicon-remove" onclick="return confirm('¿Realmente deseas borrar el producto?')"">
                                                     </button>                           
                                         {!! Form::close() !!}

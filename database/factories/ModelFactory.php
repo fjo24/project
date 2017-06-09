@@ -47,6 +47,7 @@ $factory->define(App\Product::class, function (Faker\Generator $faker) use ($fac
     return [
         'name' => $faker->word,
         'info' => $faker->country,
+        'quantity' => random_int(1, 200),
         'cost_c' => random_int(1000, 25000),
         'min' => random_int(1, 120),
     ];
@@ -58,6 +59,7 @@ $factory->define(App\Order::class, function (Faker\Generator $faker) use ($facto
         'info' => $faker->country,
         'updated' => $factory->create(App\User::class)->id,
         'created' => $factory->create(App\User::class)->id,
+        'description' => $faker->paragraph,
     ];
 });
 

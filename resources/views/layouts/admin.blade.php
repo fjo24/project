@@ -44,7 +44,7 @@ folder instead of downloading all of them to reduce the load. -->
 <div class="wrapper">
     <header class="main-header">
         <!-- Logo -->
-        <a class="logo" href="../../index2.html">
+        <a class="logo" href="/home">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini">
                         <b>
@@ -203,10 +203,16 @@ folder instead of downloading all of them to reduce the load. -->
                     </li>
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
+                    @if (Auth::guest())
+                        <li><a href="{{ url('/login') }}">Login</a></li>
+                        <li><a href="{{ url('/register') }}">Register</a></li>
+                    @else
+                       
+                    
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <img alt="User Image" class="user-image" src="../../dist/img/user2-160x160.jpg">
                             <span class="hidden-xs">
-                                            Alexander Pierce
+                                            {{ Auth::user()->name }} <span class="caret"></span>
                                         </span>
                             </img>
                         </a>
@@ -246,17 +252,18 @@ folder instead of downloading all of them to reduce the load. -->
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a class="btn btn-default btn-flat" href="#">
+                                    <a class="btn btn-default btn-flat" href="{{ route('users.show', Auth::user()->id) }}">
                                         Profile
                                     </a>
                                 </div>
                                 <div class="pull-right">
-                                    <a class="btn btn-default btn-flat" href="#">
-                                        Sign out
+                                    <a class="btn btn-default btn-flat" href="{{ url('/logout') }}">
+                                        Cerrar sesion
                                     </a>
                                 </div>
                             </li>
                         </ul>
+                        @endif
                     </li>
                     <!-- Control Sidebar Toggle Button -->
                     <li>
@@ -451,6 +458,35 @@ folder instead of downloading all of them to reduce the load. -->
                                 <i class="fa fa-circle-o">
                                 </i>
                                 Nueva Entrada o Salida
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-dashboard">
+                        </i>
+                        <span>
+                                    Eventos
+                                </span>
+                        <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right">
+                                    </i>
+                                </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="{{route('orders.index')}}">
+                                <i class="fa fa-circle-o">
+                                </i>
+                                Listado
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('orders.create')}}">
+                                <i class="fa fa-circle-o">
+                                </i>
+                                Nuevo evento
                             </a>
                         </li>
                     </ul>

@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 
-@section('title', 'Nuevo registro')
+@section('title', 'Nuevo evento')
 @include('flash::message') 
 @section('contenido')
-    {!! Form::open(['route' => 'registers.store']) !!} 
-        @include('registers.partials.fields')
+    {!! Form::open(['route' => 'orders.store']) !!} 
+        @include('orders.partials.fields')
     {!! Form::close() !!}
         @endsection
 

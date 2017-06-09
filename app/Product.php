@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
 	protected $table    = "products";
-    protected $fillable = ['id', 'name', 'info', 'cost_c', 'min'];
+    protected $fillable = ['id', 'name', 'info', 'quantity', 'cost_c', 'min'];
     
     public function registers()
     {
@@ -15,6 +15,6 @@ class Product extends Model
     }
     public function orders()
     {
-    	return $this-> belongsToMany('App\Order');
+    	return $this-> belongsToMany('App\Order')->withPivot('quantity');
     }
 }

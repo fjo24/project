@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 
-@section('title', 'Nuevo registro')
+@section('title', 'Edición de producto')
 @include('flash::message') 
 @section('contenido')
-    {!! Form::open(['route' => 'registers.store']) !!} 
-        @include('registers.partials.fields')
+    {!! Form::model($product, ['route' => ['products.update', $product], 'method' => 'PUT']) !!} 
+        @include('products.partials.fields')
     {!! Form::close() !!}
         @endsection
 

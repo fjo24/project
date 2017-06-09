@@ -23,24 +23,24 @@
                                             {!! Form::select('type', ['entry' => 'Entrada', 'discharge' => 'Salida'], null, ['class' => 'form-control', 'placeholder' => 'Seleccione entrada o salida']) !!}
                                         </div>
                                         <div class="form-group">
-                                            {!! Form::label('id', 'Proveedor') !!}
-                                            {!! Form::select('id', $provider, null, ['class' => 'form-control', 'required']) !!}
+                                            {!! Form::label('provider_id', 'Proveedor') !!}
+                                            {!! Form::select('provider_id', $provider, null, ['class' => 'form-control', 'required']) !!}
                                         </div>
                                         <div class="form-group">
-                                            {!! Form::label('id', 'Producto') !!}
-                                            {!! Form::select('id', $product, null, ['class' => 'form-control', 'required']) !!}
+                                            {!! Form::label('product_id', 'Producto') !!}
+                                            {!! Form::select('product_id', $product, null, ['class' => 'form-control', 'required']) !!}
                                         </div>
                                         <div class="form-group">
                                             {!! Form::label('info', 'Detalle del registro') !!}
-                                            {!! Form::text('info', null, ['class' => 'form-control', 'placeholder' => 'Detalles del registro']) !!}
+                                            {!! Form::text('info', null, ['class' => 'form-control', 'placeholder' => 'Detalles del registro', 'required']) !!}
                                         </div>
                                         <div class="form-group">
                                             {!! Form::label('quantity', 'Cantidad') !!}
-                                                {!! Form::text('quantity', null, ['class' => 'form-control', 'placeholder' => 'Ingrese cantidad']) !!}
+                                                {!! Form::text('quantity', null, ['class' => 'form-control', 'placeholder' => 'Ingrese cantidad', 'required']) !!}
                                         </div>
                                         <div class="form-group">
                                             {!! Form::label('cost', 'Costo') !!}
-                                                {!! Form::text('cost', null, ['class' => 'form-control', 'placeholder' => 'Ingrese costo']) !!}
+                                                {!! Form::text('cost', null, ['class' => 'form-control', 'placeholder' => 'Ingrese costo', 'required']) !!}
                                         </div>
                                     </div>
                                     <div class="for text-center">

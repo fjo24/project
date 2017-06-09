@@ -13,7 +13,7 @@ class ProductsController extends Controller
 
     public function index()
     {
-        $products = Product::orderBy('name', 'DESC')->get();
+        $products = Product::orderBy('id', 'DESC')->get();
         return view('products.index', compact('products'));
     }
 

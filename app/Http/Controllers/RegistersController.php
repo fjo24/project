@@ -25,17 +25,22 @@ class RegistersController extends Controller
 
     public function create()
     {
-        $provider = Provider::orderBy('name', 'ASC')->lists('name');
-        dd('$provider');
-        $product = Product::orderBy('name', 'ASC')->lists('name');
+        $provider = Provider::orderBy('name', 'ASC')->pluck('name', 'id')->all();
+        $product = Product::orderBy('name', 'ASC')->pluck('name', 'id')->all();
+        //dd($product);
         return view('registers.create', compact('provider', 'product'));
     }
 
     public function store(Request $request)
-    {
+    {           
         $request = $request->all();
         $register = new Register($request);
         $register->save();
+        if ($request['type'] == 'entry') {
+        $product = Product::where('id', $request['product_id'])->increment('quantity', $request['quantity']);
+        } else {
+            $product = Product::where('id', $request['product_id'])->decrement('quantity', $request['quantity']);
+        }
         Flash::success('Se ha registrado de manera exitosa!')->important();
         return redirect()->route('registers.index');
     }
@@ -48,13 +53,13 @@ class RegistersController extends Controller
 
     public function edit($id)
     {
-        $provider = Provider::orderBy('name', 'ASC')->lists('name', 'provider_id');
-        $product = Product::orderBy('name', 'ASC')->lists('name', 'product_id');
+        $provider = Provider::orderBy('name', 'ASC')->pluck('name', 'id')->all();
+        $product = Product::orderBy('name', 'ASC')->pluck('name', 'id')->all();
         $register = Register::find($id);
         return view('registers.edit', compact('register', 'provider', 'product'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, register $register)
     {
         $request = $request->all();
         $register->update($request);
