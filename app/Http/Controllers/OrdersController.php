@@ -25,7 +25,7 @@ class OrdersController extends Controller
     public function create()
     {
         $users = User::orderBy('name', 'ASC')->pluck('name', 'id')->all();
-        $products = Product::orderBy('name', 'ASC')->get();
+        $products = Product::orderBy('name', 'ASC')->pluck('name', 'id')->all();
        // dd($products);
         return view('orders.create')->with('users', $users)->with('products', $products);
     }
@@ -38,11 +38,16 @@ class OrdersController extends Controller
         $request['updated'] = Auth()->user()->id;
         $order = new Order($request);
         $order->save();
-        $product = Product::orderBy('name', 'ASC')->pluck('name', 'id')->all();
-
+        $i=$order->id;
+       // $products = Product::orderBy('name', 'ASC')->pluck('name', 'id')->all();
+        //dd($order);
+        $order->products()->sync([$request['product_id'] => ['quantity' => $request['quantity']]]);
+        //$order->products()->sync([$request['product_id'] => ['quantity' => $request['quantity']]]);
+       // $order->products()->attach($request->product_id, [$request->quantity=>'quantity']);
+        //->sync([1 => ['expires' => true], 2, 3]);
        // return view('orders.store')->with('order', $order)->with('product', $product);
       //  Flash::success('Se ha registrado el producto '. $product->name. ' de manera exitosa!')->important();
-        return redirect()->route('createpivot', $order->id);
+        return redirect()->route('orders.index');
     }
 
     public function createpivot($id){
