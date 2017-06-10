@@ -31,6 +31,8 @@ folder instead of downloading all of them to reduce the load. -->
     <link href="{{ asset ('AdminLTE/plugins/datepicker/bootstrap-datepicker3.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset ('AdminLTE/plugins/datepicker/bootstrap-datepicker.standalone.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ asset ('chosen/chosen.css') }}">
+    <link href="{{ asset ('css/addrow.css') }}" rel="stylesheet" type="text/css">
+    
         <!-- icheck 
     <link href="AdminLTE/plugins/iCheck/square/red.css" rel="stylesheet">
     <script src="AdminLTE/plugins/iCheck/icheck.js"></script>

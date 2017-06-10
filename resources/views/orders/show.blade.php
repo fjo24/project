@@ -47,7 +47,7 @@
                                         {{ $order->date }}
                                     </td>
                                     <td>
-                                        monto total
+                                       
                                     </td>
                                     <td>
                                         {{ $order->locale }} 

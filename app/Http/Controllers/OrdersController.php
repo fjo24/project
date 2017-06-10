@@ -11,11 +11,6 @@ use Laracasts\Flash\Flash;
 
 class OrdersController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $orders = Order::orderBy('id', 'DESC')->get();
@@ -31,53 +26,36 @@ class OrdersController extends Controller
     }
 
     public function store(Request $request)
-    {
+    {        
 
         $request = $request->all();
         $request['created'] = Auth()->user()->id;
         $request['updated'] = Auth()->user()->id;
         $order = new Order($request);
         $order->save();
-        $i=$order->id;
-       // $products = Product::orderBy('name', 'ASC')->pluck('name', 'id')->all();
-        //dd($order);
-        $order->products()->sync([$request['product_id'] => ['quantity' => $request['quantity']]]);
-        //$order->products()->sync([$request['product_id'] => ['quantity' => $request['quantity']]]);
-       // $order->products()->attach($request->product_id, [$request->quantity=>'quantity']);
-        //->sync([1 => ['expires' => true], 2, 3]);
+        $q = $request['quantity'];
+        $p = $request['product_id'];
+        
+        $extra = array_map(function($q){
+            return ['quantity' => $q];
+        }, $q);
+
+        $data = array_combine($p, $extra);
+        foreach ($order->products as $valor) {
+            dd($valor->name);
+        }
+
+        //dd($data);
+        $order->products()->sync($data);
+
+      /*  foreach ($order->products as $valor) {
+            $c = $valor->cost_c*$valor->pivov->quantity;
+            dd($c);
+        }*/
+
        // return view('orders.store')->with('order', $order)->with('product', $product);
-      //  Flash::success('Se ha registrado el producto '. $product->name. ' de manera exitosa!')->important();
+        Flash::success('Se ha registrado la orden de manera exitosa!')->important();
         return redirect()->route('orders.index');
-    }
-
-    public function createpivot($id){
-    
-    $order = Order::find($id);
-    $clave = $order['id'];
-    //dd($clave);
-    $product = Product::orderBy('name', 'ASC')->pluck('name', 'id')->all();
-
-    //return redirect()->route('orders.createpivot', $order->id)->with('order', $order)->with('product', $product);
-    return view('orders.createpivot')->with('order', $order)->with('product', $product)->with('clave', $clave);
-    //return view('orders.createpivot', compact('order', 'product'));
-    }
-//
-    public function storepivot(Request $request){
-    dd($request['clave']);
-
-    $request = $request->all();
-    /*$request['product_id'] = Auth()->user()->id;
-    $request['updated'] = Auth()->user()->id;
-    $pivot = new Pivot::($request);*/
-  //  $order->products()->attach($sector , array( 'fecha' => Input::get('fecha'), 'tareas' => Input::get('tareas')));
-    $order->products()->attach('order_id',['product_id'=>Input::get('fecha'), 'quantity'=>Input::get('quantity')]);
-    //$order->products()->sync($request['product_id']);
-    //$order->products()->sync($request['quantity']);
-    $order->save();
-
-      //  Flash::success('Se ha registrado el producto '. $product->name. ' de manera exitosa!')->important();
-    return redirect()->route('orders.index');
-
     }
 
     public function show($id)
@@ -85,7 +63,7 @@ class OrdersController extends Controller
         $users = User::orderBy('name', 'ASC')->pluck('name', 'id')->all();
         $orders = Product::orderBy('name', 'ASC')->get();
         // dd($products);
-        return view('orders.create')->with('users', $users)->with('orders', $orders);
+        return view('orders.show')->with('users', $users)->with('orders', $orders);
     }
 
     public function edit($id)

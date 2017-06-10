@@ -48,42 +48,33 @@
                                                 {!! Form::textarea('comment', null, ['class' => 'form-control', 'placeholder' => 'Ingrese aqui cualquier dato adicional necesario']) !!}
                                         </div>
                                     </div>
-    <div class="row clearfix">
-        <div class="col-md-12 column">
-            <table class="table table-bordered table-hover" id="tab_logic">
-                <thead>
-                    <tr >
-                        <th class="text-center">
-                            #
-                        </th>
-                        <th class="text-center">
-                            tipo de producto
-                        </th>
-                        <th class="text-center">
-                            cantidad
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr id='addr0'>
-                        <td>
-                        1
-                        </td>
-                        <td>
-                        {!! Form::select('product_id', $products, null, ['class' => 'form-control', 'required']) !!}
-                        </td>
-                        <td>
-                        {!! Form::text('quantity', null, ['class' => 'form-control', 'placeholder' => 'cantidad', 'required']) !!}
-                        </td>
-                    </tr>
-                    <tr id='addr1'></tr>
-                </tbody>
-            </table>
+
+<div class="container">
+    <div class="row">
+        <h2>Seleccione producto y cantidad</h2>
+        <div class="col-md-6">
+            <div class="contacts">
+                <label>Contacts:</label>
+                    <div class="form-group multiple-form-group input-group">
+                        <div class="input-group-btn input-group-select">
+                            <div class="form-group">
+                            {!! Form::select('product_id[]', $products, null, ['class' => 'form-control', 'required']) !!}
+                            </div>
+                            
+                            <input type="hidden" class="input-group-select-val" name="contacts['type'][]" value="phone">
+                        </div>
+                         {!! Form::text('quantity[]', null, ['class' => 'form-control', 'placeholder' => 'cantidad', 'required']) !!}
+                        
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-success btn-add">+</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <a id="add_row" class="btn btn-default pull-left">Agregar item</a><a id='delete_row' class="pull-right btn btn-default">Borrar item</a>
 </div>
-<div class="for text-center">
+
                                         {!! Form::submit('Registrar', ['class'=> 'btn btn-primary']) !!}
                                         <a class="btn btn-success btn-sm" href="{{route('orders.index')}}">
                                         Cancelar
@@ -105,6 +96,69 @@
 
 @section('js')
     <script type="text/javascript">
+(function ($) {
+    $(function () {
+
+        var addFormGroup = function (event) {
+            event.preventDefault();
+
+            var $formGroup = $(this).closest('.form-group');
+            var $multipleFormGroup = $formGroup.closest('.multiple-form-group');
+            var $formGroupClone = $formGroup.clone();
+
+            $(this)
+                .toggleClass('btn-success btn-add btn-danger btn-remove')
+                .html('–');
+
+            $formGroupClone.find('input').val('');
+            $formGroupClone.find('.product_id').text('Seleccione');
+            $formGroupClone.insertAfter($formGroup);
+
+            var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
+            if ($multipleFormGroup.data('max') <= countFormGroup($multipleFormGroup)) {
+                $lastFormGroupLast.find('.btn-add').attr('disabled', true);
+            }
+        };
+
+        var removeFormGroup = function (event) {
+            event.preventDefault();
+
+            var $formGroup = $(this).closest('.form-group');
+            var $multipleFormGroup = $formGroup.closest('.multiple-form-group');
+
+            var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
+            if ($multipleFormGroup.data('max') >= countFormGroup($multipleFormGroup)) {
+                $lastFormGroupLast.find('.btn-add').attr('disabled', false);
+            }
+
+            $formGroup.remove();
+        };
+
+        var selectFormGroup = function (event) {
+            event.preventDefault();
+
+            var $selectGroup = $(this).closest('.input-group-select');
+            var param = $(this).attr("href").replace("#","");
+            var concept = $(this).text();
+
+            $selectGroup.find('.concept').text(concept);
+            $selectGroup.find('.input-group-select-val').val(param);
+
+        }
+
+        var countFormGroup = function ($form) {
+            return $form.find('.form-group').length;
+        };
+
+        $(document).on('click', '.btn-add', addFormGroup);
+        $(document).on('click', '.btn-remove', removeFormGroup);
+        $(document).on('click', '.dropdown-menu a', selectFormGroup);
+
+    });
+})(jQuery);
+
+
+
  //datepicker
                 $('.datepicker').datepicker({
                     format: "dd-mm-yyyy",
@@ -113,24 +167,7 @@
                 });
 
 
-     $("#add_row").click(function(){
-    
 
-      $('#addr'+i).html("<td>"+ (i+1) +"</td><td><select class="form-control" required name="product_id"><option value="1">f</option></select>");
-
-
-
-      $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
-      i++; 
-  });
-     $("#delete_row").click(function(){
-         if(i>1){
-         $("#addr"+(i-1)).html('');
-         i--;
-         }
-     });
-
-});
     </script>
 @endsection
 
