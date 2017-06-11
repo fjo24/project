@@ -8,6 +8,7 @@ Use App\Product;
 Use App\Provider;
 Use App\User;
 use Laracasts\Flash\Flash;
+use DB;
 
 class OrdersController extends Controller
 {
@@ -25,55 +26,112 @@ class OrdersController extends Controller
         return view('orders.create')->with('users', $users)->with('products', $products);
     }
 
-    public function store(Request $request)
+ public function store(Request $request)
     {        
-
+        //dd($request['id']);
+        
         $request = $request->all();
+       // $request['id']=$id;
+        
         $request['created'] = Auth()->user()->id;
         $request['updated'] = Auth()->user()->id;
-        $order = new Order($request);
+        $sales = DB::table('order_product')
+        ->join('orders', 'orders.id', '=', 'order_product.order_id')
+        ->join('products', 'products.id', '=', 'order_product.product_id')
+        ->select(DB::raw('sum(order_product.quantity*products.cost_c) AS total_sales'))
+        ->where('products.id', '=', $request['product_id'])
+        ->get();
+        $order = new Order($request);       
         $order->save();
+        $id=$order->id;
         $q = $request['quantity'];
         $p = $request['product_id'];
-        
         $extra = array_map(function($q){
             return ['quantity' => $q];
         }, $q);
-
+ 
         $data = array_combine($p, $extra);
         foreach ($order->products as $valor) {
             dd($valor->name);
         }
-
-        //dd($data);
+ 
+        //dd($sales);        
         $order->products()->sync($data);
-
-      /*  foreach ($order->products as $valor) {
-            $c = $valor->cost_c*$valor->pivov->quantity;
-            dd($c);
-        }*/
-
-       // return view('orders.store')->with('order', $order)->with('product', $product);
+ 
         Flash::success('Se ha registrado la orden de manera exitosa!')->important();
-        return redirect()->route('orders.index');
+        return redirect()->route('confirm', $order->id);
     }
+
 
     public function show($id)
     {
-        $users = User::orderBy('name', 'ASC')->pluck('name', 'id')->all();
-        $orders = Product::orderBy('name', 'ASC')->get();
-        // dd($products);
-        return view('orders.show')->with('users', $users)->with('orders', $orders);
+      //  $users = User::orderBy('name', 'ASC')->pluck('name', 'id')->all();
+        $order = Order::find($id);
+        $sales = DB::table('order_product')
+        ->join('orders', 'orders.id', '=', 'order_product.order_id')
+        ->join('products', 'products.id', '=', 'order_product.product_id')
+        ->select(DB::raw('sum(order_product.quantity*products.cost_c) AS total_sales'))
+        ->where('order_product.order_id', $id)
+        ->get();
+
+    return view('orders.show')->with('order', $order)->with('sales', $sales);
+    }
+
+    public function confirm($id)
+    {
+        $order = Order::find($id);
+        $sales = DB::table('order_product')
+        ->join('orders', 'orders.id', '=', 'order_product.order_id')
+        ->join('products', 'products.id', '=', 'order_product.product_id')
+        ->select(DB::raw('sum(order_product.quantity*products.cost_c) AS total_sales'))
+        ->where('order_product.order_id', $id)
+        ->get();
+        $request['total'] = $sales[0]->total_sales;
+
+        $order->update($request);
+        //dd($sales[0]->total_sales);
+       // $request['total'] = $sales[0]->total_sales;
+        return view('orders.confirm')->with('order', $order)->with('sales', $sales);   
+      //  return redirect()->route('orders.index');
     }
 
     public function edit($id)
     {
-        //
+        $order= Order::find($id);
+        $users = User::orderBy('name', 'ASC')->pluck('name', 'id')->all();
+        $products = Product::orderBy('name', 'ASC')->pluck('name', 'id')->all();
+        $my_products = $order->products->pluck('id')->toArray();
+       // $my_quantities = $order->quantity->pluck('id')->toArray();
+       // dd($products);
+        return view('orders.edit')->with('users', $users)->with('products', $products)->with('order', $order)->with('my_products', $my_products);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, order $order)
     {
-        //
+        $request = $request->all();
+        $request['updated'] = Auth()->user()->id;
+        $sales = DB::table('order_product')
+        ->join('orders', 'orders.id', '=', 'order_product.order_id')
+        ->join('products', 'products.id', '=', 'order_product.product_id')
+        ->select(DB::raw('sum(order_product.quantity*products.cost_c) AS total_sales'))
+        ->where('products.id', '=', $request['product_id'])
+        ->get();   
+        $order->update($request);
+        $id=$order->id;
+        $q = $request['quantity'];
+        $p = $request['product_id'];
+        $extra = array_map(function($q){
+            return ['quantity' => $q];
+        }, $q);
+ 
+        $data = array_combine($p, $extra);
+        foreach ($order->products as $valor) {
+     //       dd($valor->name);
+        }
+        $order->products()->sync($data);
+ 
+        Flash::success('Se ha registrado la orden de manera exitosa!')->important();
+        return redirect()->route('confirm', $order->id);
     }
 
     public function destroy($id)

@@ -26,7 +26,7 @@
 
                     <div class="container">
                     {!! Form::open(['route' => 'orders.store']) !!} 
-                    <div class="col-md-12">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             {!! Form::label('date', 'Fecha') !!}
                                             {!! Form::text('date', null, ['class' => 'form-control', 'placeholder' => 'Ingrese fecha']) !!}
@@ -52,26 +52,33 @@
 <div class="container">
     <div class="row">
         <h2>Seleccione producto y cantidad</h2>
+       
         <div class="col-md-6">
             <div class="contacts">
-                <label>Contacts:</label>
+
                     <div class="form-group multiple-form-group input-group">
+                        <div class="col-md-6">
                         <div class="input-group-btn input-group-select">
                             <div class="form-group">
-                            {!! Form::select('product_id[]', $products, null, ['class' => 'form-control', 'required']) !!}
+                            {!! Form::select('product_id[]', $products, null, ['class' => 'form-control', 'placeholder' => 'Indique producto', 'required']) !!}
                             </div>
                             
                             <input type="hidden" class="input-group-select-val" name="contacts['type'][]" value="phone">
                         </div>
+                        </div>
+                        <div class="col-md-4">
                          {!! Form::text('quantity[]', null, ['class' => 'form-control', 'placeholder' => 'cantidad', 'required']) !!}
-                        
+                         </div>
+                        <div class="col-md-2">
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-success btn-add">+</button>
                         </span>
+                        </div>
                     </div>
-                </div>
             </div>
         </div>
+
+    </div>
     </div>
 </div>
 
@@ -156,8 +163,6 @@
 
     });
 })(jQuery);
-
-
 
  //datepicker
                 $('.datepicker').datepicker({

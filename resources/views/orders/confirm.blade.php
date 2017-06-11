@@ -26,30 +26,30 @@
                         </h3>
                     </div>
                     <table class="table table-striped">
-                        <thead>
-                    <tr>
-                        <th>ITEM</th>
-                        <th>PRECIO UNITARIO</th>
-                        <th>CANTIDAD</th>
-                        <th>TOTALES</th>
-                    </tr>
-                </thead>
-                <tbody>
-                        @foreach($order->products as $product)
-                    <tr>
-                        <td>{{   $product->name   }}</td>
-                        <td>{{ $product->cost_c }}</td>
-                        <td>{{ $product->pivot->quantity }}</td>
-                        <td>{{ $product->pivot->quantity*$product->cost_c }}</td>
-                    </tr>
+						<thead>
+    				<tr>
+    					<th>ITEM</th>
+    					<th>PRECIO UNITARIO</th>
+    					<th>CANTIDAD</th>
+    					<th>TOTALES</th>
+    				</tr>
+    			</thead>
+    			<tbody>
+    					@foreach($order->products as $product)
+					<tr>
+    					<td>{{   $product->name   }}</td>
+    					<td>{{ $product->cost_c }}</td>
+    					<td>{{ $product->pivot->quantity }}</td>
+    					<td>{{ $product->pivot->quantity*$product->cost_c }}</td>
+    				</tr>
                         @endforeach
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td><B>TOTALES<B></td>
-                        <td><B>{{ $sales[0]->total_sales }}<B></td>
-                    </tr>
-                </tbody>
+    				<tr>
+    					<td></td>
+    					<td></td>
+    					<td><B>TOTALES<B></td>
+    					<td><B>{{ $sales[0]->total_sales }}<B></td>
+    				</tr>
+    			</tbody>
                     </table>
 
                 </div>

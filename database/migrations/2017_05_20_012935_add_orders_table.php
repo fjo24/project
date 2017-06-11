@@ -16,6 +16,7 @@ class AddOrdersTable extends Migration
             $table->enum('status', ['confirmed', 'on_hold', 'Rejected'])->default('on_hold');
             $table->string('locale');
             $table->string('comment');
+            $table->integer('total')->nullable();
             $table->integer('created')->unsigned();
             $table->integer('updated')->unsigned();
 

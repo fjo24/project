@@ -25,7 +25,7 @@ Route::resource('providers','ProvidersController');
 Route::resource('products','ProductsController');
 Route::resource('registers','RegistersController');
 
-Route::get('createpivot/{order_id}',  'OrdersController@createpivot')->name('createpivot');
+Route::get('confirm/{order_id}',  'OrdersController@confirm')->name('confirm');
 Route::post('storepivot',  'OrdersController@storepivot')->name('storepivot');
 
 Route::get('excelusers',  'UsersController@export')->name('exportusers');
