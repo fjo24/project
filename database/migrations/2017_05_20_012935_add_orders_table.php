@@ -12,10 +12,10 @@ class AddOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
             $table->date('date');
+            $table->string('title');
             $table->integer('user_id')->unsigned();
             $table->enum('status', ['confirmed', 'on_hold', 'Rejected'])->default('on_hold');
             $table->string('locale');
-            $table->string('comment');
             $table->integer('total')->nullable();
             $table->integer('created')->unsigned();
             $table->integer('updated')->unsigned();

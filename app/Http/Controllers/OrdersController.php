@@ -7,6 +7,7 @@ Use App\Order;
 Use App\Product;
 Use App\Provider;
 Use App\User;
+Use App\Calendar;
 use Laracasts\Flash\Flash;
 use DB;
 
@@ -89,6 +90,10 @@ class OrdersController extends Controller
         $request['total'] = $sales[0]->total_sales;
 
         $order->update($request);
+
+
+
+
         //dd($sales[0]->total_sales);
        // $request['total'] = $sales[0]->total_sales;
         return view('orders.confirm')->with('order', $order)->with('sales', $sales);   
@@ -138,4 +143,42 @@ class OrdersController extends Controller
     {
         //
     }
+
+    public function calendar()
+    {
+
+        
+        $events = [];
+        $orders= Order::orderBy('id', 'DESC')->get();
+        foreach ($orders as $order) {
+    
+        $events[] = \Calendar::event(
+            $order->title, //event title
+            true, //full day event?
+            $order->date, //start time (you can also use Carbon instead of DateTime)
+            $order->date, //end time (you can also use Carbon instead of DateTime)
+            0, //optionally, you can specify an event ID
+            [
+        'url' => 'orders/show', $order->id,
+        //any other full-calendar supported parameters
+    ]
+             
+        );
+        }
+        $calendar = \Calendar::addEvents($events); 
+
+        return view('orders.calendar.calendar', compact('calendar'));
+       
+        /* $events= Order::orderBy('id', 'DESC')->get();
+      //   $events->toArray();
+         dd($events);
+        //$eloquentEvent = EventModel::first(); //EventModel implements MaddHatter\LaravelFullcalendar\Event
+
+        $calendar = \Calendar::addEvents($events); 
+
+        return view('orders.calendar.calendar', compact('calendar'));*/
+
+    }
+
+
 }

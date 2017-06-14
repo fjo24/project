@@ -8,16 +8,16 @@
                                             {!! Form::select('user_id', $users, null, ['class' => 'form-control', 'required']) !!}
                                         </div>
                                         <div class="form-group">
+                                            {!! Form::label('title', 'Titulo del evento') !!}
+                                                {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Ingrese aqui un titulo o descripcion breve del evento']) !!}
+                                        </div>
+                                        <div class="form-group">
                                             {!! Form::label('status', 'Estado del evento') !!}
                                             {!! Form::select('status', ['' => 'Seleccione estado del evento','on_hold' => 'Por confirmar', 'confirmed' => 'Confirmada', 'Rejected' => 'Rechazada'], null, ['class' => 'form-control', 'placeholder' => 'Seleccione un nivel de usuario']) !!}
                                         </div>
                                         <div class="form-group">
                                             {!! Form::label('locale', 'Ubicacion del evento') !!}
                                             {!! Form::text('locale', null, ['class' => 'form-control', 'placeholder' => 'Ubicacion del evento']) !!}
-                                        </div>
-                                        <div class="form-group">
-                                            {!! Form::label('comment', 'Comentarios') !!}
-                                                {!! Form::textarea('comment', null, ['class' => 'form-control', 'placeholder' => 'Ingrese aqui cualquier dato adicional necesario']) !!}
                                         </div>
                                     </div>
 
