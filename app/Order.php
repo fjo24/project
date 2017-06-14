@@ -13,6 +13,17 @@ class Order extends Model
     {
     	return $this->belongsTo('App\User');
     }
+
+    public function getdateAttribute($date)
+    {
+        return $date = \Carbon\Carbon::parse($date)->format('d-m-Y');
+    }
+
+    public function setdateAttribute($date)
+    {
+        $this->attributes['date'] = \Carbon\Carbon::parse($date)->format('Y-m-d');
+    }
+
     public function creat()
     {
         return $this->belongsTo('App\User', 'created');
@@ -31,7 +42,6 @@ class Order extends Model
         return $this->id;
     }
 
-
     public function getTitle()
     {
         return $this->title;
@@ -41,12 +51,6 @@ class Order extends Model
     {
         return $this->date;
     }
-
-    /**
-     * Get the end time
-     *
-     * @return DateTime
-     */
     public function getEnd()
     {
         return $this->date;

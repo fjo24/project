@@ -29,7 +29,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             {!! Form::label('date', 'Fecha') !!}
-                                            {!! Form::text('date', null, ['class' => 'form-control', 'placeholder' => 'Ingrese fecha']) !!}
+                                            {!! Form::text('date', null, ['class' => 'form-control  datepicker', 'placeholder' => 'Ingrese fecha']) !!}
                                         </div>
                                         <div class="form-group">
                                             {!! Form::label('user_id', 'Cliente') !!}
