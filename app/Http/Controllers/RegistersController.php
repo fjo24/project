@@ -12,7 +12,7 @@ use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 class RegistersController extends Controller
 {
-    
+
     public function index()
     {
         $registers = Register::orderBy('id', 'DESC')->get();
@@ -23,7 +23,6 @@ class RegistersController extends Controller
     {
         $provider = Provider::orderBy('name', 'ASC')->pluck('name', 'id')->all();
         $product = Product::orderBy('name', 'ASC')->pluck('name', 'id')->all();
-        //dd($product);
         return view('registers.create', compact('provider', 'product'));
     }
 
@@ -35,7 +34,7 @@ class RegistersController extends Controller
         if ($request['type'] == 'entry') {
         $product = Product::where('id', $request['product_id'])->increment('quantity', $request['quantity']);
         } else {
-            $product = Product::where('id', $request['product_id'])->decrement('quantity', $request['quantity']);
+        $product = Product::where('id', $request['product_id'])->decrement('quantity', $request['quantity']);
         }
 
         /*$date=today;   EN EL INDEX DE PRODUCT PUEDE SER ( SI EXISTE ORDEN IGUAL A FECHA ACTUAL ACTUALIZAR ALLA)

@@ -93,7 +93,7 @@ folder instead of downloading all of them to reduce the load. -->
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <img alt="User Image" class="user-image" src="{{ asset ('AdminLTE/dist/img/avatar5.png') }}">
                             <span class="hidden-xs">
-                                            {{ Auth::user()->name }} {{ Auth::user()->last_name }} <span class="caret"></span>
+                                            {{ Auth::user()->fullname }} <span class="caret"></span>
                                         </span>
                             </img>
                         </a>
@@ -102,7 +102,7 @@ folder instead of downloading all of them to reduce the load. -->
                             <li class="user-header">
                                 <img alt="User Image" class="img-circle" src="{{ asset ('AdminLTE/dist/img/avatar5.png') }}">
                                 <p>
-                                    {{ Auth::user()->name }} {{ Auth::user()->last_name }}  - @if(Auth::user()->type == "admin")
+                                     {{ Auth::user()->fullname }}  - @if(Auth::user()->level == "admin")
                                        Administrador
                                     @else
                                         Miembro

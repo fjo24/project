@@ -28,11 +28,11 @@
                             <tr>
                                 <th>CLIENTE</th>
                                 <th>TITULO</th>
-                                <th>FECHA DE INICIO</th>
-                                <th>FECHA DE FIN</th>
                                 <th>UBICACION</th>
                                 <th>ESTADO</th>
                                 <th>TIPO</th>
+                                <th>FECHA DE INICIO</th>
+                                <th>FECHA DE FIN</th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -48,12 +48,6 @@
                                         {{ $order->title }}
                                     </td>
                                     <td>
-                                        {{ $order->date }}
-                                    </td>
-                                    <td>
-                                        {{ $order->end_date }}
-                                    </td>
-                                    <td>
                                         {{ $order->locale }} 
                                     </td>
                                     <td>
@@ -67,7 +61,13 @@
                                     @else
                                         Salida
                                     @endif
-                                    </td>                                    
+                                    </td>  
+                                    <td>
+                                        {{ $order->date }}
+                                    </td>
+                                    <td>
+                                        {{ $order->end_date }}
+                                    </td>                                  
                                     <td>
                                             <a href="{{ route('orders.show', $order->id) }}">
                                                 <i class="fa fa-eye" aria-hidden="true"></i>

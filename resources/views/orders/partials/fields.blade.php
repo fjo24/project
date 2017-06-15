@@ -1,11 +1,15 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
+                                            {!! Form::label('type', 'Tipo de registro') !!}
+                                            {!! Form::select('type', ['service' => 'Servicio de venta o alquiler', 'entry' => 'Entrada de productos al almacen', 'remove' => 'Salida de productos del almacen'], null, ['class' => 'form-control', 'placeholder' => 'Seleccione entrada o salida']) !!}
+                                        </div>
+                                        <div class="form-group">
                                             {!! Form::label('date', 'Fecha de inicio') !!}
-                                            {!! Form::text('date', null, ['class' => 'form-control', 'placeholder' => 'Ingrese fecha']) !!}
+                                            {!! Form::text('date', null, ['class' => 'form-control datepicker', 'placeholder' => 'Ingrese fecha']) !!}
                                         </div>
                                         <div class="form-group">
                                             {!! Form::label('end_date', 'Fecha final') !!}
-                                            {!! Form::text('end_date', null, ['class' => 'form-control', 'placeholder' => 'Ingrese fecha si aplica']) !!}
+                                            {!! Form::text('end_date', null, ['class' => 'form-control datepicker', 'placeholder' => 'Ingrese fecha si aplica']) !!}
                                         </div>
                                         <div class="form-group">
                                             {!! Form::label('user_id', 'Cliente') !!}
