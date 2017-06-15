@@ -1,7 +1,11 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            {!! Form::label('date', 'Fecha') !!}
+                                            {!! Form::label('date', 'Fecha de inicio') !!}
                                             {!! Form::text('date', null, ['class' => 'form-control', 'placeholder' => 'Ingrese fecha']) !!}
+                                        </div>
+                                        <div class="form-group">
+                                            {!! Form::label('end_date', 'Fecha final') !!}
+                                            {!! Form::text('end_date', null, ['class' => 'form-control', 'placeholder' => 'Ingrese fecha si aplica']) !!}
                                         </div>
                                         <div class="form-group">
                                             {!! Form::label('user_id', 'Cliente') !!}
@@ -18,6 +22,10 @@
                                         <div class="form-group">
                                             {!! Form::label('locale', 'Ubicacion del evento') !!}
                                             {!! Form::text('locale', null, ['class' => 'form-control', 'placeholder' => 'Ubicacion del evento']) !!}
+                                        </div>
+                                        <div class="form-group">
+                                            {!! Form::label('notes', 'Información adicional') !!}
+                                            {!! Form::text('notes', null, ['class' => 'form-control', 'placeholder' => 'Incluya aca cualquier información adicional de interes']) !!}
                                         </div>
                                     </div>
 

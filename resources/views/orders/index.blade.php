@@ -27,10 +27,12 @@
                             <thead>
                             <tr>
                                 <th>CLIENTE</th>
-                                <th>FECHA</th>
-                                <th>MONTO TOTAL</th>
+                                <th>TITULO</th>
+                                <th>FECHA DE INICIO</th>
+                                <th>FECHA DE FIN</th>
                                 <th>UBICACION</th>
                                 <th>ESTADO</th>
+                                <th>TIPO</th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -40,18 +42,31 @@
                             @foreach($orders as $order)
                                 <tr>
                                     <td>
-                                       {{ $order->user->name }} {{ $order->user->last_name }}
+                                       {{ $order->user->fullname }}
+                                    </td>
+                                    <td>
+                                        {{ $order->title }}
                                     </td>
                                     <td>
                                         {{ $order->date }}
                                     </td>
                                     <td>
+                                        {{ $order->end_date }}
                                     </td>
                                     <td>
                                         {{ $order->locale }} 
                                     </td>
                                     <td>
                                         {{ $order->status }}
+                                    </td>
+                                    <td>
+                                    @if($order->type == "service")
+                                        Servicio
+                                    @elseif($order->type == "entry")
+                                        Entrada
+                                    @else
+                                        Salida
+                                    @endif
                                     </td>                                    
                                     <td>
                                             <a href="{{ route('orders.show', $order->id) }}">

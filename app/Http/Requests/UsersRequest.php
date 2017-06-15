@@ -25,8 +25,7 @@ class UsersRequest extends FormRequest
        //$id = Request::segment(3);
        // dd($this->route->getParameter('user'));
         return [
-            'name'              => 'max:15|required',   
-            'last_name'              => 'max:15|required',   
+            'fullname'              => 'max:50|required',   
             'email'        => 'email|required|unique:users', 
             'identification' => 'required|numeric|min:7|unique:users',
             'telephone' => 'required|numeric|min:11',

@@ -37,10 +37,10 @@
     			<tbody>
     					@foreach($order->products as $product)
 					<tr>
-    					<td>{{   $product->name   }}</td>
-    					<td>{{ $product->cost_c }}</td>
+    					<td>{{ $product->name   }}</td>
+    					<td>{{ $product->cost }}</td>
     					<td>{{ $product->pivot->quantity }}</td>
-    					<td>{{ $product->pivot->quantity*$product->cost_c }}</td>
+    					<td>{{ $product->pivot->quantity*$product->cost }}</td>
     				</tr>
                         @endforeach
     				<tr>

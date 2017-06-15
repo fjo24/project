@@ -29,16 +29,22 @@
                         <tbody>
                         <tr>
                             <td>Nombre:</td>
-                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->fullname }}</td>
                         </tr>
                         <tr>
-                            <td>Apellido:</td>
-                            <td>{{ $user->last_name }}</td>
+                            <td>Tipo de usuario:</td>
+                            <td>
+                        @if($user->type == "person")
+                            Persona Natural
+                            @else                          
+                                Organizzación
+                        @endif
+                            </td>
                         </tr>
                         <tr>
                             <td>Nivel de usuario:</td>
                             <td>
-                        @if($user->type == "admin")
+                        @if($user->level == "admin")
                             Administrador
                             @else                          
                                 Miembro

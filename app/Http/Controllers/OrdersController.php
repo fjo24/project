@@ -21,34 +21,22 @@ class OrdersController extends Controller
 
     public function create()
     {
-        $users = User::orderBy('name', 'ASC')->pluck('name', 'id')->all();
+        $users = User::orderBy('fullname', 'ASC')->pluck('fullname', 'id')->all();
         $products = Product::orderBy('name', 'ASC')->pluck('name', 'id')->all();
-       // dd($products);
         return view('orders.create')->with('users', $users)->with('products', $products);
     }
 
  public function store(Request $request)
     {        
-        //dd($request['id']);
-        
+
         $request = $request->all();
-       // $request['id']=$id;
-        
         $request['created'] = Auth()->user()->id;
         $request['updated'] = Auth()->user()->id;
-        $sales = DB::table('order_product')
-        ->join('orders', 'orders.id', '=', 'order_product.order_id')
-        ->join('products', 'products.id', '=', 'order_product.product_id')
-        ->select(DB::raw('sum(order_product.quantity*products.cost_c) AS total_sales'))
-        ->where('products.id', '=', $request['product_id'])
-        ->get();
         
         $order = new Order($request);       
         
         $order->save();
-        
-        $id=$order->id;
-        
+
         $q = $request['quantity'];
         
         $p = $request['product_id'];
@@ -61,16 +49,34 @@ class OrdersController extends Controller
         foreach ($order->products as $valor) {
             dd($valor->name);
         }
- foreach ($order->products as $valor) {
+        foreach ($order->products as $valor) {
             dd($valor->pivot->quantity);
         }
-        //dd($sales);        
+
         $order->products()->sync($data);
  
         Flash::success('Se ha registrado la orden de manera exitosa!')->important();
         return redirect()->route('confirm', $order->id);
     }
 
+    public function confirm($id)
+    {
+        $order = Order::find($id);
+        $sales = DB::table('order_product')
+        ->join('orders', 'orders.id', '=', 'order_product.order_id')
+        ->join('products', 'products.id', '=', 'order_product.product_id')
+        ->select(DB::raw('sum(order_product.quantity*products.cost) AS total_sales'))
+        ->where('order_product.order_id', $id)
+        ->get();
+        $request['total'] = $sales[0]->total_sales;
+
+        $order->update($request);
+
+        //dd($sales[0]->total_sales);
+       // $request['total'] = $sales[0]->total_sales;
+        return view('orders.confirm')->with('order', $order)->with('sales', $sales);   
+      //  return redirect()->route('orders.index');
+    }
 
     public function show($id)
     {
@@ -86,32 +92,10 @@ class OrdersController extends Controller
     return view('orders.show')->with('order', $order)->with('sales', $sales);
     }
 
-    public function confirm($id)
-    {
-        $order = Order::find($id);
-        $sales = DB::table('order_product')
-        ->join('orders', 'orders.id', '=', 'order_product.order_id')
-        ->join('products', 'products.id', '=', 'order_product.product_id')
-        ->select(DB::raw('sum(order_product.quantity*products.cost_c) AS total_sales'))
-        ->where('order_product.order_id', $id)
-        ->get();
-        $request['total'] = $sales[0]->total_sales;
-
-        $order->update($request);
-
-
-
-
-        //dd($sales[0]->total_sales);
-       // $request['total'] = $sales[0]->total_sales;
-        return view('orders.confirm')->with('order', $order)->with('sales', $sales);   
-      //  return redirect()->route('orders.index');
-    }
-
     public function edit($id)
     {
         $order= Order::find($id);
-        $users = User::orderBy('name', 'ASC')->pluck('name', 'id')->all();
+        $users = User::orderBy('fullname', 'ASC')->pluck('fullname', 'id')->all();
         $products = Product::orderBy('name', 'ASC')->pluck('name', 'id')->all();
         $my_products = $order->products->pluck('id')->toArray();
        // $my_quantities = $order->quantity->pluck('id')->toArray();

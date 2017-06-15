@@ -27,11 +27,10 @@
                             <thead>
                             <tr>
                                 <th>NOMBRE</th>
-                                <th>DESCRIPCION DEL PRODUCTO</th>
                                 <th>VALOR DEL PRODUCTO</th>
-                                <th>CANTIDAD EN ALMACEN</th>
-                                <th>CANTIDAD MINIMA NECESARIA EN ALMACEN</th>
-                                <th>FECHA DE REGISTRO</th>
+                                <th>CANTIDAD TOTAL</th>
+                                <th>DISPONIBLE EN ALMACEN</th>
+                                <th>TIPO DE PRODUCTO</th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -44,34 +43,39 @@
                                        {{ $product->name }}
                                     </td>
                                     <td>
-                                        {{ $product->info }}
-                                    </td>
-                                    <td>
-                                        {{ $product->cost_c }}
+                                        {{ $product->cost }}
                                     </td>
                                     <td>
                                         {{ $product->quantity }} 
                                     </td>
                                     <td>
-                                        {{ $product->min }}
+                                        {{ $product->available }} 
                                     </td>
                                     <td>
-                                        {{ $product->created_at }}
+                                    @if($product->type == "rent")
+                                    <span class="label label-success">
+                                        Para Alquiler
+                                    </span>
+                                    @else
+                                    <span class="label label-primary">
+                                        Para  Venta
+                                    </span>
+                                    @endif
                                     </td>                                    
                                     <td>
-                                            <a href="{{ route('products.show', $product->id) }}">
-                                                <i class="fa fa-eye" aria-hidden="true"></i>
-                                            </a>
+                                        <a href="{{ route('products.show', $product->id) }}">
+                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                        </a>
                                     </td>
                                     <td>
-                                            <a href="{{ route('products.edit', $product->id) }}">
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                            </a>
+                                        <a href="{{ route('products.edit', $product->id) }}">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                        </a>
                                     </td>
                                     <td>
                                         {!! Form::open(['route' => ['products.destroy', $product->id], 'method' => 'DELETE']) !!}
-                                                    <button class="glyphicon glyphicon-remove" onclick="return confirm('¿Realmente deseas borrar el producto?')"">
-                                                    </button>                           
+                                            <button class="glyphicon glyphicon-remove" onclick="return confirm('¿Realmente deseas borrar el producto?')"">
+                                            </button>                           
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>

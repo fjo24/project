@@ -8,9 +8,9 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 20);
-            $table->string('last_name', 20);
-            $table->enum('type', ['member', 'admin'])->default('member');
+            $table->string('fullname', 50);
+            $table->enum('type', ['person', 'organization'])->default('person');
+            $table->enum('level', ['member', 'admin'])->default('member');
             $table->string('email')->unique();
             $table->string('identification', 25)->unique();
             $table->string('telephone', 25);

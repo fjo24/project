@@ -12,10 +12,13 @@ class AddOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
             $table->date('date');
+            $table->date('end_date')->nullable();
             $table->string('title');
+            $table->enum('type', ['service', 'entry', 'remove'])->default('service');
             $table->integer('user_id')->unsigned();
             $table->enum('status', ['confirmed', 'on_hold', 'Rejected'])->default('on_hold');
-            $table->string('locale');
+            $table->string('locale')->nullable();
+            $table->string('notes')->nullable();
             $table->integer('total')->nullable();
             $table->integer('created')->unsigned();
             $table->integer('updated')->unsigned();

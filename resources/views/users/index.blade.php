@@ -30,12 +30,12 @@
                             <thead>
                             <tr>
                                 <th>NOMBRE</th>
-                                <th>APELLIDO</th>
-                                <th>CEDULA</th>
+                                <th>TIPO</th>
+                                <th>NUMERO DE DOCUMENTO</th>
                                 <th>TELEFONO</th>
                                 <th>CORREO ELECTRONICO</th>
                                 <th>MIEMBRO DESDE</th>
-                                <th>TIPO</th>
+                                <th>NIVEL DE USUARIO</th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -45,10 +45,14 @@
                             @foreach($users as $user)
                                 <tr>
                                     <td>
-                                       {{ $user->name }}
+                                       {{ $user->fullname }}
                                     </td>
                                     <td>
-                                        {{ $user->last_name }}
+                                    @if($user->type == "person")
+                                        Persona natural
+                                    @else
+                                        Organización
+                                    @endif
                                     </td>
                                     <td>
                                         {{ $user->identification }}
@@ -63,7 +67,7 @@
                                         {{ $user->created_at }}
                                     </td>
                                     <td>
-                                    @if($user->type == "admin")
+                                    @if($user->level == "admin")
                                     <span class="label label-danger">
                                         Admin
                                     </span>

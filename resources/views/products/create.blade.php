@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Edición de producto')
+@section('title', 'Nuevo producto')
 @include('flash::message') 
 @section('contenido')
     {!! Form::open(['route' => 'products.store']) !!} 

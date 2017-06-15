@@ -23,20 +23,24 @@
                                                 {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Nombre de producto']) !!}
                                         </div>
                                         <div class="form-group">
-                                            {!! Form::label('info', 'Descripción del producto') !!}
-                                                {!! Form::text('info', null, ['class' => 'form-control', 'placeholder' => 'Descripción del producto']) !!}
+                                            {!! Form::label('type', 'Tipo de producto') !!}
+                                                {!! Form::select('type', ['' => 'Seleccione un tipo de producto', 'rent' => 'Para alquiler', 'sale' => 'Para venta'], null, ['class' => 'form-control', 'placeholder' => 'Seleccione un tipo de producto']) !!}
                                         </div>
                                         <div class="form-group">
-                                            {!! Form::label('cost_c', 'Valor del producto') !!}
-                                                {!! Form::text('cost_c', null, ['class' => 'form-control', 'placeholder' => 'Ingrese valor comercial del producto']) !!}
+                                            {!! Form::label('info', 'Descripción del producto') !!}
+                                                {!! Form::text('info', null, ['class' => 'form-control', 'placeholder' => 'Descripción del producto']) !!}
                                         </div>
                                         <div class="form-group">
                                             {!! Form::label('quantity', 'cantidad en almacen') !!}
                                                 {!! Form::text('quantity', null, ['class' => 'form-control', 'placeholder' => 'Ingrese cantidad']) !!}
                                         </div>
                                         <div class="form-group">
-                                            {!! Form::label('min', 'cantidad minima en almacen producto') !!}
-                                                {!! Form::text('min', null, ['class' => 'form-control', 'placeholder' => 'Ingrese cantidad']) !!}
+                                            {!! Form::label('available', 'cantidad disponible en almacen') !!}
+                                                {!! Form::text('available', null, ['class' => 'form-control', 'placeholder' => 'Ingrese cantidad']) !!}
+                                        </div>
+                                        <div class="form-group">
+                                            {!! Form::label('cost', 'Valor del producto') !!}
+                                                {!! Form::text('cost', null, ['class' => 'form-control', 'placeholder' => 'Ingrese valor comercial del producto']) !!}
                                         </div>
                                     </div>
                                     <div class="for text-center">

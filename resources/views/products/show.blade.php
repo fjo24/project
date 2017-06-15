@@ -37,19 +37,25 @@
                         </tr>
                         <tr>
                             <td>Valor comercial:</td>
-                            <td>{{ $product->cost_c }}</td>
+                            <td>{{ $product->cost }}</td>
+                        </tr>
+                        <tr>
+                            <td>Cantidad en almacen:</td>
+                            <td>{{$product->quantity}}</td>
                         </tr>
                         <tr>
                             <td>Cantidad disponible en almacen:</td>
-                            <td></td>
+                            <td>{{$product->available}}</td>
                         </tr>
                         <tr>
-                            <td>Cantidad minima necesaria en almacen:</td>
-                            <td>{{ $product->min }}</td>
-                        </tr>
-                        <tr>
-                            <td>Fecha de registro:</td>
-                            <td>{{ $product->created_at }}</td>
+                            <td>Tipo de producto:</td>
+                            <td>
+                        @if($product->type == "rent")
+                            Para alquiler
+                            @else                          
+                            Para venta
+                        @endif
+                            </td>
                         </tr>
                         </tbody>
                     </table>

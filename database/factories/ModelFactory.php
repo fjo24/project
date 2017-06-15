@@ -16,8 +16,8 @@ $factory->define(App\User::class, function (Faker\Generator $faker)  {
     static $password;
 
     return [
-        'name' => $faker->firstName,
-        'last_name' => $faker->lastName,
+        'fullname' => $faker->firstName,
+        //'last_name' => $faker->lastName,
         //'type' => randomElement(['member', 'admin']),
         'email' => $faker->unique()->safeEmail,
         'identification' => $faker->ean8,
@@ -47,22 +47,25 @@ $factory->define(App\Product::class, function (Faker\Generator $faker) use ($fac
     return [
         'name' => $faker->word,
         'info' => $faker->country,
-        'quantity' => random_int(1, 200),
-        'cost_c' => random_int(1000, 25000),
-        'min' => random_int(1, 120),
+        'quantity' => random_int(100, 300),
+        'available' => random_int(1, 100),
+        'cost' => random_int(1000, 25000),
     ];
 });
 
 $factory->define(App\Order::class, function (Faker\Generator $faker) use ($factory) {
     return [
         'date' => $faker->date(),
-        'info' => $faker->country,
+        'end_date' => $faker->date(),
+        'title' => $faker->word,
+        'user_id' => $factory->create(App\User::class)->id,
+        'locale' => $faker->country,
+        'notes' => $faker->country,
         'updated' => $factory->create(App\User::class)->id,
         'created' => $factory->create(App\User::class)->id,
-        'description' => $faker->paragraph,
     ];
 });
-
+/*
 $factory->define(App\Register::class, function (Faker\Generator $faker) use ($factory) {
     return [
         'provider_id' => $factory->create(App\Provider::class)->id,
@@ -71,4 +74,4 @@ $factory->define(App\Register::class, function (Faker\Generator $faker) use ($fa
         'quantity' => random_int(1, 200),
         'cost' => random_int(30000, 2500000),
     ];
-});
+});*/
