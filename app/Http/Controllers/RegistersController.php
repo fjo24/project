@@ -41,6 +41,14 @@ class RegistersController extends Controller
         } else {
             $product = Product::where('id', $request['product_id'])->decrement('quantity', $request['quantity']);
         }
+
+        /*$date=today;   EN EL INDEX DE PRODUCT PUEDE SER ( SI EXISTE ORDEN IGUAL A FECHA ACTUAL ACTUALIZAR ALLA)
+        $product = Product::where('id', $request['product_id'])->increment('quantity', $request['quantity']);
+        foreach $products as $product{
+            if (product->type == entry && $date==request->date)
+            product->quantity increment
+        }
+        */
         Flash::success('Se ha registrado de manera exitosa!')->important();
         return redirect()->route('registers.index');
     }

@@ -42,11 +42,17 @@ class OrdersController extends Controller
         ->select(DB::raw('sum(order_product.quantity*products.cost_c) AS total_sales'))
         ->where('products.id', '=', $request['product_id'])
         ->get();
+        
         $order = new Order($request);       
+        
         $order->save();
+        
         $id=$order->id;
+        
         $q = $request['quantity'];
+        
         $p = $request['product_id'];
+        
         $extra = array_map(function($q){
             return ['quantity' => $q];
         }, $q);
@@ -55,7 +61,9 @@ class OrdersController extends Controller
         foreach ($order->products as $valor) {
             dd($valor->name);
         }
- 
+ foreach ($order->products as $valor) {
+            dd($valor->pivot->quantity);
+        }
         //dd($sales);        
         $order->products()->sync($data);
  
