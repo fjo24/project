@@ -4,9 +4,7 @@
 
 @section('contenido')
     <div class="box">
-       
         @include('partials.errors')
-
         <div class="box-header with-border">
             <h3 class="box-title">
                 Lista de Proveedores
@@ -37,25 +35,25 @@
                             @foreach($providers as $provider)
                                 <tr>
                                     <td>
-                                       {{ $provider->name }}
+                                        {{ $provider->name }}
                                     </td>
                                     <td>
                                         {{ $provider->rif }}
-                                    </td>                                    
-                                    <td>
-                                            <a href="{{ route('providers.show', $provider->id) }}">
-                                                <i class="fa fa-eye" aria-hidden="true"></i>
-                                            </a>
                                     </td>
                                     <td>
-                                            <a href="{{ route('providers.edit', $provider->id) }}">
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                            </a>
+                                        <a href="{{ route('providers.show', $provider->id) }}">
+                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('providers.edit', $provider->id) }}">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                        </a>
                                     </td>
                                     <td>
                                         {!! Form::open(['route' => ['providers.destroy', $provider->id], 'method' => 'DELETE']) !!}
-                                                    <button class="glyphicon glyphicon-remove" onclick="return confirm('¿Realmente deseas borrar el proveedor?')"">
-                                                    </button>                           
+                                        <button class="glyphicon glyphicon-remove" onclick="return confirm('¿Realmente deseas borrar el proveedor?')"">
+                                        </button>
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>
@@ -77,7 +75,6 @@
         <!-- /.box -->
     </div>
 @endsection
-
 @section('js')
     <script type="text/javascript">
         $(document).ready(function () {

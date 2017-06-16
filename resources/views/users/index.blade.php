@@ -4,9 +4,7 @@
 
 @section('contenido')
     <div class="box">
-       
         @include('partials.errors')
-
         <div class="box-header with-border">
             <h3 class="box-title">
                 Lista de usuarios
@@ -45,18 +43,18 @@
                             @foreach($users as $user)
                                 <tr>
                                     <td>
-                                       {{ $user->fullname }}
+                                        {{ $user->fullname }}
                                     </td>
                                     <td>
-                                    @if($user->type == "person")
-                                        Persona natural
-                                    @else
-                                        Organización
-                                    @endif
+                                        @if($user->type == "person")
+                                            Persona natural
+                                        @else
+                                            Organización
+                                        @endif
                                     </td>
                                     <td>
                                         {{ $user->identification }}
-                                    </td>                                    
+                                    </td>
                                     <td>
                                         {{ $user->telephone }}
                                     </td>
@@ -67,30 +65,30 @@
                                         {{ $user->created_at }}
                                     </td>
                                     <td>
-                                    @if($user->level == "admin")
-                                    <span class="label label-danger">
+                                        @if($user->level == "admin")
+                                            <span class="label label-danger">
                                         Admin
                                     </span>
-                                    @else
-                                    <span class="label label-primary">
+                                        @else
+                                            <span class="label label-primary">
                                         Miembro
                                     </span>
-                                    @endif
+                                        @endif
                                     </td>
                                     <td>
-                                            <a href="{{ route('users.show', $user->id) }}">
-                                                <i class="fa fa-eye" aria-hidden="true"></i>
-                                            </a>
+                                        <a href="{{ route('users.show', $user->id) }}">
+                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                        </a>
                                     </td>
                                     <td>
-                                            <a href="{{ route('users.edit', $user->id) }}">
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                            </a>
+                                        <a href="{{ route('users.edit', $user->id) }}">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                        </a>
                                     </td>
                                     <td>
                                         {!! Form::open(['route' => ['users.destroy', $user->id], 'method' => 'DELETE']) !!}
-                                                    <button class="glyphicon glyphicon-remove" onclick="return confirm('¿Realmente deseas borrar el usuario?')"">
-                                                    </button>                           
+                                        <button class="glyphicon glyphicon-remove" onclick="return confirm('¿Realmente deseas borrar el usuario?')"">
+                                        </button>
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>

@@ -47,7 +47,7 @@ class UsersController extends Controller
     }
 
     public function update(EditUsersRequest $request, $id)
-    {   
+    {
         $user = User::find($id);
         $user->fill($request->all());
         $user->save();
@@ -57,9 +57,9 @@ class UsersController extends Controller
 
     public function export(Request $request, User $users)
     {
-       Excel::create('Listado de usuarios', function($excel) {
+        Excel::create('Listado de usuarios', function($excel) {
             $excel->sheet('listado', function($sheet) {
-                 $users = User::orderBy('name', 'ASC')->get();
+                $users = User::orderBy('name', 'ASC')->get();
                 $sheet->loadView('users.excel.export')->with('users', $users);
             });
         })->export('xls');

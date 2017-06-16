@@ -9,7 +9,6 @@
                 Detalles del Producto
             </h3>
             <div class="box-tools">
-
                 <div class="text-center">
                     <a class="btn btn-success btn-sm" href="{{ route('products.index') }}">
                         Volver
@@ -50,27 +49,25 @@
                         <tr>
                             <td>Tipo de producto:</td>
                             <td>
-                        @if($product->type == "rent")
-                            Para alquiler
-                            @else                          
-                            Para venta
-                        @endif
+                                @if($product->type == "rent")
+                                    Para alquiler
+                                @else
+                                    Para venta
+                                @endif
                             </td>
                         </tr>
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>
-            <div class="for text-center">
-        <a class="btn btn-success btn-sm" href="{{ route('products.edit', $product->id) }}">
-            Editar
-        </a>
-        <a class="btn btn-danger btn-sm" href="{{ route('products.index') }}">
-            Volver
-        </a>
+        <div class="for text-center">
+            <a class="btn btn-success btn-sm" href="{{ route('products.edit', $product->id) }}">
+                Editar
+            </a>
+            <a class="btn btn-danger btn-sm" href="{{ route('products.index') }}">
+                Volver
+            </a>
+        </div>
     </div>
-    </div>
-
 @endsection

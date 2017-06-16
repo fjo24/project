@@ -14,6 +14,11 @@ class Order extends Model
     	return $this->belongsTo('App\User');
     }
 
+    public function products()
+    {
+        return $this-> belongsToMany('App\Product', 'order_product')->withPivot('quantity');
+    }
+
     public function getdateAttribute($date)
     {
         return $date = \Carbon\Carbon::parse($date)->format('d-m-Y');
@@ -43,10 +48,7 @@ class Order extends Model
         return $this->belongsTo('App\User', 'updated');
     }
 
-    public function products()
-    {
-    	return $this-> belongsToMany('App\Product', 'order_product')->withPivot('quantity');
-    }
+    
 
         public function getId() {
         return $this->id;

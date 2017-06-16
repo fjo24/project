@@ -9,7 +9,6 @@
                 Detalles del Usuario
             </h3>
             <div class="box-tools">
-
                 <div class="text-center">
                     <a class="btn btn-success btn-sm" href="{{ route('users.index') }}">
                         Volver
@@ -34,21 +33,21 @@
                         <tr>
                             <td>Tipo de usuario:</td>
                             <td>
-                        @if($user->type == "person")
-                            Persona Natural
-                            @else                          
-                                Organizzación
-                        @endif
+                                @if($user->type == "person")
+                                    Persona Natural
+                                @else
+                                    Organizzación
+                                @endif
                             </td>
                         </tr>
                         <tr>
                             <td>Nivel de usuario:</td>
                             <td>
-                        @if($user->level == "admin")
-                            Administrador
-                            @else                          
-                                Miembro
-                        @endif
+                                @if($user->level == "admin")
+                                    Administrador
+                                @else
+                                    Miembro
+                                @endif
                             </td>
                         </tr>
                         <tr>
@@ -61,18 +60,17 @@
                         </tr>
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>
-            <div class="for text-center">
-        <a class="btn btn-success btn-sm" href="{{ route('users.edit', $user->id) }}">
-            Editar
-        </a>
-        <a class="btn btn-danger btn-sm" href="{{ route('users.index') }}">
-            Volver
-        </a>
-    </div>
+        <div class="for text-center">
+            <a class="btn btn-success btn-sm" href="{{ route('users.edit', $user->id) }}">
+                Editar
+            </a>
+            <a class="btn btn-danger btn-sm" href="{{ route('users.index') }}">
+                Volver
+            </a>
+        </div>
     </div>
 
 @endsection

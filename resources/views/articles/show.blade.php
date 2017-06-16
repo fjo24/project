@@ -57,14 +57,14 @@
                 </div>
             </div>
         </div>
-            <div class="for text-center">
-        <a class="btn btn-success btn-sm" href="{{ route('articles.edit', $article->id) }}">
-            Editar
-        </a>
-        <a class="btn btn-danger btn-sm" href="{{ route('articles.index') }}">
-            Volver
-        </a>
-    </div>
+        <div class="for text-center">
+            <a class="btn btn-success btn-sm" href="{{ route('articles.edit', $article->id) }}">
+                Editar
+            </a>
+            <a class="btn btn-danger btn-sm" href="{{ route('articles.index') }}">
+                Volver
+            </a>
+        </div>
     </div>
 
 @endsection

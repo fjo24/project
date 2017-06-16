@@ -26,66 +26,26 @@ class OrdersController extends Controller
         return view('orders.create')->with('users', $users)->with('products', $products);
     }
 
- public function store(Request $request)
-    {        
-
+    public function store(Request $request)
+    {
         $request = $request->all();
         $request['created'] = Auth()->user()->id;
         $request['updated'] = Auth()->user()->id;
-        
-        $order = new Order($request);       
-        
+        $order = new Order($request);
         $order->save();
-        $id=$order->id;
 
+        $id=$order->id;
         $q = $request['quantity'];
-        
         $p = $request['product_id'];
-        
+        //formating array
         $extra = array_map(function($q){
             return ['quantity' => $q];
         }, $q);
- 
+        //combining array
         $data = array_combine($p, $extra);
-        foreach ($order->products as $valor) {
-            dd($valor->name);
-        }
-        foreach ($order->products as $valor) {
-            dd($valor->pivot->quantity);
-        }
-
+        //ready to sync
         $order->products()->sync($data);
 
-       
-
-
-        //$products = Product::where('id', $request['product_id']);
-       // dd($request['type']);
-       // $quantities=$request['quantity'];
-
-     //   dd($quantity);
-        //foreach ($products as $product){
-         /*   if ($request['type'] == 'entry') {
-                $quantity = DB::table('order_product')
-        ->join('products', 'products.id', '=', 'order_product.product_id')
-        ->select(DB::raw('sum(order_product.quantity*products.cost) AS total_sales'))
-        ->where('order_product.order_id', $id)
-        ->get();
-                //foreach ($quantities as $quantity){
-                    $product = Product::where('id', $request['product_id'])->increment('quantity', $request['quantity']);
-            //DB::table('products')->where('id', $request['product_id'])->increment('quantity', $request['quantity']);
-            }else{
-                    $product = Product::where('id', $request['product_id'])->decrement('quantity', $request['quantity']);
-            }*/
-        //}
-        /*$date=today;   EN EL INDEX DE PRODUCT PUEDE SER ( SI EXISTE ORDEN IGUAL A FECHA ACTUAL ACTUALIZAR ALLA)
-        $product = Product::where('id', $request['product_id'])->increment('quantity', $request['quantity']);
-        foreach $products as $product{
-            if (product->type == entry && $date==request->date)
-            product->quantity increment
-        }
-        */
- 
         Flash::success('Se ha registrado la orden de manera exitosa!')->important();
         return redirect()->route('confirm', $order->id);
     }
@@ -93,58 +53,90 @@ class OrdersController extends Controller
     public function confirm($id)
     {
         $order = Order::find($id);
+        //updating total field
+        if ($order->type=='service') {
         $sales = DB::table('order_product')
-        ->join('orders', 'orders.id', '=', 'order_product.order_id')
-        ->join('products', 'products.id', '=', 'order_product.product_id')
-        ->select(DB::raw('sum(order_product.quantity*products.cost) AS total_sales'))
-        ->where('order_product.order_id', $id)
-        ->get();
+            ->join('orders', 'orders.id', '=', 'order_product.order_id')
+            ->join('products', 'products.id', '=', 'order_product.product_id')
+            ->select(DB::raw('sum(order_product.quantity*products.cost) AS total_sales'))
+            ->where('order_product.order_id', $id)
+            ->get();
         $request['total'] = $sales[0]->total_sales;
-
+        //$order->products;
         $order->update($request);
+        }else{
+            $sales=0;
+        }
+        //updating depot of products
         $type=$order->type;
-         //actualizacion de productos
-        $j=$order->products->pivot->product_id;
-        dd($j);
-        if ($type == 'entry') {
         $products = Product::orderBy('name', 'ASC')->get();
-        //dd($products);
+        //Selecting just ids from the pivot table that is related to the id of order
         foreach ($products as $product){
-        $quantity = DB::table('order_product')
-        ->join('products', 'products.id', '=', 'order_product.product_id')
-        ->select(DB::raw('sum(order_product.quantity+products.available) AS updated_quantity'))
-        ->where('order_product.order_id', $id)
-        ->where('products.id', $product->id)
-        ->get();
-        $req = $quantity[0]->updated_quantity;
-        
-        $product->where('id', $request['product_id'])->update(['available' => $req]);
-            }
-                //foreach ($quantities as $quantity){
-                    
-            //DB::table('products')->where('id', $request['product_id'])->increment('quantity', $request['quantity']);
-            }else{
-                    $product = Product::where('id', $request['product_id'])->decrement('quantity', $request['quantity']);
-            }
+            $products_id = DB::table('order_product')
+                ->join('orders', 'orders.id', '=', 'order_product.order_id')
+                ->select('order_product.product_id AS ids')
+                ->where('order_product.product_id', $product->id)
+                ->where('order_product.order_id', $id)
+                ->get();
+            if ($type=='entry') {
+                //SUM mounts of id selected..
+                //quantity field
+                foreach ($products_id as $product_id){
+                    $quantity = DB::table('order_product')
+                        ->join('products', 'products.id', '=', 'order_product.product_id')
+                        ->select(DB::raw('sum(order_product.quantity+products.quantity) AS updated_quantity'))
+                        ->where('order_product.order_id', $id)
+                        ->where('products.id', $product_id->ids)
+                        ->get();
+                    $req = $quantity[0]->updated_quantity;
+                    //available field
+                    $available = DB::table('order_product')
+                        ->join('products', 'products.id', '=', 'order_product.product_id')
+                        ->select(DB::raw('sum(order_product.quantity+products.available) AS updated_available'))
+                        ->where('order_product.order_id', $id)
+                        ->where('products.id', $product_id->ids)
+                        ->get();
+                    $req2 = $available[0]->updated_available;
+                    $product->update(['available' => $req2, 'quantity' => $req]);
+                }
+            }elseif ($type=='remove') {
+                foreach ($products_id as $product_id){
+                    $quantity = DB::table('order_product')
+                        ->join('products', 'products.id', '=', 'order_product.product_id')
+                        ->select(DB::raw('sum(products.quantity-order_product.quantity) AS updated_quantity'))
+                        ->where('order_product.order_id', $id)
+                        ->where('products.id', $product_id->ids)
+                        ->get();
+                    $req = $quantity[0]->updated_quantity;
+                    //available field
+                    $available = DB::table('order_product')
+                        ->join('products', 'products.id', '=', 'order_product.product_id')
+                        ->select(DB::raw('sum(products.available-order_product.quantity) AS updated_available'))
+                        ->where('order_product.order_id', $id)
+                        ->where('products.id', $product_id->ids)
+                        ->get();
+                    $req2 = $available[0]->updated_available;
 
-        //dd($sales[0]->total_sales);
-       // $request['total'] = $sales[0]->total_sales;
-        return view('orders.confirm')->with('order', $order)->with('sales', $sales);   
-      //  return redirect()->route('orders.index');
+                    $product->update(['available' => $req2, 'quantity' => $req]);
+                }
+            }
+        }
+        return view('orders.confirm')->with('order', $order)->with('sales', $sales);
+
     }
 
     public function show($id)
     {
-      //  $users = User::orderBy('name', 'ASC')->pluck('name', 'id')->all();
+        //  $users = User::orderBy('name', 'ASC')->pluck('name', 'id')->all();
         $order = Order::find($id);
         $sales = DB::table('order_product')
-        ->join('orders', 'orders.id', '=', 'order_product.order_id')
-        ->join('products', 'products.id', '=', 'order_product.product_id')
-        ->select(DB::raw('sum(order_product.quantity*products.cost) AS total_sales'))
-        ->where('order_product.order_id', $id)
-        ->get();
+            ->join('orders', 'orders.id', '=', 'order_product.order_id')
+            ->join('products', 'products.id', '=', 'order_product.product_id')
+            ->select(DB::raw('sum(order_product.quantity*products.cost) AS total_sales'))
+            ->where('order_product.order_id', $id)
+            ->get();
 
-    return view('orders.show')->with('order', $order)->with('sales', $sales);
+        return view('orders.show')->with('order', $order)->with('sales', $sales);
     }
 
     public function edit($id)
@@ -160,12 +152,6 @@ class OrdersController extends Controller
     {
         $request = $request->all();
         $request['updated'] = Auth()->user()->id;
-        $sales = DB::table('order_product')
-        ->join('orders', 'orders.id', '=', 'order_product.order_id')
-        ->join('products', 'products.id', '=', 'order_product.product_id')
-        ->select(DB::raw('sum(order_product.quantity*products.cost) AS total_sales'))
-        ->where('products.id', '=', $request['product_id'])
-        ->get();   
         $order->update($request);
         $id=$order->id;
         $q = $request['quantity'];
@@ -173,13 +159,13 @@ class OrdersController extends Controller
         $extra = array_map(function($q){
             return ['quantity' => $q];
         }, $q);
- 
+
         $data = array_combine($p, $extra);
         foreach ($order->products as $valor) {
         }
 
         $order->products()->sync($data);
- 
+
         Flash::success('Se ha registrado la orden de manera exitosa!')->important();
         return redirect()->route('confirm', $order->id);
     }
@@ -191,29 +177,25 @@ class OrdersController extends Controller
 
     public function calendar()
     {
-
-        
         $events = [];
         $orders= Order::orderBy('id', 'DESC')->get();
         foreach ($orders as $order) {
-    
-        $events[] = \Calendar::event(
-            $order->title, //event title
-            true, //full day event?
-            $order->date, //start time (you can also use Carbon instead of DateTime)
-            $order->date, //end time (you can also use Carbon instead of DateTime)
-            0, //optionally, you can specify an event ID
-            [
-        'url' => 'orders/show', $order->id,
-        //any other full-calendar supported parameters
-    ]
-             
-        );
-        }
-        $calendar = \Calendar::addEvents($events); 
 
+            $events[] = \Calendar::event(
+                $order->title, //event title
+                true, //full day event?
+                $order->date, //start time (you can also use Carbon instead of DateTime)
+                $order->end_date, //end time (you can also use Carbon instead of DateTime)
+                0, //optionally, you can specify an event ID
+                [
+                    'url' => 'orders/show', $order->id,
+                    //any other full-calendar supported parameters
+                ]
+            );
+        }
+        $calendar = \Calendar::addEvents($events);
         return view('orders.calendar.calendar', compact('calendar'));
-       
+
         /* $events= Order::orderBy('id', 'DESC')->get();
       //   $events->toArray();
          dd($events);

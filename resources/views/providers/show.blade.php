@@ -9,7 +9,6 @@
                 Detalles del Proveedor
             </h3>
             <div class="box-tools">
-
                 <div class="text-center">
                     <a class="btn btn-success btn-sm" href="{{ route('providers.index') }}">
                         Volver
@@ -42,18 +41,16 @@
                         </tr>
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>
-            <div class="for text-center">
-        <a class="btn btn-success btn-sm" href="{{ route('providers.edit', $provider->id) }}">
-            Editar
-        </a>
-        <a class="btn btn-danger btn-sm" href="{{ route('providers.index') }}">
-            Volver
-        </a>
+        <div class="for text-center">
+            <a class="btn btn-success btn-sm" href="{{ route('providers.edit', $provider->id) }}">
+                Editar
+            </a>
+            <a class="btn btn-danger btn-sm" href="{{ route('providers.index') }}">
+                Volver
+            </a>
+        </div>
     </div>
-    </div>
-
 @endsection

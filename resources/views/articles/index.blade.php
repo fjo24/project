@@ -4,7 +4,7 @@
 
 @section('contenido')
     <div class="box">
-       
+
         @include('partials.errors')
 
         <div class="box-header with-border">
@@ -39,7 +39,7 @@
                             @foreach($articles as $article)
                                 <tr>
                                     <td>
-                                       {{ $article->title }}
+                                        {{ $article->title }}
                                     </td>
                                     <td>
                                         {{ $article->user->name }}  {{ $article->user->last_name }}
@@ -49,21 +49,21 @@
                                     </td>
                                     <td>
                                         {{ $article->created_at }}
-                                    </td>                                    
-                                    <td>
-                                            <a href="{{ route('articles.show', $article->id) }}">
-                                                <i class="fa fa-eye" aria-hidden="true"></i>
-                                            </a>
                                     </td>
                                     <td>
-                                            <a href="{{ route('articles.edit', $article->id) }}">
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                            </a>
+                                        <a href="{{ route('articles.show', $article->id) }}">
+                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('articles.edit', $article->id) }}">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                        </a>
                                     </td>
                                     <td>
                                         {!! Form::open(['route' => ['articles.destroy', $article->id], 'method' => 'DELETE']) !!}
-                                                    <button class="glyphicon glyphicon-remove" onclick="return confirm('¿Realmente deseas borrar el articulo?')"">
-                                                    </button>                           
+                                        <button class="glyphicon glyphicon-remove" onclick="return confirm('¿Realmente deseas borrar el articulo?')"">
+                                        </button>
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>

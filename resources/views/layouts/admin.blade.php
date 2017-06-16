@@ -34,12 +34,12 @@ folder instead of downloading all of them to reduce the load. -->
     <link href="{{ asset ('AdminLTE/plugins/datepicker/bootstrap-datepicker.standalone.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ asset ('chosen/chosen.css') }}">
     <link href="{{ asset ('css/addrow.css') }}" rel="stylesheet" type="text/css">
-    
-    
-    
-        <!-- icheck 
-    <link href="AdminLTE/plugins/iCheck/square/red.css" rel="stylesheet">
-    <script src="AdminLTE/plugins/iCheck/icheck.js"></script>
+
+
+
+    <!-- icheck
+<link href="AdminLTE/plugins/iCheck/square/red.css" rel="stylesheet">
+<script src="AdminLTE/plugins/iCheck/icheck.js"></script>
 
 -->
 
@@ -63,7 +63,6 @@ folder instead of downloading all of them to reduce the load. -->
                         <b>
                             FRANCACHELA
                         </b>
-                        
                     </span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
@@ -88,8 +87,6 @@ folder instead of downloading all of them to reduce the load. -->
                         <li><a href="{{ url('/login') }}">Login</a></li>
                         <li><a href="{{ url('/register') }}">Register</a></li>
                     @else
-                       
-                    
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <img alt="User Image" class="user-image" src="{{ asset ('AdminLTE/dist/img/avatar5.png') }}">
                             <span class="hidden-xs">
@@ -102,11 +99,11 @@ folder instead of downloading all of them to reduce the load. -->
                             <li class="user-header">
                                 <img alt="User Image" class="img-circle" src="{{ asset ('AdminLTE/dist/img/avatar5.png') }}">
                                 <p>
-                                     {{ Auth::user()->fullname }}  - @if(Auth::user()->level == "admin")
-                                       Administrador
+                                    {{ Auth::user()->fullname }}  - @if(Auth::user()->level == "admin")
+                                        Administrador
                                     @else
                                         Miembro
-                                    @endif 
+                                    @endif
                                     <small>
                                         Mimbro desde {{ Auth::user()->created_at }}
                                     </small>
@@ -128,14 +125,14 @@ folder instead of downloading all of them to reduce the load. -->
                             </li>
                         </ul>
                         @endif
-                    </li>
-                    <!-- Control Sidebar Toggle Button -->
-                    <li>
-                        <a data-toggle="control-sidebar" href="#">
-                            <i class="fa fa-gears">
-                            </i>
-                        </a>
-                    </li>
+                        </li>
+                        <!-- Control Sidebar Toggle Button -->
+                        <li>
+                            <a data-toggle="control-sidebar" href="#">
+                                <i class="fa fa-gears">
+                                </i>
+                            </a>
+                        </li>
                 </ul>
             </div>
         </nav>
@@ -392,7 +389,7 @@ folder instead of downloading all of them to reduce the load. -->
         </section>
         <!-- Main content -->
         <section class="content">
-        @include('flash::message') 
+            @include('flash::message')
             @yield('contenido')
         </section>
         <!-- /.content -->
@@ -403,10 +400,9 @@ folder instead of downloading all of them to reduce the load. -->
             <b>
                 2017
             </b>
-            
         </div>
         <strong>
-            Agencia de Festejos Francachela C.A. 
+            Agencia de Festejos Francachela C.A.
         </strong>
         Todos los derechos reservados.
     </footer>
@@ -662,9 +658,6 @@ folder instead of downloading all of them to reduce the load. -->
 
 <script type="text/javascript" src="{{ asset('AdminLTE/plugins/mask/jquery.mask.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('AdminLTE/plugins/mask/jquery.mask.min.js') }}"></script>
-
-
-
 
 @yield('js')
 </body>

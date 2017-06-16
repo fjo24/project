@@ -4,9 +4,7 @@
 
 @section('contenido')
     <div class="box">
-       
         @include('partials.errors')
-
         <div class="box-header with-border">
             <h3 class="box-title">
                 Lista de eventos
@@ -42,46 +40,46 @@
                             @foreach($orders as $order)
                                 <tr>
                                     <td>
-                                       {{ $order->user->fullname }}
+                                        {{ $order->user->fullname }}
                                     </td>
                                     <td>
                                         {{ $order->title }}
                                     </td>
                                     <td>
-                                        {{ $order->locale }} 
+                                        {{ $order->locale }}
                                     </td>
                                     <td>
                                         {{ $order->status }}
                                     </td>
                                     <td>
-                                    @if($order->type == "service")
-                                        Servicio
-                                    @elseif($order->type == "entry")
-                                        Entrada
-                                    @else
-                                        Salida
-                                    @endif
-                                    </td>  
+                                        @if($order->type == "service")
+                                            Servicio
+                                        @elseif($order->type == "entry")
+                                            Entrada
+                                        @else
+                                            Salida
+                                        @endif
+                                    </td>
                                     <td>
                                         {{ $order->date }}
                                     </td>
                                     <td>
                                         {{ $order->end_date }}
-                                    </td>                                  
-                                    <td>
-                                            <a href="{{ route('orders.show', $order->id) }}">
-                                                <i class="fa fa-eye" aria-hidden="true"></i>
-                                            </a>
                                     </td>
                                     <td>
-                                            <a href="{{ route('orders.edit', $order->id) }}">
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                            </a>
+                                        <a href="{{ route('orders.show', $order->id) }}">
+                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('orders.edit', $order->id) }}">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                        </a>
                                     </td>
                                     <td>
                                         {!! Form::open(['route' => ['orders.destroy', $order->id], 'method' => 'DELETE']) !!}
-                                                    <button class="glyphicon glyphicon-remove" onclick="return confirm('¿Realmente deseas borrar el producto?')"">
-                                                    </button>                           
+                                        <button class="glyphicon glyphicon-remove" onclick="return confirm('¿Realmente deseas borrar el producto?')"">
+                                        </button>
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>

@@ -4,9 +4,7 @@
 
 @section('contenido')
     <div class="box">
-       
         @include('partials.errors')
-
         <div class="box-header with-border">
             <h3 class="box-title">
                 Lista de productos
@@ -40,28 +38,28 @@
                             @foreach($products as $product)
                                 <tr>
                                     <td>
-                                       {{ $product->name }}
+                                        {{ $product->name }}
                                     </td>
                                     <td>
                                         {{ $product->cost }}
                                     </td>
                                     <td>
-                                        {{ $product->quantity }} 
+                                        {{ $product->quantity }}
                                     </td>
                                     <td>
-                                        {{ $product->available }} 
+                                        {{ $product->available }}
                                     </td>
                                     <td>
-                                    @if($product->type == "rent")
-                                    <span class="label label-success">
+                                        @if($product->type == "rent")
+                                            <span class="label label-success">
                                         Para Alquiler
                                     </span>
-                                    @else
-                                    <span class="label label-primary">
+                                        @else
+                                            <span class="label label-primary">
                                         Para  Venta
                                     </span>
-                                    @endif
-                                    </td>                                    
+                                        @endif
+                                    </td>
                                     <td>
                                         <a href="{{ route('products.show', $product->id) }}">
                                             <i class="fa fa-eye" aria-hidden="true"></i>
@@ -74,8 +72,8 @@
                                     </td>
                                     <td>
                                         {!! Form::open(['route' => ['products.destroy', $product->id], 'method' => 'DELETE']) !!}
-                                            <button class="glyphicon glyphicon-remove" onclick="return confirm('¿Realmente deseas borrar el producto?')"">
-                                            </button>                           
+                                        <button class="glyphicon glyphicon-remove" onclick="return confirm('¿Realmente deseas borrar el producto?')"">
+                                        </button>
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>
@@ -97,7 +95,6 @@
         <!-- /.box -->
     </div>
 @endsection
-
 @section('js')
     <script type="text/javascript">
         $(document).ready(function () {
