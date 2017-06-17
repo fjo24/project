@@ -22,8 +22,9 @@ class OrdersController extends Controller
     public function create()
     {
         $users = User::orderBy('fullname', 'ASC')->pluck('fullname', 'id')->all();
+        $providers = Provider::orderBy('name', 'ASC')->pluck('name', 'id')->all();
         $products = Product::orderBy('name', 'ASC')->pluck('name', 'id')->all();
-        return view('orders.create')->with('users', $users)->with('products', $products);
+        return view('orders.create')->with('users', $users)->with('products', $products)->with('providers', $providers);
     }
 
     public function store(Request $request)
@@ -143,9 +144,10 @@ class OrdersController extends Controller
     {
         $order= Order::find($id);
         $users = User::orderBy('fullname', 'ASC')->pluck('fullname', 'id')->all();
+        $providers = Provider::orderBy('name', 'ASC')->pluck('name', 'id')->all();
         $products = Product::orderBy('name', 'ASC')->pluck('name', 'id')->all();
         $my_products = $order->products->pluck('id')->toArray();
-        return view('orders.edit')->with('users', $users)->with('products', $products)->with('order', $order)->with('my_products', $my_products);
+        return view('orders.edit')->with('users', $users)->with('products', $products)->with('order', $order)->with('my_products', $my_products)->with('providers', $providers);
     }
 
     public function update(Request $request, order $order)

@@ -15,14 +15,16 @@ class AddOrdersTable extends Migration
             $table->date('end_date')->nullable();
             $table->string('title');
             $table->enum('type', ['service', 'entry', 'remove'])->default('service');
-            $table->integer('user_id')->unsigned();
-            $table->enum('status', ['confirmed', 'on_hold', 'Rejected'])->default('on_hold');
+            $table->integer('user_id')->nullable()->unsigned();
+            $table->integer('provider_id')->nullable()->unsigned();
+            $table->enum('status', ['confirmed', 'on_hold'])->default('confirmed');
             $table->string('locale')->nullable();
             $table->string('notes')->nullable();
             $table->integer('total')->nullable();
             $table->integer('created')->unsigned();
             $table->integer('updated')->unsigned();
 
+            $table->foreign('provider_id')->references('id')->on('providers')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('created')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('updated')->references('id')->on('users')->onDelete('cascade');

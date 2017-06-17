@@ -7,15 +7,8 @@
         @include('partials.errors')
         <div class="box-header with-border">
             <h3 class="box-title">
-                Lista de eventos
+                Nuevo evento
             </h3>
-            <div class="box-tools">
-                <div class="text-center">
-                    <a class="btn btn-primary btn-sm" href="{{ route('orders.create') }}">
-                        EDITAR EVENTO
-                    </a>
-                </div>
-            </div>
         </div>
         <div class="box-body">
             <div class="row">
@@ -24,7 +17,7 @@
                         {!! Form::model($order, ['route' => ['orders.update', $order], 'method' => 'PUT']) !!}
                         @include('orders.partials.fields')
                         {!! Form::close() !!}
-                                <!-- /.box-body -->
+                        <!-- /.box-body -->
                     </div>
                 </div>
                 <!-- /.box-body -->
@@ -35,9 +28,9 @@
             </div>
             <!-- /.box -->
         </div>
-        @endsection
-        @section('js')
-            <script type="text/javascript">
+@endsection
+@section('js')
+    <script type="text/javascript">
                 (function ($) {
                     $(function () {
                         var addFormGroup = function (event) {
@@ -86,7 +79,34 @@
                     language: "es",
                     autoclose: true
                 });
-            </script>
+
+                $(document).ready(function() {
+            $("#type").on("change", function() {
+               var valor = $("#type").val();
+               if (valor === "service") {
+                    $("#provider_id").attr('disabled', true);
+                    $("#user_id").attr('disabled', false);
+                    $("#end_date").attr('disabled', false);
+                    $("#status").attr('disabled', false);
+                    $("#locale").attr('disabled', false);
+               } else if (valor === "entry") {
+                    // 
+                    $("#provider_id").attr('disabled', false);
+                    $("#user_id").attr('disabled', true);
+                    $("#end_date").attr('disabled', true);
+                    $("#status").attr('disabled', true);
+                    $("#locale").attr('disabled', true);
+               } else if (valor === "remove") {
+                    // 
+                    $("#provider_id").attr('disabled', true);
+                    $("#user_id").attr('disabled', true);
+                    $("#end_date").attr('disabled', true);
+                    $("#status").attr('disabled', true);
+                    $("#locale").attr('disabled', true);
+               }
+            });
+         });
+    </script>
 @endsection
 
 

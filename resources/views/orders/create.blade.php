@@ -7,61 +7,74 @@
         @include('partials.errors')
         <div class="box-header with-border">
             <h3 class="box-title">
-                Lista de eventos
+                Nuevo evento
             </h3>
-            <div class="box-tools">
-                <div class="text-center">
-                    <a class="btn btn-primary btn-sm" href="{{ route('orders.create') }}">
-                        NUEVO EVENTO
-                    </a>
-                </div>
-            </div>
         </div>
         <div class="box-body">
             <div class="row">
                 <div class="col-xs-12">
                     <div class="container">
                         {!! Form::open(['route' => 'orders.store']) !!}
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                {!! Form::label('type', 'Tipo de registro') !!}
-                                {!! Form::select('type', ['service' => 'Servicio de venta o alquiler', 'entry' => 'Entrada de productos al almacen', 'remove' => 'Salida de productos del almacen'], null, ['class' => 'form-control', 'placeholder' => 'Seleccione entrada o salida']) !!}
-                            </div>
-                            <div class="form-group">
-                                {!! Form::label('date', 'Fecha de inicio') !!}
-                                {!! Form::text('date', null, ['class' => 'form-control datepicker', 'placeholder' => 'Ingrese fecha']) !!}
-                            </div>
-                            <div class="form-group">
-                                {!! Form::label('end_date', 'Fecha final') !!}
-                                {!! Form::text('end_date', null, ['class' => 'form-control datepicker', 'placeholder' => 'Ingrese fecha si aplica']) !!}
-                            </div>
-                            <div class="form-group">
-                                {!! Form::label('user_id', 'Cliente') !!}
-                                {!! Form::select('user_id', $users, null, ['class' => 'form-control', 'required']) !!}
-                            </div>
-                            <div class="form-group">
-                                {!! Form::label('title', 'Titulo del evento') !!}
-                                {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Ingrese aqui un titulo o descripcion breve del evento']) !!}
-                            </div>
-                            <div class="form-group">
-                                {!! Form::label('status', 'Estado del evento') !!}
-                                {!! Form::select('status', ['' => 'Seleccione estado del evento','on_hold' => 'Por confirmar', 'confirmed' => 'Confirmada', 'Rejected' => 'Rechazada'], null, ['class' => 'form-control', 'placeholder' => 'Seleccione un nivel de usuario']) !!}
-                            </div>
-                            <div class="form-group">
-                                {!! Form::label('locale', 'Ubicacion del evento') !!}
-                                {!! Form::text('locale', null, ['class' => 'form-control', 'placeholder' => 'Ubicacion del evento']) !!}
-                            </div>
-                            <div class="form-group">
-                                {!! Form::label('notes', 'Información adicional') !!}
-                                {!! Form::text('notes', null, ['class' => 'form-control', 'placeholder' => 'Incluya aca cualquier información adicional de interes']) !!}
+                        <div class="col-md-8 col-md-offset-2">
+                            <div class="box box-primary">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Datos de la orden</h3>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="col-md-6 col-md-offset-3">
+                                        <div class="form-group">
+                                            {!! Form::label('type', 'Tipo de orden') !!}
+                                            {!! Form::select('type', ['service' => 'Servicio de venta o alquiler', 'entry' => 'Entrada de productos al almacen', 'remove' => 'Salida de productos del almacen'], null, ['class' => 'form-control', 'placeholder' => 'Seleccione tipo de registro']) !!}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">     
+                                        <div class="form-group">
+                                            {!! Form::label('title', 'Titulo') !!}
+                                            {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Ingrese aqui un titulo o descripcion breve del evento']) !!}
+                                        </div>
+                                        <div class="form-group">
+                                            {!! Form::label('notes', 'Descripción') !!}
+                                            {!! Form::text('notes', null, ['class' => 'form-control', 'placeholder' => 'Incluya aca cualquier información adicional de interes']) !!}
+                                        </div>
+                                        <div class="form-group">
+                                            {!! Form::label('date', 'Fecha de inicio') !!}
+                                            {!! Form::text('date', null, ['class' => 'form-control datepicker', 'placeholder' => 'Ingrese fecha']) !!}
+                                        </div>
+                                        <div class="form-group">
+                                            {!! Form::label('end_date', 'Fecha final') !!}
+                                            {!! Form::text('end_date', null, ['class' => 'form-control datepicker', 'placeholder' => 'Ingrese fecha si aplica']) !!}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            {!! Form::label('status', 'Estado del evento') !!}
+                                            {!! Form::select('status', ['' => 'Seleccione estado del evento','on_hold' => 'Por confirmar', 'confirmed' => 'Confirmada'], null, ['class' => 'form-control', 'placeholder' => 'Seleccione un nivel de usuario']) !!}
+                                        </div>
+                                        <div class="form-group">
+                                            {!! Form::label('user_id', 'Cliente') !!}
+                                            {!! Form::select('user_id', $users, null, ['class' => 'form-control', 'placeholder' => 'Seleccione cliente']) !!}
+                                        </div>
+                                        <div class="form-group">
+                                            {!! Form::label('provider_id', 'Proveedor') !!}
+                                            {!! Form::select('provider_id', $providers, null, ['class' => 'form-control', 'placeholder' => 'Seleccione proveedor']) !!}
+                                        </div>
+                                        <div class="form-group">
+                                            {!! Form::label('locale', 'Ubicacion del evento') !!}
+                                            {!! Form::text('locale', null, ['class' => 'form-control', 'placeholder' => 'Ubicacion del evento']) !!}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                <div class="col-md-12">
+                    <div class="col-md-6 col-md-offset-3">    
+                        <h2>Seleccione producto y cantidad</h2>
+                    </div>
                         <div class="container">
                             <div class="row">
-                                <h2>Seleccione producto y cantidad</h2>
-                                <div class="col-md-6">
+                                <div class="col-md-6 col-md-offset-3">
                                     <div class="contacts">
-
+                                    <div class="col-md-12">
                                         <div class="form-group multiple-form-group input-group">
                                             <div class="col-md-6">
                                                 <div class="input-group-btn input-group-select">
@@ -80,12 +93,15 @@
                                                 </span>
                                             </div>
                                         </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {!! Form::submit('Registrar', ['class'=> 'btn btn-primary']) !!}
+                </div>
+                <div class="for text-center">
+                    {!! Form::submit('Registrar', ['class'=> 'btn btn-primary  btn-sm']) !!}
                     <a class="btn btn-success btn-sm" href="{{route('orders.index')}}">
                         Cancelar
                     </a>
@@ -101,11 +117,12 @@
         <!-- /.box-footer-->
     </div>
     <!-- /.box -->
-    </div>
+</div>
 @endsection
 
 @section('js')
     <script type="text/javascript">
+        //select for products
         (function ($) {
             $(function () {
                 var addFormGroup = function (event) {
@@ -156,5 +173,32 @@
                     language: "es",
                     autoclose: true
                 });
+
+                $(document).ready(function() {
+            $("#type").on("change", function() {
+               var valor = $("#type").val();
+               if (valor === "service") {
+                    $("#provider_id").attr('disabled', true);
+                    $("#user_id").attr('disabled', false);
+                    $("#end_date").attr('disabled', false);
+                    $("#status").attr('disabled', false);
+                    $("#locale").attr('disabled', false);
+               } else if (valor === "entry") {
+                    // 
+                    $("#provider_id").attr('disabled', false);
+                    $("#user_id").attr('disabled', true);
+                    $("#end_date").attr('disabled', true);
+                    $("#status").attr('disabled', true);
+                    $("#locale").attr('disabled', true);
+               } else if (valor === "remove") {
+                    // 
+                    $("#provider_id").attr('disabled', true);
+                    $("#user_id").attr('disabled', true);
+                    $("#end_date").attr('disabled', true);
+                    $("#status").attr('disabled', true);
+                    $("#locale").attr('disabled', true);
+               }
+            });
+         });
     </script>
 @endsection
