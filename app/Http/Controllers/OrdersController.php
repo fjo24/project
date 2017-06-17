@@ -52,7 +52,12 @@ class OrdersController extends Controller
     }
 
     public function confirm($id)
-    {
+    {/*
+@if($order->type == "service")
+                                        {{ $sales[0]->total_sales }}
+                                    @endif*/
+
+
         $order = Order::find($id);
         //updating total field
         if ($order->type=='service') {
@@ -207,6 +212,12 @@ class OrdersController extends Controller
 
         return view('orders.calendar.calendar', compact('calendar'));*/
 
+    }
+
+    public function pdf($id)
+    {
+        $order = Order::find($id);
+        return view('orders.pdf.pdf', compact('order'));
     }
 
 

@@ -20,3 +20,4 @@ Route::post('storepivot',  'OrdersController@storepivot')->name('storepivot');
 
 Route::get('excelusers',  'UsersController@export')->name('exportusers');
 Route::get('calendar',  'OrdersController@calendar')->name('calendar');
+Route::get('pdf/{order_id}',  'OrdersController@pdf')->name('pdf');

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
 	protected $table    = "orders";
-    protected $fillable = ['id', 'date', 'end_date', 'title', 'type', 'user_id', 'provider_id', 'status', 'locale', 'notes', 'total', 'created', 'updated'];
+    protected $fillable = ['id', 'date', 'end_date', 'title', 'type', 'user_id', 'provider_id', 'status', 'locale', 'notes', 'total', 'created', 'updated', 'created_at'];
 
     public function user()
     {
@@ -24,19 +24,19 @@ class Order extends Model
         return $date = \Carbon\Carbon::parse($date)->format('d-m-Y');
     }
 
+    public function getupdatedatAttribute($date)
+    {
+        return $date = \Carbon\Carbon::parse($date)->format('d-m-Y - h:i:s A');
+    }
+
+    public function getcreatedatAttribute($date)
+    {
+        return $date = \Carbon\Carbon::parse($date)->format('d-m-Y - h:i:s A');
+    }
+
     public function setdateAttribute($date)
     {
         $this->attributes['date'] = \Carbon\Carbon::parse($date)->format('Y-m-d');
-    }
-
-    public function getendDateAttribute($date)
-    {
-        return $date = \Carbon\Carbon::parse($date)->format('d-m-Y');
-    }
-
-    public function setendDateAttribute($date)
-    {
-        $this->attributes['end_date'] = \Carbon\Carbon::parse($date)->format('Y-m-d');
     }
 
     public function creat()

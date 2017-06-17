@@ -31,7 +31,7 @@
                                                 {!! Form::select('level', ['' => 'Seleccione un nivel de usuario', 'member' => 'Miembro', 'admin' => 'Administrador'], null, ['class' => 'form-control', 'placeholder' => 'Seleccione un nivel de usuario']) !!}
                                         </div>
                                         <div class="form-group">
-                                            {!! Form::label('identification', 'Numero de cedula') !!}
+                                            {!! Form::label('identification', 'Numero de cedula o rif') !!}
                                                 {!! Form::text('identification', null, ['class' => 'form-control', 'placeholder' => 'Ingrese su ID', 'required']) !!}
                                         </div>
                                         <div class="form-group">
