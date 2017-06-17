@@ -80,27 +80,24 @@
                     autoclose: true
                 });
 
-                $(document).ready(function() {
+               $(document).ready(function() {
             $("#type").on("change", function() {
                var valor = $("#type").val();
                if (valor === "service") {
                     $("#provider_id").attr('disabled', true);
                     $("#user_id").attr('disabled', false);
-                    $("#end_date").attr('disabled', false);
                     $("#status").attr('disabled', false);
                     $("#locale").attr('disabled', false);
                } else if (valor === "entry") {
                     // 
                     $("#provider_id").attr('disabled', false);
                     $("#user_id").attr('disabled', true);
-                    $("#end_date").attr('disabled', true);
                     $("#status").attr('disabled', true);
                     $("#locale").attr('disabled', true);
                } else if (valor === "remove") {
                     // 
                     $("#provider_id").attr('disabled', true);
                     $("#user_id").attr('disabled', true);
-                    $("#end_date").attr('disabled', true);
                     $("#status").attr('disabled', true);
                     $("#locale").attr('disabled', true);
                }

@@ -187,7 +187,7 @@ class OrdersController extends Controller
                 $order->title, //event title
                 true, //full day event?
                 $order->date, //start time (you can also use Carbon instead of DateTime)
-                $order->end_date, //end time (you can also use Carbon instead of DateTime)
+                $order->date, //end time (you can also use Carbon instead of DateTime)
                 0, //optionally, you can specify an event ID
                 [
                     'url' => 'orders/show', $order->id,

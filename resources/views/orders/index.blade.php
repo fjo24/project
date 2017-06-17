@@ -10,10 +10,15 @@
                 Lista de eventos
             </h3>
             <div class="box-tools">
-                <div class="text-center">
-                    <a class="btn btn-primary btn-sm" href="{{ route('orders.create') }}">
-                        NUEVO EVENTO
-                    </a>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Action <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a href="{{ route('orders.create') }}">NUEVO EVENTO</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                  </ul>
                 </div>
             </div>
         </div>
@@ -29,8 +34,7 @@
                                 <th>UBICACION</th>
                                 <th>ESTADO</th>
                                 <th>TIPO</th>
-                                <th>FECHA DE INICIO</th>
-                                <th>FECHA DE FIN</th>
+                                <th>FECHA</th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -62,9 +66,6 @@
                                     </td>
                                     <td>
                                         {{ $order->date }}
-                                    </td>
-                                    <td>
-                                        {{ $order->end_date }}
                                     </td>
                                     <td>
                                         <a href="{{ route('orders.show', $order->id) }}">

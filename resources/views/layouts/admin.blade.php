@@ -85,7 +85,7 @@ folder instead of downloading all of them to reduce the load. -->
                     <li class="dropdown user user-menu">
                     @if (Auth::guest())
                         <li><a href="{{ url('/login') }}">Login</a></li>
-                        <li><a href="{{ url('/register') }}">Register</a></li>
+                        <li><a href="{{ route('users.create')}}">Register</a></li>
                     @else
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <img alt="User Image" class="user-image" src="{{ asset ('AdminLTE/dist/img/avatar5.png') }}">
@@ -154,20 +154,7 @@ folder instead of downloading all of them to reduce the load. -->
                     </p>
                 </div>
             </div>
-            <!-- search form -->
-            <form action="#" class="sidebar-form" method="get">
-                <div class="input-group">
-                    <input class="form-control" name="q" placeholder="Search..." type="text">
-                    <span class="input-group-btn">
-                                    <button class="btn btn-flat" id="search-btn" name="search" type="submit">
-                                        <i class="fa fa-search">
-                                        </i>
-                                    </button>
-                                </span>
-                    </input>
-                </div>
-            </form>
-            <!-- /.search form -->
+
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
                 <li class="header">

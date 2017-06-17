@@ -4,13 +4,11 @@
                                     <h3 class="box-title">Datos de la orden</h3>
                                 </div>                        
                         <div class="col-md-12">
-                            <div class="col-md-6 col-md-offset-3">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     {!! Form::label('type', 'Tipo de orden') !!}
                                     {!! Form::select('type', ['service' => 'Servicio de venta o alquiler', 'entry' => 'Entrada de productos al almacen', 'remove' => 'Salida de productos del almacen'], null, ['class' => 'form-control', 'placeholder' => 'Seleccione tipo de registro']) !!}
-                                </div>
-                            </div>
-                            <div class="col-md-6">     
+                                </div> 
                                 <div class="form-group">
                                     {!! Form::label('title', 'Titulo') !!}
                                     {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Ingrese aqui un titulo o descripcion breve del evento']) !!}
@@ -20,12 +18,8 @@
                                     {!! Form::text('notes', null, ['class' => 'form-control', 'placeholder' => 'Incluya aca cualquier información adicional de interes']) !!}
                                 </div>
                                 <div class="form-group">
-                                    {!! Form::label('date', 'Fecha de inicio') !!}
+                                    {!! Form::label('date', 'Fecha') !!}
                                     {!! Form::text('date', null, ['class' => 'form-control datepicker', 'placeholder' => 'Ingrese fecha']) !!}
-                                </div>
-                                <div class="form-group">
-                                    {!! Form::label('end_date', 'Fecha final') !!}
-                                    {!! Form::text('end_date', null, ['class' => 'form-control datepicker', 'placeholder' => 'Ingrese fecha si aplica']) !!}
                                 </div>
                             </div>
                             <div class="col-md-6">

@@ -38,7 +38,7 @@ foreach ($orders as $order){
                     ->where('order_product.product_id', $product->id)
                     ->where('order_product.order_id', $id)
                     ->get();
-                if (($date >= $order->date) && ($date <= $order->end_date)) {
+                if ($date == $order->date) {
                     if ($type=='service') {
                         //SUM mounts of id selected..
                         //quantity field

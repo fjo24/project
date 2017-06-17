@@ -32,7 +32,7 @@ class HomeController extends Controller
         $products = Product::orderBy('id', 'DESC')->get();
         $date = Carbon::now()->format('d-m-Y');
         $orders = Order::orderBy('title', 'ASC')->get();
-        
+
         foreach ($products as $product){
         $mount=$product->quantity;
         $product->update(['available' => $mount]);
@@ -51,7 +51,7 @@ foreach ($orders as $order){
                     ->where('order_product.product_id', $product->id)
                     ->where('order_product.order_id', $id)
                     ->get();
-                if (($date >= $order->date) && ($date <= $order->end_date)) {
+                if ($date >= $order->date) {
                     if ($type=='service') {
                         //SUM mounts of id selected..
                         //quantity field
