@@ -7,7 +7,7 @@
         @include('partials.errors')
         <div class="box-header with-border">
             <h3 class="box-title">
-                Lista de entradas y salidas
+                Lista de eventos
             </h3>
             <div class="box-tools">
                 <div class="btn-group">
@@ -15,8 +15,8 @@
                     REGISTRAR <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu">
-                    <li><a href="{{ route('orders.create') }}">Entrada/Salida</a></li>
-                    <li><a href="{{ route('createevent') }}">Evento</a></li>
+                    <li><a href="{{ route('orders.create') }}">ENTRADA O SALIDA DE MATERIAL</a></li>
+                    <li><a href="{{ route('createevent') }}">EVENTO</a></li>
                   </ul>
                 </div>
             </div>
@@ -28,9 +28,12 @@
                         <table class="table table-hover display table-responsive table-condensed" id="table">
                             <thead>
                             <tr>
+                                <th>CLIENTE</th>
                                 <th>TITULO</th>
-                                <th>CREADO POR</th>
-                                <th>FECHA DE REGISTRO</th>
+                                <th>UBICACION</th>
+                                <th>ESTADO</th>
+                                <th>CONTACTO</th>
+                                <th>FECHA DEL EVENTO</th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -38,13 +41,30 @@
                             </thead>
                             <tbody>
                             @foreach($orders as $order)
-                                 @if($order->type == "entry" || $order->type == "remove")
+                                 @if($order->type == "service")
                                     <tr>
+                                        <td>
+                                            {{ $order->user->fullname }}
+                                        </td>
                                         <td>
                                             {{ $order->title }}
                                         </td>
                                         <td>
-                                            {{ $order->creat->fullname }}
+                                            {{ $order->locale }}
+                                        </td>
+                                        <td>
+                                            @if($order->status == "confirmed")
+                                                <span class="label label-success">
+                                                    CONFIRMADO
+                                                </span>
+                                            @else
+                                                <span class="label label-warning">
+                                                    NO COMFIRMADO
+                                                </span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            {{ $order->user->telephone }}
                                         </td>
                                         <td>
                                             {{ $order->date }}
@@ -97,5 +117,3 @@
         });
     </script>
 @endsection
-
-

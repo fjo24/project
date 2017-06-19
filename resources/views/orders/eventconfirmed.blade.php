@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 @if($order->type == "service")
-      @section('title', 'Orden de '.$order->user->fullname)
-@elseif($order->type == "remove")
-      @section('title', 'Orden de salida de productos de almacen')
-@else
+        @section('title', 'Orden de '.$order->user->fullname)
+  @elseif($order->type == "remove")
+        @section('title', 'Orden de salida de productos de almacen')
+    @else
       @section('title', 'Orden de entrada de productos de almacen')
 @endif
 
@@ -11,12 +11,12 @@
     <div class="box">
         <div class="box-header with-border">
             <h3 class="box-title">
-                Detalles de la orden
+                EVENTO CONFIRMADO!
             </h3>
             <div class="box-tools">
                 <div class="text-center">
                     <a class="btn btn-success btn-sm" href="{{ route('pdf', $order->id) }}">
-                        DESCARGAR PDF
+                        DESCARGAR
                     </a>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                 <div class="box box-solid box-default">
                     <div class="box-header with-border">
                         <h3 class="box-title">
-                            Datos de orden:
+                            EVENTO CONFIRMADO!
                         </h3>
                     </div>
 
@@ -73,9 +73,9 @@
           <b>Fecha del evento: </b>{{ $order->date }}<br>
           <b>Ubicacion del evento:</b> {{ $order->locale }}<br>
           <b>Estado del evento: </b>@if($order->status == "on_hold")
-                                      EN ESPERA
+                                      NO CONFIRMADO
                                   @else
-                                      CONFIRMADO
+                                      COMFIRMADO
                                   @endif<br>
         </div>
         <!-- /.col -->
@@ -146,41 +146,14 @@
                 </div>
             </div>
         </div>
-        @if($order->status == "confirmed")
-            <div class="for text-center">
-                <a class="btn btn-success btn-sm" href="{{ route('orders.edit', $order->id) }}">
-                    EDITAR
-                </a>
-                <a class="btn btn-danger btn-sm" href="{{ route('orders.index') }}">
-                    CANCELAR
-                </a>
-            </div>
-        @else
-            <div class="for text-center">
-                @if(Auth::user()->level=='admin')
-                <a class="btn btn-success btn-sm" href="{{ route('indexconfirmed') }}">
-                    DEJAR EN ESPERA
-                </a>
-                <a class="btn btn-success btn-sm" href="{{ route('eventconfirmed', $order->id) }}">
-                    COMFIRMAR
-                </a>
-                <a class="btn btn-success btn-sm" href="{{ route('orders.edit', $order->id) }}">
-                    EDITAR
-                </a>
-                <a class="btn btn-danger btn-sm" href="{{ route('orders.index') }}">
-                    CANCELAR
-                </a>
-            @endif
-            @if(Auth::user()->level=='member')
-                <a class="btn btn-success btn-sm" href="{{ route('orders.edit', $order->id) }}">
-                    EDITAR
-                </a>
-                <a class="btn btn-danger btn-sm" href="{{ route('orders.index') }}">
-                    CANCELAR
-                </a>
-            @endif
-            </div>
-        @endif
+        <div class="for text-center">
+            <a class="btn btn-success btn-sm" href="{{ route('orders.edit', $order->id) }}">
+                EDITAR
+            </a>
+            <a class="btn btn-danger btn-sm" href="{{ route('orders.index') }}">
+                VOLVER
+            </a>
+        </div>
     </div>
 @endsection
 @elseif($order->type == "remove")

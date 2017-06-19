@@ -16,7 +16,7 @@ class AddOrdersTable extends Migration
             $table->enum('type', ['service', 'entry', 'remove'])->default('service');
             $table->integer('user_id')->nullable()->unsigned();
             $table->integer('provider_id')->nullable()->unsigned();
-            $table->enum('status', ['confirmed', 'on_hold'])->default('confirmed');
+            $table->enum('status', ['confirmed', 'on_hold'])->default('on_hold');
             $table->string('locale')->nullable();
             $table->string('notes')->nullable();
             $table->integer('total')->nullable();

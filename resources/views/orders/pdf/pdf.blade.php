@@ -30,7 +30,7 @@
 	        <address>
 	          <strong>Agencia de Festejos Francachela C.A.</strong><br>
 	          <b>RIF: </b>J-405021420.<br>
-	          <b>Dirección:</b> Avenida los Llanos Nº 53.<br>
+	          <b>Dirección:</b> Av. los Llanos Nº 53.<br>
 	          San juan de los morros, Estado Guárico.<br>
 	          <b>TLF:</b> 0246-4320357<br>
 	          <b>Email:</b> festejosfrancachela@gmail.com
@@ -142,7 +142,7 @@
           <address>
             <strong>Agencia de Festejos Francachela C.A.</strong><br>
             <b> RIF: </b>J-405021420.
-            <b> Dirección:</b> Avenida los Llanos Nº 53.
+            <b> Dirección:</b> Av. los Llanos Nº 53.
             San juan de los morros, Estado Guárico.<br>
             <b>TLF:</b> 0246-4320357
             <b>Email:</b> festejosfrancachela@gmail.com
@@ -208,7 +208,7 @@
           <address>
             <strong>Agencia de Festejos Francachela C.A.</strong><br>
             <b> RIF: </b>J-405021420.
-            <b> Dirección:</b> Avenida los Llanos Nº 53.
+            <b> Dirección:</b> Av. los Llanos Nº 53.
             San juan de los morros, Estado Guárico.<br>
             <b>TLF:</b> 0246-4320357
             <b>Email:</b> festejosfrancachela@gmail.com

@@ -32,7 +32,7 @@ class HomeController extends Controller
         $products = Product::orderBy('id', 'DESC')->get();
         $date = Carbon::now()->format('d-m-Y');
         $orders = Order::orderBy('title', 'ASC')->get();
-
+/*
         foreach ($products as $product){
         $mount=$product->quantity;
         $product->update(['available' => $mount]);
@@ -90,7 +90,7 @@ foreach ($orders as $order){
                     }
                 }
             }
-        }
+        }*/
         return view('home');
     }
 }

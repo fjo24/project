@@ -16,7 +16,7 @@
     <!-- Ionicons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
     <!-- Theme style -->
-    <link href="{{asset('AdminLTE/dist/css/AdminLTE.min.css')}}" rel="stylesheet">
+    <link href="{{asset('AdminLTE/dist/css/AdminLTE.css')}}" rel="stylesheet">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
 folder instead of downloading all of them to reduce the load. -->
     <link href="{{asset('AdminLTE/dist/css/skins/_all-skins.min.css')}}" rel="stylesheet">
@@ -56,7 +56,7 @@ folder instead of downloading all of them to reduce the load. -->
                         <b>
                             A
                         </b>
-                        LT
+                        FF
                     </span>
             <!-- logo for regular state and mobile devices -->
             <span class="logo-lg">
@@ -84,8 +84,8 @@ folder instead of downloading all of them to reduce the load. -->
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                     @if (Auth::guest())
-                        <li><a href="{{ url('/login') }}">Login</a></li>
-                        <li><a href="{{ route('users.create')}}">Register</a></li>
+                        <li><a href="{{ url('/login') }}">ENTRAR</a></li>
+                        <li><a href="{{ route('users.create')}}">REGISTRO</a></li>
                     @else
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <img alt="User Image" class="user-image" src="{{ asset ('AdminLTE/dist/img/avatar5.png') }}">
@@ -144,22 +144,16 @@ folder instead of downloading all of them to reduce the load. -->
         <section class="sidebar">
             <!-- Sidebar user panel -->
             <div class="user-panel">
-                <div class="pull-left image">
-                    <img alt="User Image" class="img-circle" src="{{ asset ('AdminLTE/dist/img/loguito.png') }}">
-                    </img>
-                </div>
-                <div class="pull-left info">
-                    <p>
-                        Tu Agencia de Festejos
-                    </p>
-                </div>
-            </div>
+              
+                <img alt="User Image" src="{{ asset ('AdminLTE/dist/img/loguito1.png') }}">
+                    </img>            </div>
 
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
                 <li class="header">
                     MENU PRINCIPAL
                 </li>
+                 @if(Auth::user() && Auth::user()->level=='admin')
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-users">
@@ -185,35 +179,6 @@ folder instead of downloading all of them to reduce the load. -->
                                 <i class="fa fa-circle-o">
                                 </i>
                                 Registrar
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-info">
-                        </i>
-                        <span>
-                                    Articulos
-                                </span>
-                        <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right">
-                                    </i>
-                                </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li>
-                            <a href="{{route('articles.index')}}">
-                                <i class="fa fa-circle-o">
-                                </i>
-                                Listado
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{route('articles.create')}}">
-                                <i class="fa fa-circle-o">
-                                </i>
-                                Nuevo
                             </a>
                         </li>
                     </ul>
@@ -290,17 +255,17 @@ folder instead of downloading all of them to reduce the load. -->
                     </a>
                     <ul class="treeview-menu">
                         <li>
-                            <a href="{{route('registers.index')}}">
+                            <a href="{{route('orders.index')}}">
                                 <i class="fa fa-circle-o">
                                 </i>
                                 Historial
                             </a>
                         </li>
                         <li>
-                            <a href="{{route('registers.create')}}">
+                            <a href="{{route('orders.create')}}">
                                 <i class="fa fa-circle-o">
                                 </i>
-                                Nueva Entrada o Salida
+                                Nuevo registro
                             </a>
                         </li>
                     </ul>
@@ -319,14 +284,14 @@ folder instead of downloading all of them to reduce the load. -->
                     </a>
                     <ul class="treeview-menu">
                         <li>
-                            <a href="{{route('orders.index')}}">
+                            <a href="{{route('indexconfirmed')}}">
                                 <i class="fa fa-circle-o">
                                 </i>
                                 Listado
                             </a>
                         </li>
                         <li>
-                            <a href="{{route('orders.create')}}">
+                            <a href="{{route('createevent')}}">
                                 <i class="fa fa-circle-o">
                                 </i>
                                 Nuevo evento
@@ -341,6 +306,56 @@ folder instead of downloading all of them to reduce the load. -->
                         </li>
                     </ul>
                 </li>
+                @elseif(Auth::user() && Auth::user()->level=='member')
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-calendar">
+                        </i>
+                        <span>
+                                    Eventos
+                                </span>
+                        <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right">
+                                    </i>
+                                </span>
+                    </a>
+                    <ul class="treeview-menu">
+                 
+                        <li>
+                            <a href="{{route('createevent')}}">
+                                <i class="fa fa-circle-o">
+                                </i>
+                                Solicitar presupuesto
+                            </a>
+                        </li>
+                      
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-info">
+                        </i>
+                        <span>
+                                    Info
+                                </span>
+                        <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right">
+                                    </i>
+                                </span>
+                    </a>
+                    <ul class="treeview-menu">
+                 
+                        <li>
+                            <a href="{{route('we')}}">
+                                <i class="fa fa-circle-o">
+                                </i>
+                                Nosotros
+                            </a>
+                        </li>
+                      
+                    </ul>
+                </li>
+                @endif
             </ul>
         </section>
         <!-- /.sidebar -->
@@ -350,34 +365,16 @@ folder instead of downloading all of them to reduce the load. -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>
-                AGENCIA DE FESTEJOS FRANCACHELA C.A.
-                <small>
-                    Todo para tu fiesta o evento
-                </small>
-            </h1>
-            <ol class="breadcrumb">
-                <li>
-                    <a href="#">
-                        <i class="fa fa-dashboard">
-                        </i>
-                        Home
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        Examples
-                    </a>
-                </li>
-                <li class="active">
-                    Blank page
-                </li>
-            </ol>
+            
         </section>
         <!-- Main content -->
         <section class="content">
             @include('flash::message')
             @yield('contenido')
+            <center><h1>
+                <img alt="User Image" src="{{ asset ('AdminLTE/dist/img/f.png') }}">
+                    </img>
+            </h1></center>       
         </section>
         <!-- /.content -->
     </div>
@@ -641,10 +638,7 @@ folder instead of downloading all of them to reduce the load. -->
 <script type="text/javascript" src="{{ asset('AdminLTE/plugins/datatables/datatables.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('AdminLTE/plugins/input-mask/jquery.inputmask.js') }}"></script>
 <script type="text/javascript" src="{{ asset('AdminLTE/plugins/input-mask/jquery.inputmask.phone.extensions.js') }}"></script>
-<script type="text/javascript" src="{{ asset('AdminLTE/plugins/mask/jquery.mask.min.js') }}"></script>
 
-<script type="text/javascript" src="{{ asset('AdminLTE/plugins/mask/jquery.mask.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('AdminLTE/plugins/mask/jquery.mask.min.js') }}"></script>
 
 @yield('js')
 </body>

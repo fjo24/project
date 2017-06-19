@@ -39,11 +39,10 @@
                                     {!! Form::label('locale', 'Ubicacion del evento') !!}
                                     {!! Form::text('locale', null, ['class' => 'form-control', 'placeholder' => 'Ubicacion del evento']) !!}
                                 </div>
-                            </div>
-                        
-                        
-                        <div class="col-md-8 col-md-offset-2">
-                <div class="form-group">    
+
+                                <center> 
+                                    <div class="col-md-12">
+                   <div class="col-md-12">      
                                                 <h2>Seleccione producto y cantidad</h2>
                                             </div>
                                             </div>
@@ -80,6 +79,10 @@
                                         @endforeach
                                         </div>
                                     </div>
+                            </div>
+                        
+                        
+                        
                         </div>
                     </div>
                 </div> 

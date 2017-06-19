@@ -1,10 +1,6 @@
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
-        <div class="box">
-            <div class="box-header with-border">
-                @include('partials.errors')
-                <h3 class="box-title">Registro de producto</h3>
-            </div>
+    
             <!-- /.box-header -->
             <div class="box-body">
                 <div class="row">
@@ -42,7 +38,7 @@
                                     </div>
                                 </div>
                                 <div class="for text-center">
-                                    {!! Form::submit('Registrar', ['class'=> 'btn btn-primary']) !!}
+                                    {!! Form::submit('REGISTRAR', ['class'=> 'btn btn-primary btn-sm']) !!}
                                     <a class="btn btn-success btn-sm" href="{{route('products.index')}}">
                                         ATRAS
                                     </a>
@@ -52,6 +48,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+
     </div>
 </div>

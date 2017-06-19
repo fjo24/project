@@ -9,8 +9,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="container">
-            @if($order->type == "service")
-                        {!! Form::model($order, ['route' => ['orders.update', $order], 'method' => 'PUT']) !!}
+                        {!! Form::open(['route' => 'storeevent']) !!}
                         <div class="col-md-10">
                             <div class="box box-primary">
                                 <div class="box-header with-border">
@@ -22,10 +21,12 @@
                                             {!! Form::label('title', 'Titulo') !!}
                                             {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Ingrese aqui un titulo o descripcion breve del evento']) !!}
                                         </div>
+                                    @if(Auth::user()->level=='admin')
                                         <div class="form-group">
                                             {!! Form::label('user_id', 'Cliente') !!}
                                             {!! Form::select('user_id', $users, null, ['class' => 'form-control', 'placeholder' => 'Seleccione cliente']) !!}
                                         </div>
+                                    @endif
                                         <div class="form-group">
                                             {!! Form::label('date', 'Fecha') !!}
                                             {!! Form::text('date', null, ['class' => 'form-control datepicker', 'placeholder' => 'Ingrese fecha']) !!}
@@ -41,11 +42,6 @@
                                             {!! Form::text('notes', null, ['class' => 'form-control', 'placeholder' => 'Incluya aca cualquier información adicional de interes']) !!}
                                         </div>
                                     </div>
-
-
-
-
-
                                     <center> 
                                     <div class="col-md-12">
                    <div class="col-md-12">    
@@ -53,40 +49,32 @@
                     </div>
                         
                             <div class="row">
-                                 @foreach ($order->products as $product)
+                                
                                     <div class="contacts">
                                     <div class="col-md-12">
                                         <div class="form-group multiple-form-group input-group">
-                                                    <div class="col-md-2">
-                                                    <span class="input-group-btn">
-                                                        <button type="button" class="btn btn-danger btn-remove">-</button>
-                                                    </span>
+                                            <div class="col-md-6">
+                                                <div class="input-group-btn input-group-select">
+                                                    <div class="form-group">
+                                                        {!! Form::select('product_id[]', $products, null, ['class' => 'form-control', 'placeholder' => 'Indique producto', 'required']) !!}
                                                     </div>
-                                                    <div class="col-md-4">
-                                                        <div class="input-group-btn input-group-select">
-                                                            <div class="form-group">
-                                                                {!! Form::select('product_id[]', $products, $product->id, ['class' => 'form-control', 'required']) !!}
-                                                            </div>
-
-                                                            <input type="hidden" class="input-group-select-val" name="contacts['type'][]" value="phone">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        {!! Form::text('quantity[]', $product->pivot->quantity, ['class' => 'form-control', 'placeholder' => 'cantidad', 'required']) !!}
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                    <span class="input-group-btn">
-                                                        <button type="button" class="btn btn-success btn-add">+</button>
-                                                    </span>
-                                                    </div>
+                                                    <input type="hidden" class="input-group-select-val" name="contacts['type'][]" value="phone">
                                                 </div>
                                             </div>
+                                            <div class="col-md-4">
+                                                {!! Form::text('quantity[]', null, ['class' => 'form-control', 'placeholder' => 'cantidad', 'required']) !!}
+                                            </div>
+                                            <div class="col-md-2">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-success btn-add">+</button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        </div>
                                     </div>
-                                    @endforeach
                                 </div>
               
                     </div>
-                                </center>
                                 </div>
                             </div>
                         </div>
@@ -110,9 +98,6 @@
     </div>
     <!-- /.box -->
 </div>
-@else
-                    <H1>Esta orden no puede ser editada</H1>
-@endif
 @endsection
 
 @section('js')

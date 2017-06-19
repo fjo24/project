@@ -3,70 +3,47 @@
 @section('title', 'Nuevo evento')
 
 @section('contenido')
-    <div class="box">
+
         @include('partials.errors')
-        <div class="box-header with-border">
-            <h3 class="box-title">
-                Nuevo evento
-            </h3>
-        </div>
         <div class="box-body">
             <div class="row">
                 <div class="col-xs-12">
                     <div class="container">
                         {!! Form::open(['route' => 'orders.store']) !!}
-                        <div class="col-md-8 col-md-offset-2">
+                        <div class="col-md-10">
                             <div class="box box-primary">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title">Datos de la orden</h3>
+                                    <h3 class="box-title">Datos de la entrada o salida</h3>
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="col-md-6">
+                                    <div class="col-md-6"> 
                                         <div class="form-group">
                                             {!! Form::label('type', 'Tipo de orden') !!}
-                                            {!! Form::select('type', ['service' => 'Servicio de venta o alquiler', 'entry' => 'Entrada de productos al almacen', 'remove' => 'Salida de productos del almacen'], null, ['class' => 'form-control', 'placeholder' => 'Seleccione tipo de registro']) !!}
+                                            {!! Form::select('type', ['entry' => 'Entrada de productos al almacen', 'remove' => 'Salida de productos del almacen'], null, ['class' => 'form-control', 'placeholder' => 'Seleccione tipo de registro']) !!}
                                         </div> 
+                                        <div class="form-group">
+                                            {!! Form::label('notes', 'Descripción') !!}
+                                            {!! Form::text('notes', null, ['class' => 'form-control', 'placeholder' => 'Incluya aca cualquier información adicional de interes']) !!}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             {!! Form::label('title', 'Titulo') !!}
                                             {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Ingrese aqui un titulo o descripcion breve del evento']) !!}
                                         </div>
                                         <div class="form-group">
-                                            {!! Form::label('notes', 'Descripción') !!}
-                                            {!! Form::text('notes', null, ['class' => 'form-control', 'placeholder' => 'Incluya aca cualquier información adicional de interes']) !!}
-                                        </div>
-                                        <div class="form-group">
-                                            {!! Form::label('date', 'Fecha') !!}
-                                            {!! Form::text('date', null, ['class' => 'form-control datepicker', 'placeholder' => 'Ingrese fecha']) !!}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            {!! Form::label('status', 'Estado del evento') !!}
-                                            {!! Form::select('status', ['' => 'Seleccione estado del evento','on_hold' => 'Por confirmar', 'confirmed' => 'Confirmada'], null, ['class' => 'form-control', 'placeholder' => 'Seleccione un nivel de usuario']) !!}
-                                        </div>
-                                        <div class="form-group">
-                                            {!! Form::label('user_id', 'Cliente') !!}
-                                            {!! Form::select('user_id', $users, null, ['class' => 'form-control', 'placeholder' => 'Seleccione cliente']) !!}
-                                        </div>
-                                        <div class="form-group">
                                             {!! Form::label('provider_id', 'Proveedor') !!}
                                             {!! Form::select('provider_id', $providers, null, ['class' => 'form-control', 'placeholder' => 'Seleccione proveedor']) !!}
                                         </div>
-                                        <div class="form-group">
-                                            {!! Form::label('locale', 'Ubicacion del evento') !!}
-                                            {!! Form::text('locale', null, ['class' => 'form-control', 'placeholder' => 'Ubicacion del evento']) !!}
-                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                <div class="col-md-12">
-                    <div class="col-md-6 col-md-offset-3">    
+                                    <center> 
+                                    <div class="col-md-12">
+                   <div class="col-md-12">    
                         <h2>Seleccione producto y cantidad</h2>
                     </div>
-                        <div class="container">
+                        
                             <div class="row">
-                                <div class="col-md-6 col-md-offset-3">
+                               
                                     <div class="contacts">
                                     <div class="col-md-12">
                                         <div class="form-group multiple-form-group input-group">
@@ -90,16 +67,20 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+   
                     </div>
+                    </center>
                 </div>
                 <div class="for text-center">
-                    {!! Form::submit('Registrar', ['class'=> 'btn btn-primary  btn-sm']) !!}
+                    {!! Form::submit('REGISTRAR', ['class'=> 'btn btn-primary  btn-sm']) !!}
                     <a class="btn btn-success btn-sm" href="{{route('orders.index')}}">
-                        Cancelar
+                        CANCELAR
                     </a>
                 </div>
+                                </div>
+                            </div>
+                        </div>
+                
                 {!! Form::close() !!}
                         <!-- /.box-body -->
             </div>
@@ -109,7 +90,7 @@
             <!-- footer-->
         </div>
         <!-- /.box-footer-->
-    </div>
+
     <!-- /.box -->
 </div>
 @endsection

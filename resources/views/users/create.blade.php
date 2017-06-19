@@ -15,11 +15,10 @@
     </div>
     </div>
     <div class="for text-center">
-        {!! Form::submit('Registrar', ['class'=> 'btn btn-primary']) !!}
+        {!! Form::submit('REGISTRAR', ['class'=> 'btn btn-primary  btn-sm']) !!}
         <a class="btn btn-success btn-sm" href="{{route('users.index')}}">
             ATRAS
         </a>
-    </div>
     </div>
     </div>
     </div>
@@ -38,19 +37,7 @@
             language: "es",
             autoclose: true
         });
-        //CHOSEN
-        $('.select-combustions').chosen({
-            placeholder_text_multiple:"SELECCIONE TIPO DE COMBUSTION",
-            max_selected_options    : 4,
-            no_results_text         : "TIPO DE COMBUSTION NO ENCONTRADA"
-        });
-        $('#form').click(function (e) {
-            setTimeout(function () {
-                clearChosen()
-            }, 200);
-        });
-        function clearChosen() {
-            $('select#chosen').trigger('chosen:updated');
-        }
+        //input mask
+        $(".inputmask").inputmask("(999) 9999999");
     </script>
 @endsection

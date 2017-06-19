@@ -1,12 +1,9 @@
 <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <div class="box">
-                <div class="box-header with-border">
-              
+            
                     @include('partials.errors')
                     
-                    <h3 class="box-title">Registro de usuario</h3>
-                </div>
+    
                 <!-- /.box-header -->
                 <div class="box-body">
                     <div class="row">
@@ -36,7 +33,10 @@
                                         </div>
                                         <div class="form-group">
                                             {!! Form::label('telephone', 'Telefono') !!}
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
                                                 {!! Form::text('telephone', null, ['class' => 'form-control', 'placeholder' => '', 'required']) !!}
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             {!! Form::label('email', 'Correo Electronico') !!}
