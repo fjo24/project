@@ -1,18 +1,18 @@
 <?php
 
 namespace App\Http\Requests;
-
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Routing\Route;
+//use Illuminate\Routing\Route;
 
 class EditUsersRequest extends FormRequest
 {
- // private $route;
+
+   /* private $route;
     public function __construct(Route $route)
     {
         $this->route = $route;
-    } 
+    } */   
 
     public function authorize()
     {
@@ -21,20 +21,18 @@ class EditUsersRequest extends FormRequest
 
     public function rules()
     {
-        //$id = Request::segment(3);
+
        //$id = Request::segment(3);
        // dd($this->route->getParameter('user'));
         return [
-            'fullname'              => 'max:50|required',   
-            
-            //'email'        => 'email|required|unique:users',
-            'identification' => 'required|numeric|min:7',
-            'telephone' => 'required|numeric|min:11',
+            'fullname'       => 'max:50|required',   
+            'email'          => 'email|required|unique:users', 
+            'identification' => 'required|numeric|min:7|unique:users',
+            'telephone'      => 'required|numeric|min:11',
             //$this->route->getParameter('user'),
-            'type'        => 'required',
+            'type'           => 'required',
             //. $this->route->getParameter('user'),
-
+            
         ];
     }
-
 }

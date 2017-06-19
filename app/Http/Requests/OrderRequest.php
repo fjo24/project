@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+
 class OrderRequest extends FormRequest
 {
     /**
@@ -16,16 +17,19 @@ class OrderRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
+
+
+
     public function rules()
     {
+$date = Carbon::now()->format('d-m-Y');
         return [
-            'title'              => 'max:50|required',   
+            'title'      => 'max:50|required',
+            'date'       => 'required|date',
 
         ];
+
+    
+    
     }
 }

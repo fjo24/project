@@ -217,14 +217,6 @@ class OrdersController extends Controller
         $calendar = \Calendar::addEvents($events);
         return view('orders.calendar.calendar', compact('calendar'));
 
-        /* $events= Order::orderBy('id', 'DESC')->get();
-      //   $events->toArray();
-         dd($events);
-        //$eloquentEvent = EventModel::first(); //EventModel implements MaddHatter\LaravelFullcalendar\Event
-
-        $calendar = \Calendar::addEvents($events); 
-
-        return view('orders.calendar.calendar', compact('calendar'));*/
 
     }
 

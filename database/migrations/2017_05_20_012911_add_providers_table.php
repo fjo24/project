@@ -17,6 +17,8 @@ class AddProvidersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('rif');
+            $table->string('locale');
+            $table->string('email');
             $table->timestamps();
         });
     }

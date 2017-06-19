@@ -16,7 +16,7 @@
     <!-- Ionicons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
     <!-- Theme style -->
-    <link href="{{asset('AdminLTE/dist/css/AdminLTE.min.css')}}" rel="stylesheet">
+    <link href="{{asset('AdminLTE/dist/css/AdminLTE.css')}}" rel="stylesheet">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
 folder instead of downloading all of them to reduce the load. -->
     <link href="{{asset('AdminLTE/dist/css/skins/_all-skins.min.css')}}" rel="stylesheet">
@@ -54,14 +54,13 @@ folder instead of downloading all of them to reduce the load. -->
                         <b>
                             A
                         </b>
-                        LT
+                        FF
                     </span>
             <!-- logo for regular state and mobile devices -->
             <span class="logo-lg">
                         <b>
                             FRANCACHELA
                         </b>
-                        
                     </span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
@@ -80,184 +79,40 @@ folder instead of downloading all of them to reduce the load. -->
             </a>
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
-                    <!-- Messages: style can be found in dropdown.less-->
-                    <li class="dropdown messages-menu">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-envelope-o">
-                            </i>
-                            <span class="label label-success">
-                                        4
-                                    </span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">
-                                You have 4 messages
-                            </li>
-                            <li>
-                                <!-- inner menu: contains the actual data -->
-                                <ul class="menu">
-                                    <li>
-                                        <!-- start message -->
-                                        <a href="#">
-                                            <div class="pull-left">
-                                                <img alt="User Image" class="img-circle"
-                                                     src="../../dist/img/user2-160x160.jpg">
-                                                </img>
-                                            </div>
-                                            <h4>
-                                                Support Team
-                                                <small>
-                                                    <i class="fa fa-clock-o">
-                                                    </i>
-                                                    5 mins
-                                                </small>
-                                            </h4>
-                                            <p>
-                                                Why not buy a new awesome theme?
-                                            </p>
-                                        </a>
-                                    </li>
-                                    <!-- end message -->
-                                </ul>
-                            </li>
-                            <li class="footer">
-                                <a href="#">
-                                    See All Messages
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- Notifications: style can be found in dropdown.less -->
-                    <li class="dropdown notifications-menu">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-bell-o">
-                            </i>
-                            <span class="label label-warning">
-                                        10
-                                    </span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">
-                                You have 10 notifications
-                            </li>
-                            <li>
-                                <!-- inner menu: contains the actual data -->
-                                <ul class="menu">
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-users text-aqua">
-                                            </i>
-                                            5 new members joined today
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="footer">
-                                <a href="#">
-                                    View all
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- Tasks: style can be found in dropdown.less -->
-                    <li class="dropdown tasks-menu">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-flag-o">
-                            </i>
-                            <span class="label label-danger">
-                                        9
-                                    </span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">
-                                You have 9 tasks
-                            </li>
-                            <li>
-                                <!-- inner menu: contains the actual data -->
-                                <ul class="menu">
-                                    <li>
-                                        <!-- Task item -->
-                                        <a href="#">
-                                            <h3>
-                                                Design some buttons
-                                                <small class="pull-right">
-                                                    20%
-                                                </small>
-                                            </h3>
-                                            <div class="progress xs">
-                                                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20"
-                                                     class="progress-bar progress-bar-aqua" role="progressbar"
-                                                     style="width: 20%">
-                                                            <span class="sr-only">
-                                                                20% Complete
-                                                            </span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <!-- end task item -->
-                                </ul>
-                            </li>
-                            <li class="footer">
-                                <a href="#">
-                                    View all tasks
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                     @if (Auth::guest())
-                        <li><a href="{{ url('/login') }}">Login</a></li>
-                        <li><a href="{{ url('/register') }}">Register</a></li>
+                        <li><a href="{{ url('/login') }}">ENTRAR</a></li>
+                        <li><a href="{{ route('users.create')}}">REGISTRO</a></li>
                     @else
-
-
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <img alt="User Image" class="user-image" src="../../dist/img/user2-160x160.jpg">
+                            <img alt="User Image" class="user-image" src="{{ asset ('AdminLTE/dist/img/avatar5.png') }}">
                             <span class="hidden-xs">
-                                            {{ Auth::user()->name }} <span class="caret"></span>
+                                            {{ Auth::user()->fullname }} <span class="caret"></span>
                                         </span>
                             </img>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                <img alt="User Image" class="img-circle" src="../../dist/img/user2-160x160.jpg">
+                                <img alt="User Image" class="img-circle" src="{{ asset ('AdminLTE/dist/img/avatar5.png') }}">
                                 <p>
-                                    Alexander Pierce - Web Developer
+                                    {{ Auth::user()->fullname }}  - @if(Auth::user()->level == "admin")
+                                        Administrador
+                                    @else
+                                        Miembro
+                                    @endif
                                     <small>
-                                        Member since Nov. 2012
+                                        Mimbro desde {{ Auth::user()->created_at }}
                                     </small>
                                 </p>
                                 </img>
-                            </li>
-                            <!-- Menu Body -->
-                            <li class="user-body">
-                                <div class="row">
-                                    <div class="col-xs-4 text-center">
-                                        <a href="#">
-                                            Followers
-                                        </a>
-                                    </div>
-                                    <div class="col-xs-4 text-center">
-                                        <a href="#">
-                                            Sales
-                                        </a>
-                                    </div>
-                                    <div class="col-xs-4 text-center">
-                                        <a href="#">
-                                            Friends
-                                        </a>
-                                    </div>
-                                </div>
-                                <!-- /.row -->
                             </li>
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
                                     <a class="btn btn-default btn-flat" href="{{ route('users.show', Auth::user()->id) }}">
-                                        Profile
+                                        Perfil
                                     </a>
                                 </div>
                                 <div class="pull-right">
@@ -287,43 +142,19 @@ folder instead of downloading all of them to reduce the load. -->
         <section class="sidebar">
             <!-- Sidebar user panel -->
             <div class="user-panel">
-                <div class="pull-left image">
-                    <img alt="User Image" class="img-circle" src="../../dist/img/user2-160x160.jpg">
-                    </img>
-                </div>
-                <div class="pull-left info">
-                    <p>
-                        Agencia de festejos
-                    </p>
-                    <a href="#">
-                        <i class="fa fa-circle text-success">
-                        </i>
-                        Online
-                    </a>
-                </div>
-            </div>
-            <!-- search form -->
-            <form action="#" class="sidebar-form" method="get">
-                <div class="input-group">
-                    <input class="form-control" name="q" placeholder="Search..." type="text">
-                    <span class="input-group-btn">
-                                    <button class="btn btn-flat" id="search-btn" name="search" type="submit">
-                                        <i class="fa fa-search">
-                                        </i>
-                                    </button>
-                                </span>
-                    </input>
-                </div>
-            </form>
-            <!-- /.search form -->
+              
+                <img alt="User Image" src="{{ asset ('AdminLTE/dist/img/loguito1.png') }}">
+                    </img>            </div>
+
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
                 <li class="header">
                     MENU PRINCIPAL
                 </li>
+                 @if(Auth::user() && Auth::user()->level=='admin')
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-dashboard">
+                        <i class="fa fa-users">
                         </i>
                         <span>
                                     Usuarios
@@ -352,36 +183,7 @@ folder instead of downloading all of them to reduce the load. -->
                 </li>
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-dashboard">
-                        </i>
-                        <span>
-                                    Articulos
-                                </span>
-                        <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right">
-                                    </i>
-                                </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li>
-                            <a href="{{route('articles.index')}}">
-                                <i class="fa fa-circle-o">
-                                </i>
-                                Listado
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{route('articles.create')}}">
-                                <i class="fa fa-circle-o">
-                                </i>
-                                Nuevo
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-dashboard">
+                        <i class="fa fa-thumbs-o-up">
                         </i>
                         <span>
                                     Provedores
@@ -410,7 +212,7 @@ folder instead of downloading all of them to reduce the load. -->
                 </li>
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-dashboard">
+                        <i class="fa fa-birthday-cake">
                         </i>
                         <span>
                                     Productos
@@ -439,7 +241,7 @@ folder instead of downloading all of them to reduce the load. -->
                 </li>
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-dashboard">
+                        <i class="fa fa-arrows-v">
                         </i>
                         <span>
                                     Entrada y Salida
@@ -451,24 +253,24 @@ folder instead of downloading all of them to reduce the load. -->
                     </a>
                     <ul class="treeview-menu">
                         <li>
-                            <a href="{{route('registers.index')}}">
+                            <a href="{{route('orders.index')}}">
                                 <i class="fa fa-circle-o">
                                 </i>
                                 Historial
                             </a>
                         </li>
                         <li>
-                            <a href="{{route('registers.create')}}">
+                            <a href="{{route('orders.create')}}">
                                 <i class="fa fa-circle-o">
                                 </i>
-                                Nueva Entrada o Salida
+                                Nuevo registro
                             </a>
                         </li>
                     </ul>
                 </li>
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-dashboard">
+                        <i class="fa fa-calendar">
                         </i>
                         <span>
                                     Eventos
@@ -480,21 +282,78 @@ folder instead of downloading all of them to reduce the load. -->
                     </a>
                     <ul class="treeview-menu">
                         <li>
-                            <a href="{{route('orders.index')}}">
+                            <a href="{{route('indexconfirmed')}}">
                                 <i class="fa fa-circle-o">
                                 </i>
                                 Listado
                             </a>
                         </li>
                         <li>
-                            <a href="{{route('orders.create')}}">
+                            <a href="{{route('createevent')}}">
                                 <i class="fa fa-circle-o">
                                 </i>
                                 Nuevo evento
                             </a>
                         </li>
+                        <li>
+                            <a href="{{route('calendar')}}">
+                                <i class="fa fa-circle-o">
+                                </i>
+                                Calendario de eventos
+                            </a>
+                        </li>
                     </ul>
                 </li>
+                @elseif(Auth::user() && Auth::user()->level=='member')
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-calendar">
+                        </i>
+                        <span>
+                                    Eventos
+                                </span>
+                        <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right">
+                                    </i>
+                                </span>
+                    </a>
+                    <ul class="treeview-menu">
+                 
+                        <li>
+                            <a href="{{route('createevent')}}">
+                                <i class="fa fa-circle-o">
+                                </i>
+                                Solicitar presupuesto
+                            </a>
+                        </li>
+                      
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-info">
+                        </i>
+                        <span>
+                                    Info
+                                </span>
+                        <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right">
+                                    </i>
+                                </span>
+                    </a>
+                    <ul class="treeview-menu">
+                 
+                        <li>
+                            <a href="{{route('we')}}">
+                                <i class="fa fa-circle-o">
+                                </i>
+                                Nosotros
+                            </a>
+                        </li>
+                      
+                    </ul>
+                </li>
+                @endif
             </ul>
         </section>
         <!-- /.sidebar -->
@@ -504,34 +363,16 @@ folder instead of downloading all of them to reduce the load. -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>
-                Blank page
-                <small>
-                    it all starts here
-                </small>
-            </h1>
-            <ol class="breadcrumb">
-                <li>
-                    <a href="#">
-                        <i class="fa fa-dashboard">
-                        </i>
-                        Home
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        Examples
-                    </a>
-                </li>
-                <li class="active">
-                    Blank page
-                </li>
-            </ol>
+            
         </section>
         <!-- Main content -->
         <section class="content">
             @include('flash::message')
             @yield('contenido')
+            <center><h1>
+                <img alt="User Image" src="{{ asset ('AdminLTE/dist/img/f.png') }}">
+                    </img>
+            </h1></center>       
         </section>
         <!-- /.content -->
     </div>
@@ -539,19 +380,13 @@ folder instead of downloading all of them to reduce the load. -->
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
             <b>
-                Version
+                2017
             </b>
-            2.3.8
         </div>
         <strong>
-            Copyright © 2014-2016
-            <a href="http://almsaeedstudio.com">
-                Almsaeed Studio
-            </a>
-            .
+            Agencia de Festejos Francachela C.A.
         </strong>
-        All rights
-        reserved.
+        Todos los derechos reservados.
     </footer>
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">

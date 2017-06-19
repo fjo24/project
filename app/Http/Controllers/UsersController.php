@@ -46,12 +46,19 @@ class UsersController extends Controller
         return view('users.edit', compact('user'));
     }
 
-    public function update(EditUsersRequest $request, $id)
+    public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'email' => 'required|unique:users,email, '. $id,
+            'identification' => 'required|unique:users,identification, '. $id,
+            'fullname'       => 'max:50|required',   
+            'telephone'      => 'required|numeric|min:11',
+            'type'           => 'required',
+        ]);
         $user = User::find($id);
         $user->fill($request->all());
         $user->save();
-        flash('El usuario '. $user->name. ' '. $user->last_name.' ha sido editado con exito!!', 'success')->important();
+        flash('El usuario '. $user->fullname.' ha sido editado con exito!!', 'success')->important();
         return redirect()->route('users.index');
     }
 
