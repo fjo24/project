@@ -38,3 +38,6 @@ Route::get('query/query', [
 ]);
 
 Route::get('we',  'InfoController@we')->name('we');
+
+//activities
+Route::get('activities',  'ActivitiesController@index')->name('activities');

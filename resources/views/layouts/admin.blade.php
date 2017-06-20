@@ -306,6 +306,29 @@ folder instead of downloading all of them to reduce the load. -->
                         </li>
                     </ul>
                 </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-info">
+                        </i>
+                        <span>
+                                    Actividades
+                                </span>
+                        <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right">
+                                    </i>
+                                </span>
+                    </a>
+                    <ul class="treeview-menu">
+                 
+                        <li>
+                            <a href="{{route('activities')}}">
+                                <i class="fa fa-circle-o">
+                                </i>
+                                Tareas pendientes
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 @elseif(Auth::user() && Auth::user()->level=='member')
                 <li class="treeview">
                     <a href="#">
@@ -355,6 +378,7 @@ folder instead of downloading all of them to reduce the load. -->
                       
                     </ul>
                 </li>
+
                 @endif
             </ul>
         </section>
