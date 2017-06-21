@@ -22,10 +22,10 @@ class OrderRequest extends FormRequest
 
     public function rules()
     {
-$date = Carbon::now()->format('d-m-Y');
+
         return [
             'title'      => 'max:50|required',
-            'date'       => 'required|date',
+           // 'date'       => 'required|date',
 
         ];
 

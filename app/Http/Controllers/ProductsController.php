@@ -64,12 +64,12 @@ foreach ($orders as $order){
 
     
           
-        return view('products.index', compact('products'));
+        return view('admin.products.index', compact('products'));
     }
 
     public function create()
     {
-        return view('products.create');
+        return view('admin.products.create');
     }
 
     public function store(Request $request)
@@ -77,27 +77,27 @@ foreach ($orders as $order){
         $request = $request->all();
         $product = new Product($request);
         $product->save();
-        Flash::success('Se ha registrado el producto '. $product->name. ' de manera exitosa!')->important();
+        //Flash::success('Se ha registrado el producto '. $product->name. ' de manera exitosa!')->important();
         return redirect()->route('products.index');
     }
 
     public function show($id)
     {
         $product = Product::find($id);
-        return view('products.show', compact('product'));
+        return view('admin.products.show', compact('product'));
     }
 
     public function edit($id)
     {
         $product = Product::find($id);
-        return view('products.edit', compact('product'));
+        return view('admin.products.edit', compact('product'));
     }
 
     public function update(Request $request, product $product)
     {
         $request = $request->all();
         $product->update($request);
-        flash('El producto '. $product->name. ' ha sido editado con exito!!', 'success')->important();
+        //flash('El producto '. $product->name. ' ha sido editado con exito!!', 'success')->important();
         return redirect()->route('products.index');
     }
 
@@ -105,7 +105,7 @@ foreach ($orders as $order){
     {
         $product = Product::find($id);
         $product->delete();
-        flash('El producto '. $product->name.' ha sido eliminado con exito!!', 'danger')->important();
+        //flash('El producto '. $product->name.' ha sido eliminado con exito!!', 'danger')->important();
         return redirect()->route('products.index');
     }
 }

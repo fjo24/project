@@ -7,12 +7,9 @@ Route::get('/', function () {
 Auth::routes();
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');//agregado para corregir error
 Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('users','UsersController');
-Route::resource('articles','ArticlesController');
-Route::resource('orders','OrdersController');
-Route::resource('providers','ProvidersController');
-Route::resource('products','ProductsController');
-Route::resource('registers','RegistersController');
+
+//Route::resource('articles','ArticlesController');
+
 
 Route::get('confirm/{order_id}',  'OrdersController@confirm')->name('confirm');
 Route::post('storepivot',  'OrdersController@storepivot')->name('storepivot');
@@ -41,3 +38,12 @@ Route::get('we',  'InfoController@we')->name('we');
 
 //activities
 Route::get('activities',  'ActivitiesController@index')->name('activities');
+
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+    //se agrego el middleware para que deba autenticarse para acceder a las rutas siguientes
+	Route::resource('users','UsersController');
+	Route::resource('providers','ProvidersController');
+	Route::resource('products','ProductsController');
+	Route::resource('orders','OrdersController');
+	Route::resource('registers','RegistersController');
+});

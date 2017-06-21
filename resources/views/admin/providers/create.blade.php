@@ -4,7 +4,7 @@
 @include('flash::message')
 @section('contenido')
     {!! Form::open(['route' => 'providers.store']) !!}
-    @include('providers.partials.fields')
+    @include('admin.providers.partials.fields')
     {!! Form::close() !!}
 @endsection
 @section('js')

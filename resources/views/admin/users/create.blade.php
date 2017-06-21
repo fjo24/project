@@ -4,7 +4,7 @@
 @include('flash::message')
 @section('contenido')
     {!! Form::open(['route' => 'users.store', 'class' => 'form', 'method' => 'POST']) !!}
-    @include('users.partials.fields')
+    @include('admin.users.partials.fields')
     <div class="form-group">
         {!! Form::label('password', 'Contraseña') !!}
         {!! Form::password('password', ['class' => 'form-control', 'placeholder' => 'Ingrese contraseña', 'required']) !!}

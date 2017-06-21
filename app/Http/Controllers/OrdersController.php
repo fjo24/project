@@ -9,11 +9,9 @@ use App\Http\Requests\OrderRequest;
 Use App\Provider;
 Use App\User;
 Use App\Calendar;
-use Laracasts\Flash\Flash;
+//use Laracasts\Flash\Flash;
 use Carbon\Carbon;
 use DB;
-
-
 use Illuminate\Support\Facades\Auth;
 class OrdersController extends Controller
 {
@@ -21,7 +19,7 @@ class OrdersController extends Controller
     public function index()
     {
         $orders = Order::orderBy('id', 'DESC')->with('user')->get();
-        return view('orders.index', compact('orders'));
+        return view('admin.orders.index', compact('orders'));
     }
     
     public function depot()
@@ -29,7 +27,7 @@ class OrdersController extends Controller
         $users = User::orderBy('fullname', 'ASC')->pluck('fullname', 'id')->all();
         $providers = Provider::orderBy('name', 'ASC')->pluck('name', 'id')->all();
         $products = Product::orderBy('name', 'ASC')->pluck('name', 'id')->all();
-        return view('orders.create')->with('users', $users)->with('products', $products)->with('providers', $providers);
+        return view('admin.orders.create')->with('users', $users)->with('products', $products)->with('providers', $providers);
     }    
 
     public function create()
@@ -37,7 +35,7 @@ class OrdersController extends Controller
         $users = User::orderBy('fullname', 'ASC')->pluck('fullname', 'id')->all();
         $providers = Provider::orderBy('name', 'ASC')->pluck('name', 'id')->all();
         $products = Product::orderBy('name', 'ASC')->pluck('name', 'id')->all();
-        return view('orders.create')->with('users', $users)->with('products', $products)->with('providers', $providers);
+        return view('admin.orders.create')->with('users', $users)->with('products', $products)->with('providers', $providers);
     }
 
     public function store(OrderRequest $request)
@@ -62,7 +60,7 @@ class OrdersController extends Controller
         //ready to sync
         $order->products()->sync($data);
 
-        Flash::success('Se ha registrado la orden de manera exitosa!')->important();
+      //  Flash::success('Se ha registrado la orden de manera exitosa!')->important();
         return redirect()->route('confirm', $order->id);
     }
 
@@ -137,7 +135,7 @@ class OrdersController extends Controller
                 }
             }
         }
-        return view('orders.confirm')->with('order', $order)->with('sales', $sales);
+        return view('admin.orders.confirm')->with('order', $order)->with('sales', $sales);
 
     }
 
@@ -152,7 +150,7 @@ class OrdersController extends Controller
             ->where('order_product.order_id', $id)
             ->get();
 
-        return view('orders.show')->with('order', $order)->with('sales', $sales);
+        return view('admin.orders.show')->with('order', $order)->with('sales', $sales);
     }
 
     public function edit($id)
@@ -162,7 +160,7 @@ class OrdersController extends Controller
         $providers = Provider::orderBy('name', 'ASC')->pluck('name', 'id')->all();
         $products = Product::orderBy('name', 'ASC')->pluck('name', 'id')->all();
         $my_products = $order->products->pluck('id')->toArray();
-        return view('orders.edit')->with('users', $users)->with('products', $products)->with('order', $order)->with('my_products', $my_products)->with('providers', $providers);
+        return view('admin.orders.edit')->with('users', $users)->with('products', $products)->with('order', $order)->with('my_products', $my_products)->with('providers', $providers);
     }
 
     public function update(OrderRequest $request, order $order)
@@ -183,7 +181,7 @@ class OrdersController extends Controller
 
         $order->products()->sync($data);
 
-        Flash::success('Se ha registrado la orden de manera exitosa!')->important();
+     //   Flash::success('Se ha registrado la orden de manera exitosa!')->important();
         return redirect()->route('confirm', $order->id);
     }
 
@@ -191,7 +189,7 @@ class OrdersController extends Controller
     {
         $order = Order::find($id);
         $order->delete();
-        flash('La orden ha sido eliminado con exito!!', 'danger')->important();
+       // flash('La orden ha sido eliminado con exito!!', 'danger')->important();
         return redirect()->route('orders.index');
     }
 
@@ -215,7 +213,7 @@ class OrdersController extends Controller
             }
         }
         $calendar = \Calendar::addEvents($events);
-        return view('orders.calendar.calendar', compact('calendar'));
+        return view('admin.orders.calendar.calendar', compact('calendar'));
 
 
     }
@@ -223,20 +221,20 @@ class OrdersController extends Controller
     public function pdf($id)
     {
         $order = Order::find($id);
-        return view('orders.pdf.pdf', compact('order'));
+        return view('admin.orders.pdf.pdf', compact('order'));
     }
 
     public function indexconfirmed()
     {
         $orders = Order::orderBy('id', 'DESC')->with('user')->get();
-        return view('orders.indexconfirmed', compact('orders'));
+        return view('admin.orders.indexconfirmed', compact('orders'));
     }
 
     public function createevent()
     {
         $users = User::orderBy('fullname', 'ASC')->pluck('fullname', 'id')->all();
         $products = Product::orderBy('name', 'ASC')->pluck('name', 'id')->all();
-        return view('orders.createevent')->with('users', $users)->with('products', $products);
+        return view('admin.orders.createevent')->with('users', $users)->with('products', $products);
     }
 
     public function storeevent(OrderRequest $request)
@@ -263,7 +261,7 @@ class OrdersController extends Controller
         //ready to sync
         $order->products()->sync($data);
 
-        Flash::success('Se ha registrado la orden de manera exitosa!')->important();
+      //  Flash::success('Se ha registrado la orden de manera exitosa!')->important();
         return redirect()->route('confirm', $order->id);
     }
 
@@ -320,7 +318,7 @@ class OrdersController extends Controller
        
             }
         
-            Flash::success('EVENTO CONFIRMADO!')->important();
+           // Flash::success('EVENTO CONFIRMADO!')->important();
         return redirect()->route('indexconfirmed', $order->id);
 }
 }
