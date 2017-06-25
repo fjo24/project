@@ -36,7 +36,7 @@
                                 @if($user->type == "person")
                                     Persona Natural
                                 @else
-                                    Organizzación
+                                    Organización
                                 @endif
                             </td>
                         </tr>
@@ -64,13 +64,18 @@
             </div>
         </div>
         <div class="for text-center">
-            <a class="btn btn-success btn-sm" href="{{ route('users.edit', $user->id) }}">
+            @if($user->type == "person")
+                <a class="btn btn-success btn-sm" href="{{ route('editperson', Auth::user()->id) }}">
                 Editar
-            </a>
-            <a class="btn btn-danger btn-sm" href="{{ route('users.index') }}">
-                Volver
-            </a>
+                </a>
+            @else
+                <a class="btn btn-success btn-sm" href="{{ route('editorganization', Auth::user()->id) }}">
+                Editar
+                </a>
+            @endif
+                <a class="btn btn-danger btn-sm" href="{{ route('users.index') }}">
+                    Volver
+                </a>
         </div>
     </div>
-
 @endsection

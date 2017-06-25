@@ -15,19 +15,22 @@
             language: "es",
             autoclose: true
         });
-        //CHOSEN
-        $('.select-combustions').chosen({
-            placeholder_text_multiple:"SELECCIONE TIPO DE COMBUSTION",
-            max_selected_options    : 4,
-            no_results_text         : "TIPO DE COMBUSTION NO ENCONTRADA"
-        });
-        $('#form').click(function (e) {
-            setTimeout(function () {
-                clearChosen()
-            }, 200);
-        });
-        function clearChosen() {
-            $('select#chosen').trigger('chosen:updated');
-        }
+        $(document).ready(function() {
+            $("#type").on("change", function() {
+               var valor = $("#type").val();
+               if (valor === "service") {
+                    $("#quantity").attr('disabled', true);
+                    $("#available").attr('disabled', true);
+               } else if (valor === "rent") {
+                    // 
+                    $("#quantity").attr('disabled', false);
+                    $("#available").attr('disabled', false);
+               } else if (valor === "sale") {
+                    // 
+                    $("#quantity").attr('disabled', false);
+                    $("#available").attr('disabled', false);
+               }
+            });
+         });
     </script>
 @endsection

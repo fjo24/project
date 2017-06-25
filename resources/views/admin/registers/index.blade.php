@@ -26,13 +26,9 @@
                         <table class="table table-hover display table-responsive table-condensed" id="table">
                             <thead>
                             <tr>
-                                <th>PROVEEDOR</th>
-                                <th>PRODUCTO</th>
-                                <th>TIPO DE REGISTRO</th>
                                 <th>FECHA</th>
-                                <th>DESCRIPCION</th>
-                                <th>CANTIDAD</th>
-                                <th>MONTO</th>
+                                <th>PROVEEDOR</th>
+                                <th>TIPO DE REGISTRO</th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -42,10 +38,14 @@
                             @foreach($registers as $register)
                                 <tr>
                                     <td>
-                                       {{ $register->provider->name }}
+                                        {{ $register->date }}
                                     </td>
                                     <td>
-                                        {{ $register->product->name }}
+                                    @if($register->type == "entry")
+                                        {{ $register->provider->name }}
+                                    @else
+                                        N/A
+                                    @endif
                                     </td>
                                     <td>
                                     @if($register->type == "entry")
@@ -59,31 +59,19 @@
                                     @endif
                                     </td>
                                     <td>
-                                        {{ $register->created_at }}
+                                        <a href="{{ route('registers.show', $register->id) }}">
+                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                        </a>
                                     </td>
                                     <td>
-                                        {{ $register->info }}
-                                    </td>
-                                    <td>
-                                        {{ $register->quantity }}
-                                    </td>
-                                    <td>
-                                        {{ $register->cost }}
-                                    </td>
-                                    <td>
-                                            <a href="{{ route('registers.show', $register->id) }}">
-                                                <i class="fa fa-eye" aria-hidden="true"></i>
-                                            </a>
-                                    </td>
-                                    <td>
-                                            <a href="{{ route('registers.edit', $register->id) }}">
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                            </a>
+                                        <a href="{{ route('registers.edit', $register->id) }}">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                        </a>
                                     </td>
                                     <td>
                                         {!! Form::open(['route' => ['registers.destroy', $register->id], 'method' => 'DELETE']) !!}
-                                                    <button class="glyphicon glyphicon-remove" onclick="return confirm('¿Realmente deseas borrar el producto?')"">
-                                                    </button>                           
+                                            <button class="glyphicon glyphicon-remove" onclick="return confirm('¿Realmente deseas borrar el registro?')"">
+                                            </button>                           
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>

@@ -16,9 +16,9 @@ class AddProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->enum('type', ['rent', 'sale'])->default('rent');
+            $table->enum('type', ['rent', 'sale', 'service'])->default('rent');
             $table->string('info');
-            $table->string('quantity');
+            $table->string('quantity')->nullable();
             $table->string('available')->nullable();
             $table->string('cost')->nullable();
             $table->timestamps();

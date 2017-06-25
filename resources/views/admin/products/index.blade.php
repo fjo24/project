@@ -44,21 +44,33 @@
                                         {{ $product->cost }}
                                     </td>
                                     <td>
-                                        {{ $product->quantity }}
+                                        @if($product->quantity == null)
+                                            N/A
+                                        @else
+                                            {{ $product->quantity }}
+                                        @endif
                                     </td>
                                     <td>
-                                        {{ $product->available }}
+                                        @if($product->available == null)
+                                            N/A
+                                        @else
+                                            {{ $product->available }}
+                                        @endif
                                     </td>
                                     <td>
                                         @if($product->type == "rent")
                                             <span class="label label-success">
                                         Para Alquiler
                                     </span>
-                                        @else
+                                        @elseif($product->type == "sale")
                                             <span class="label label-primary">
                                         Para  Venta
                                     </span>
+                                        @else
+                                        <span class="label label-warning">
+                                        Servicio
                                         @endif
+                                    </span>
                                     </td>
                                     <td>
                                         <a href="{{ route('products.show', $product->id) }}">

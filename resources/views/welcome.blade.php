@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Agencia de Festejos Francachela C.A.</title>
-
+        <link href="{{asset('AdminLTE/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
@@ -73,13 +73,13 @@
                         <a href="{{ url('/home') }}">HOME</a>
                     @else
                         <a href="{{ url('/login') }}">ENTRAR</a>
-                        <a href="{{ url('users/create') }}">REGISTRAR</a>
+                        <a href="{{ url('member/type') }}">REGISTRAR</a>
                     @endif
                 </div>
             @endif
 
             <div class="content">
-                <img alt="User Image" class="img-circle" src="{{ asset ('AdminLTE/dist/img/loguito.png') }}">
+                <img alt="User Image" src="{{ asset ('AdminLTE/dist/img/loguito.png') }}">
                     </img>
 
             </div>

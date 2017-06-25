@@ -85,13 +85,13 @@ folder instead of downloading all of them to reduce the load. -->
                     <li class="dropdown user user-menu">
                     @if (Auth::guest())
                         <li><a href="{{ url('/login') }}">ENTRAR</a></li>
-                        <li><a href="{{ route('users.create')}}">REGISTRO</a></li>
+                        <li><a href="{{ url('member/type') }}">REGISTRO</a></li>
                     @else
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <img alt="User Image" class="user-image" src="{{ asset ('AdminLTE/dist/img/avatar5.png') }}">
-                            <span class="hidden-xs">
-                                            {{ Auth::user()->fullname }} <span class="caret"></span>
-                                        </span>
+                                <span class="hidden-xs">
+                                    {{ Auth::user()->fullname }} <span class="caret"></span>
+                                </span>
                             </img>
                         </a>
                         <ul class="dropdown-menu">
@@ -113,9 +113,15 @@ folder instead of downloading all of them to reduce the load. -->
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
+                                @if(Auth::user()->level == "admin")
                                     <a class="btn btn-default btn-flat" href="{{ route('users.show', Auth::user()->id) }}">
                                         Perfil
                                     </a>
+                                @else
+                                    <a class="btn btn-default btn-flat" href="{{ route('showmember', Auth::user()->id) }}">
+                                        Perfil
+                                    </a>
+                                @endif
                                 </div>
                                 <div class="pull-right">
                                     <a class="btn btn-default btn-flat" href="{{ url('/logout') }}">
@@ -159,7 +165,7 @@ folder instead of downloading all of them to reduce the load. -->
                         <i class="fa fa-users">
                         </i>
                         <span>
-                                    Usuarios
+                                Usuarios
                                 </span>
                         <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right">
@@ -175,7 +181,7 @@ folder instead of downloading all of them to reduce the load. -->
                             </a>
                         </li>
                         <li>
-                            <a href="{{route('users.create')}}">
+                            <a href="{{url('member/type') }}">
                                 <i class="fa fa-circle-o">
                                 </i>
                                 Registrar
@@ -188,7 +194,7 @@ folder instead of downloading all of them to reduce the load. -->
                         <i class="fa fa-thumbs-o-up">
                         </i>
                         <span>
-                                    Provedores
+                                Provedores
                                 </span>
                         <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right">
@@ -217,7 +223,7 @@ folder instead of downloading all of them to reduce the load. -->
                         <i class="fa fa-birthday-cake">
                         </i>
                         <span>
-                                    Productos
+                                Productos
                                 </span>
                         <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right">
@@ -246,7 +252,7 @@ folder instead of downloading all of them to reduce the load. -->
                         <i class="fa fa-arrows-v">
                         </i>
                         <span>
-                                    Entrada y Salida
+                                Entrada y Salida
                                 </span>
                         <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right">
@@ -255,14 +261,14 @@ folder instead of downloading all of them to reduce the load. -->
                     </a>
                     <ul class="treeview-menu">
                         <li>
-                            <a href="{{route('orders.index')}}">
+                            <a href="{{route('registers.index')}}">
                                 <i class="fa fa-circle-o">
                                 </i>
                                 Historial
                             </a>
                         </li>
                         <li>
-                            <a href="{{route('orders.create')}}">
+                            <a href="{{route('registers.create')}}">
                                 <i class="fa fa-circle-o">
                                 </i>
                                 Nuevo registro
@@ -284,14 +290,14 @@ folder instead of downloading all of them to reduce the load. -->
                     </a>
                     <ul class="treeview-menu">
                         <li>
-                            <a href="{{route('indexconfirmed')}}">
+                            <a href="{{route('orders.index')}}">
                                 <i class="fa fa-circle-o">
                                 </i>
                                 Listado
                             </a>
                         </li>
                         <li>
-                            <a href="{{route('createevent')}}">
+                            <a href="{{route('orders.create')}}">
                                 <i class="fa fa-circle-o">
                                 </i>
                                 Nuevo evento
@@ -302,6 +308,49 @@ folder instead of downloading all of them to reduce the load. -->
                                 <i class="fa fa-circle-o">
                                 </i>
                                 Calendario de eventos
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('events.index')}}">
+                                <i class="fa fa-circle-o">
+                                </i>
+                                Tipos de eventos
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-calendar">
+                        </i>
+                        <span>
+                                Pagos
+                                </span>
+                        <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right">
+                                    </i>
+                                </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="{{route('payments.create')}}">
+                                <i class="fa fa-circle-o">
+                                </i>
+                                Registrar pago
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('payments.index')}}">
+                                <i class="fa fa-circle-o">
+                                </i>
+                                Lista de pagos
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('payments.index')}}">
+                                <i class="fa fa-circle-o">
+                                </i>
+                                Pagos totales por evento
                             </a>
                         </li>
                     </ul>
@@ -330,6 +379,35 @@ folder instead of downloading all of them to reduce the load. -->
                     </ul>
                 </li>
                 @elseif(Auth::user() && Auth::user()->level=='member')
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-users">
+                        </i>
+                        <span>
+                                Opciones de usuario
+                                </span>
+                        <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right">
+                                    </i>
+                                </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="{{route('users.index')}}">
+                                <i class="fa fa-circle-o">
+                                </i>
+                                Listado
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('users.create')}}">
+                                <i class="fa fa-circle-o">
+                                </i>
+                                Registrar
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-calendar">

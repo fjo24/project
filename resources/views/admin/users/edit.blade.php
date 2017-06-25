@@ -46,5 +46,21 @@
         function clearChosen() {
             $('select#chosen').trigger('chosen:updated');
         }
+
+        $(document).ready(function() {
+            $("#type").on("change", function() {
+               var valor = $("#type").val();
+               if (valor === "person") {
+                    $("#name").attr('disabled', false);
+                    $("#lastname").attr('disabled', false);
+                    $("#fullname").attr('disabled', true);
+               } else if (valor === "organization") {
+                    // 
+                    $("#name").attr('disabled', true);
+                    $("#lastname").attr('disabled', true);
+                    $("#fullname").attr('disabled', false);
+               }
+            });
+         });
     </script>
 @endsection

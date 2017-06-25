@@ -7,16 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
 	protected $table    = "orders";
-    protected $fillable = ['id', 'date', 'end_date', 'title', 'type', 'user_id', 'provider_id', 'status', 'locale', 'notes', 'total', 'created', 'updated', 'created_at'];
+    protected $fillable = ['id', 'total', 'paid_out', 'status', 'date', 'title', 'locale', 'user_id', 'event_id', 'notes', 'created', 'updated', 'created_at'];
 
     public function user()
     {
     	return $this->belongsTo('App\User');
     }
 
+    public function payments()
+    {
+        return $this->hasMany('App\Payment');
+    }
+
     public function products()
     {
-        return $this-> belongsToMany('App\Product', 'order_product')->withPivot('quantity');
+        return $this->belongsToMany('App\Product', 'order_product')->withPivot('quantity');
     }
 
     public function getdateAttribute($date)
@@ -49,8 +54,8 @@ class Order extends Model
     }
 
     
-
-        public function getId() {
+    //for calendar
+    public function getId() {
         return $this->id;
     }
 

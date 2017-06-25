@@ -1,4 +1,4 @@
-@extends('orders.partials.panel')
+@extends('admin.orders.partials.panel')
 
 @section('title', 'Calendario de eventos')
 

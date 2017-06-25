@@ -8,7 +8,7 @@ Use App\Product;
 Use App\Order;
 use Carbon\Carbon;
 use Laracasts\Flash\Flash;
-use App\Http\Requests\ProductsRequest;
+use App\Http\Requests\ProductRequest;
 use DB;
 
 class ProductsController extends Controller
@@ -42,7 +42,7 @@ foreach ($orders as $order){
                     ->where('order_product.order_id', $id)
                     ->get();
                 if ($date == $order->date) {
-                    if ($type=='service' && $status=='confirmed') {
+                    if ($status=='confirmed') {
                         //SUM mounts of id selected..
                         //quantity field
                             if ($product->type=='rent') {
@@ -61,8 +61,6 @@ foreach ($orders as $order){
                 }
             }
         }
-
-    
           
         return view('admin.products.index', compact('products'));
     }
@@ -72,7 +70,7 @@ foreach ($orders as $order){
         return view('admin.products.create');
     }
 
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
         $request = $request->all();
         $product = new Product($request);
@@ -93,7 +91,7 @@ foreach ($orders as $order){
         return view('admin.products.edit', compact('product'));
     }
 
-    public function update(Request $request, product $product)
+    public function update(ProductRequest $request, product $product)
     {
         $request = $request->all();
         $product->update($request);
@@ -107,5 +105,11 @@ foreach ($orders as $order){
         $product->delete();
         //flash('El producto '. $product->name.' ha sido eliminado con exito!!', 'danger')->important();
         return redirect()->route('products.index');
+    }
+
+    public function modal()
+    {
+        return view('admin.products.modal');
+        
     }
 }

@@ -43,7 +43,7 @@
                             @foreach($users as $user)
                                 <tr>
                                     <td>
-                                        {{ $user->fullname }}
+                                        {{ $user->fullname }} 
                                     </td>
                                     <td>
                                         @if($user->type == "person")
@@ -81,9 +81,15 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="{{ route('users.edit', $user->id) }}">
-                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                        </a>
+                                        @if($user->type == "person")
+                                            <a href="{{ route('editperson', $user->id) }}">
+                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                            </a>
+                                        @else
+                                            <a href="{{ route('editorganization', $user->id) }}">
+                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                            </a>
+                                        @endif
                                     </td>
                                     <td>
                                         {!! Form::open(['route' => ['users.destroy', $user->id], 'method' => 'DELETE']) !!}

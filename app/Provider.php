@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Provider extends Model
 {
 	protected $table    = "providers";
-    protected $fillable = ['id', 'name', 'rif'];
+    protected $fillable = ['id', 'name', 'telephone', 'rif', 'locale', 'email'];
 
     public function registers()
     {

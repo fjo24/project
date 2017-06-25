@@ -3,7 +3,6 @@
 @section('title', 'Nuevo evento')
 
 @section('contenido')
-
         @include('partials.errors')
         <div class="box-body">
             <div class="row">
@@ -13,29 +12,40 @@
                         <div class="col-md-10">
                             <div class="box box-primary">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title">Datos de la entrada o salida</h3>
+                                    <h3 class="box-title">Datos del evento</h3>
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="col-md-6"> 
-                                        <div class="form-group">
-                                            {!! Form::label('type', 'Tipo de orden') !!}
-                                            {!! Form::select('type', ['entry' => 'Entrada de productos al almacen', 'remove' => 'Salida de productos del almacen'], null, ['class' => 'form-control', 'placeholder' => 'Seleccione tipo de registro']) !!}
-                                        </div> 
-                                        <div class="form-group">
-                                            {!! Form::label('notes', 'Descripción') !!}
-                                            {!! Form::text('notes', null, ['class' => 'form-control', 'placeholder' => 'Incluya aca cualquier información adicional de interes']) !!}
-                                        </div>
-                                    </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             {!! Form::label('title', 'Titulo') !!}
                                             {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Ingrese aqui un titulo o descripcion breve del evento']) !!}
                                         </div>
                                         <div class="form-group">
-                                            {!! Form::label('provider_id', 'Proveedor') !!}
-                                            {!! Form::select('provider_id', $providers, null, ['class' => 'form-control', 'placeholder' => 'Seleccione proveedor']) !!}
+                                            {!! Form::label('event_id', 'Tipo de evento') !!}
+                                            {!! Form::select('event_id', $events, null, ['class' => 'form-control', 'placeholder' => 'Seleccione tipo de evento']) !!}
+                                        </div>
+                                        <div class="form-group">
+                                            {!! Form::label('date', 'Fecha') !!}
+                                            {!! Form::text('date', null, ['class' => 'form-control datepicker', 'placeholder' => 'Ingrese fecha']) !!}
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        @if(Auth::user()->level=='admin')
+                                            <div class="form-group">
+                                                {!! Form::label('user_id', 'Cliente') !!}
+                                                {!! Form::select('user_id', $users, null, ['class' => 'form-control', 'placeholder' => 'Seleccione cliente']) !!}
+                                            </div>
+                                        @endif
+                                        <div class="form-group">
+                                            {!! Form::label('locale', 'Ubicacion del evento') !!}
+                                            {!! Form::text('locale', null, ['class' => 'form-control', 'placeholder' => 'Ubicacion del evento']) !!}
+                                        </div>
+                                        <div class="form-group">
+                                            {!! Form::label('notes', 'Información adicional') !!}
+                                            {!! Form::text('notes', null, ['class' => 'form-control', 'placeholder' => 'Incluya aca cualquier información adicional de interes']) !!}
+                                        </div>
+                                    </div>
+                                </div>
                                     <center> 
                                     <div class="col-md-12">
                    <div class="col-md-12">    
@@ -43,7 +53,7 @@
                     </div>
                         
                             <div class="row">
-                               
+                                
                                     <div class="contacts">
                                     <div class="col-md-12">
                                         <div class="form-group multiple-form-group input-group">
@@ -67,30 +77,30 @@
                                         </div>
                                     </div>
                                 </div>
-   
+              
                     </div>
-                    </center>
-                </div>
-                <div class="for text-center">
-                    {!! Form::submit('REGISTRAR', ['class'=> 'btn btn-primary  btn-sm']) !!}
+                    <div class="for text-center">
+                    {!! Form::submit('Registrar', ['class'=> 'btn btn-primary  btn-sm']) !!}
                     <a class="btn btn-success btn-sm" href="{{route('orders.index')}}">
-                        CANCELAR
+                        Cancelar
                     </a>
                 </div>
+                    </center>
                                 </div>
                             </div>
                         </div>
                 
+                </div>
                 {!! Form::close() !!}
                         <!-- /.box-body -->
             </div>
-        </div>
+   
         <!-- /.box-body -->
         <div class="box-footer">
             <!-- footer-->
         </div>
         <!-- /.box-footer-->
-
+    </div>
     <!-- /.box -->
 </div>
 @endsection

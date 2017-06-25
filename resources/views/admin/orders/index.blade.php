@@ -15,8 +15,7 @@
                     REGISTRAR <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu">
-                    <li><a href="{{ route('orders.create') }}">Entrada/Salida</a></li>
-                    <li><a href="{{ route('createevent') }}">Evento</a></li>
+                    <li><a href="{{ route('orders.create') }}">Nuevo evento</a></li>
                   </ul>
                 </div>
             </div>
@@ -28,9 +27,14 @@
                         <table class="table table-hover display table-responsive table-condensed" id="table">
                             <thead>
                             <tr>
+                                <th>CLIENTE</th>
                                 <th>TITULO</th>
-                                <th>CREADO POR</th>
-                                <th>FECHA DE REGISTRO</th>
+                                <th>UBICACION</th>
+                                <th>MONTO</th>
+                                <th>ESTADO</th>
+                                <th>CONTACTO</th>
+                                <th>MONTO</th>
+                                <th>FECHA DEL EVENTO</th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -38,13 +42,47 @@
                             </thead>
                             <tbody>
                             @foreach($orders as $order)
-                                 @if($order->type == "entry" || $order->type == "remove")
                                     <tr>
+                                        <td>
+                                            {{ $order->user->fullname }}
+                                        </td>
                                         <td>
                                             {{ $order->title }}
                                         </td>
                                         <td>
-                                            {{ $order->creat->fullname }}
+                                            {{ $order->locale }}
+                                        </td>
+                                        <td>
+                                            {{ $order->total }}
+                                        </td>
+                                        <td>
+                                            @if($order->status == "confirmed")
+                                                <span class="label label-success">
+                                                    CONFIRMADO
+                                                </span>
+                                            @elseif($order->status == "payment_received")
+                                                <span class="label label-warning">
+                                                    PAGO RECIBIDO
+                                                </span>
+                                            @elseif($order->status == "Rejected")
+                                                <span class="label label-danger">
+                                                    ORDEN RECHAZADA
+                                                </span>
+                                            @elseif($order->status == "payment_verified")
+                                                <span class="label label-primary">
+                                                    PAGO VERIFICADO
+                                                </span>
+                                            @else
+                                                <span class="label label-default">
+                                                    EN ESPERA
+                                                </span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            {{ $order->user->telephone }}
+                                        </td>
+                                        <td>
+                                            {{ $order->total }}
                                         </td>
                                         <td>
                                             {{ $order->date }}
@@ -66,7 +104,6 @@
                                             {!! Form::close() !!}
                                         </td>
                                     </tr>
-                                @endif
                             @endforeach
                             </tbody>
                         </table>

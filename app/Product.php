@@ -11,10 +11,11 @@ class Product extends Model
     
     public function registers()
     {
-        return $this->hasMany('App\Register');
+        return $this->belongsToMany('App\Register', 'product_register')->withPivot('quantity');
     }
+
     public function orders()
     {
-    	return $this-> belongsToMany('App\Order', 'order_product')->withPivot('quantity');
+    	return $this->belongsToMany('App\Order', 'order_product')->withPivot('quantity');
     }
 }

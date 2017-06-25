@@ -26,7 +26,7 @@
                             <tr>
                                 <th>NOMBRE</th>
                                 <th>RIF</th>
-                                <th></th>
+                                <th>CORREO ELECTRONICO</th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -39,6 +39,9 @@
                                     </td>
                                     <td>
                                         {{ $provider->rif }}
+                                    </td>
+                                    <td>
+                                        {{ $provider->email }}
                                     </td>
                                     <td>
                                         <a href="{{ route('providers.show', $provider->id) }}">

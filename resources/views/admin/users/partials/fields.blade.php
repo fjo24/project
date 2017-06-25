@@ -16,12 +16,20 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            {!! Form::label('fullname', 'Nombre') !!}
-                                                {!! Form::text('fullname', null, ['class' => 'form-control', 'placeholder' => 'Nombre']) !!}
+                                            {!! Form::label('type', 'Tipo de usuario') !!}
+                                                {!! Form::select('type', ['' => 'Seleccione un tipo de usuario', 'person' => 'Persona Natural', 'organization' => 'Organización'], null, ['class' => 'form-control', 'placeholder' => 'Seleccione un nivel de usuario']) !!}
                                         </div>
                                         <div class="form-group">
-                                            {!! Form::label('type', 'Tipo de usuario') !!}
-                                                {!! Form::select('type', ['' => 'Seleccione un tipo de usuario', 'person' => 'Persona natural', 'organization' => 'Organizacion'], null, ['class' => 'form-control', 'placeholder' => 'Seleccione un tipo de usuario']) !!}
+                                            {!! Form::label('name', 'Nombre') !!}
+                                                {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Nombre']) !!}
+                                        </div>
+                                        <div class="form-group">
+                                            {!! Form::label('lastname', 'Apellido') !!}
+                                                {!! Form::text('lastname', null, ['class' => 'form-control', 'placeholder' => 'Apellido']) !!}
+                                        </div>
+                                        <div class="form-group">
+                                            {!! Form::label('fullname', 'Nombre completo') !!}
+                                                {!! Form::text('fullname', null, ['class' => 'form-control', 'placeholder' => 'Nombre completo']) !!}
                                         </div>
                                         <div class="form-group">
                                             {!! Form::label('level', 'Nivel de usuario') !!}

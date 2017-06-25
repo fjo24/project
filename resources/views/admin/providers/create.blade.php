@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Edición de proveedor')
+@section('title', 'Nuevo proveedor')
 @include('flash::message')
 @section('contenido')
     {!! Form::open(['route' => 'providers.store']) !!}

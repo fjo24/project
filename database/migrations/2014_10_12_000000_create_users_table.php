@@ -8,8 +8,10 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('fullname', 50);
-            $table->enum('type', ['person', 'organization'])->default('person');
+            $table->string('name', 50)->nullable();
+            $table->string('lastname', 50)->nullable();
+            $table->string('fullname', 250);
+            $table->enum('type', ['person', 'organization']);
             $table->enum('level', ['member', 'admin'])->default('member');
             $table->string('email')->unique();
             $table->string('identification', 25)->unique();

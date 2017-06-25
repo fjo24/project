@@ -82,7 +82,8 @@ return [
     'timezone'             => 'El campo :attribute debe contener una zona válida.',
     'unique'               => 'El elemento :attribute ya está en uso.',
     'url'                  => 'El formato de :attribute no corresponde con el de una URL válida.',
-
+    'after_or_equal'       => 'La fecha debe ser igual o mayor que la fecha de hoy.',
+    'before_or_equal'      => 'La fecha debe ser igual o menor que la fecha de hoy.',
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
@@ -113,27 +114,22 @@ return [
 
     'attributes'           => [
 
-        'SEX'                  => 'sexo',
-        'EMPLOYEE_NUMBER'      => 'numero de documento',
-        'FIRST_NAME'           => 'primer nombre',
-        'SECOND_NAME'          => 'segundo nombre',
-        'first_LAST_NAME'      => 'primer apellido',
-        'SECOND_LAST_NAME'     => 'segundo apellido',
-        'DATE_OF_BIRTH'        => 'fecha de nacimiento',
-        'EMAIL_ADDRESS'        => 'correo electronico',
-        'EFFECTIVE_START_DATE' => 'fecha de ingreso',
-        'EFFECTIVE_END_DATE'   => 'fecha de cese',
-        'TELEF1'               => 'telefono',
-        'TELEF2'               => 'celular',
-        'SALARY'               => 'salario',
-        'SOLD_MIN'             => 'venta minima',
-        'DISCCOUNT'            => 'descuento',
-        'COUNTRY'              => 'distrito',
-        'ADDRESS'              => 'direccion',
-
-        'num_motor'            => 'numero del motor',
-        'proxima_visita'       => 'proxima visita',
-        'created_at'           => 'fecha de creación',
+        'SEX'               => 'sexo',
+        'email'             => 'correo electronico',
+        'identification'    => 'de identificacion', 
+        'fullname'          => 'nombre',   
+        'telephone'         => 'telefono',
+        'type'              => 'tipo',
+        'name'              => 'nombre',
+        'lastname'          => 'apellido',
+        'password'          => 'contraseña', 
+        'info'              => 'descripción', 
+        'quantity'          => 'cantidad', 
+        'available'         => 'disponible', 
+        'cost'              => 'costo',
+        'title'             => 'titulo', 
+        'event_id'          => 'tipo de evento', 
+        'date'              => 'fecha', 
 
     ],
 

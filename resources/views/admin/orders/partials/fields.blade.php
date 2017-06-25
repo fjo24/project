@@ -8,7 +8,7 @@
                                 <div class="form-group">
                                     {!! Form::label('type', 'Tipo de orden') !!}
                                     {!! Form::select('type', ['service' => 'Servicio de venta o alquiler', 'entry' => 'Entrada de productos al almacen', 'remove' => 'Salida de productos del almacen'], null, ['class' => 'form-control', 'placeholder' => 'Seleccione tipo de registro']) !!}
-                                </div> 
+                                </div>
                                 <div class="form-group">
                                     {!! Form::label('title', 'Titulo') !!}
                                     {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Ingrese aqui un titulo o descripcion breve del evento']) !!}
