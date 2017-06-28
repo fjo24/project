@@ -11,6 +11,10 @@
                     {!! Form::text('date', null, ['class' => 'form-control datepicker', 'placeholder' => 'Fecha de pago']) !!}
                 </div>
                 <div class="form-group">
+                    {!! Form::label('user_id', 'Nombre de quien paga:') !!}
+                    {!! Form::select('user_id', $users, null, ['class' => 'form-control', 'placeholder' => 'Indique la persona responsable del pago']) !!}
+                </div>
+                <div class="form-group">
                     {!! Form::label('order_id', 'Evento a pagar') !!}
                     {!! Form::select('order_id', $orders, null, ['class' => 'form-control', 'placeholder' => 'Seleccione evento']) !!}
                 </div>

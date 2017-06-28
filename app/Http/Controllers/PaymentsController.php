@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\PaymentsRequest;
 Use App\Payment;
+use Laracasts\Flash\Flash;
 Use App\Order;
+Use App\User;
 use DB;
 
 class PaymentsController extends Controller
@@ -18,8 +20,9 @@ class PaymentsController extends Controller
 
     public function create()
     {	
+        $users = User::orderBy('fullname', 'ASC')->pluck('fullname', 'id')->all();
     	$orders = Order::orderBy('id', 'DESC')->pluck('title', 'id')->all();
-        return view('admin.payments.create', compact('orders'));
+        return view('admin.payments.create', compact('orders', 'users'));
     }
 
     public function store(PaymentsRequest $request)
@@ -31,14 +34,6 @@ class PaymentsController extends Controller
         $id=$request['order_id'];
         //dd($p);
         $order = Order::find($id);
-    	//dd($order);
-    	/*$sales = DB::table('payments')
-            ->join('orders', 'orders.id', '=', 'payments.order_id')
-            
-            ->select(DB::raw('sum(orders.paid_out) AS total_sales'))
-            ->where('orders.id', $id)
-            ->get();
-        $paids = $sales[0]->total_sales;*/
         $paids = $order->paid_out;
         $mount = $payment->mount;
         $request['paid_out'] = $mount + $paids;
@@ -46,9 +41,14 @@ class PaymentsController extends Controller
         $total = $order->total;
         if ($paid >= $total) {
         	$request['status'] = 'payment_received';
+            Flash::success('EL PAGO FUE REGISTRADO CON EXITO, DEBE ESPERAR A QUE SEA CONFIRMADO!')->important(); 
+        }else{
+            $rest=$total-$paid;
+            Flash::success('EL PAGO FUE REGISTRADO PERO ES INSUFICIENTE!.. Faltan '. $rest . ' BsF PARA COMPLETAR EL PAGO..!')->important();    
         }
+
         $order->update($request);
-       // Flash::success('Se ha registrado el proveedor '. $payment->title. ' de manera exitosa!')->important();
+
         return redirect()->route('payments.index');
     }
 
@@ -60,9 +60,10 @@ class PaymentsController extends Controller
 
     public function edit($id)
     {
+        $users = User::orderBy('fullname', 'ASC')->pluck('fullname', 'id')->all();
     	$orders = Order::orderBy('id', 'DESC')->pluck('title', 'id')->all();
         $payment = Payment::find($id);
-        return view('admin.payments.edit', compact('payment', 'orders'));
+        return view('admin.payments.edit', compact('payment', 'orders', 'users'));
     }
 
     public function update(PaymentsRequest $request, $id)
@@ -70,7 +71,7 @@ class PaymentsController extends Controller
         $request = $request->all();
         $payment = Payment::find($id);
         $payment->update($request);
-     //   flash('El proveedor '. $payment->name. ' ha sido editado con exito!!', 'success')->important();
+        flash('El proveedor '. $payment->name. ' ha sido editado con exito!!', 'success')->important();
         return redirect()->route('payments.index');
     }
 
@@ -78,7 +79,7 @@ class PaymentsController extends Controller
     {
         $payment = Payment::find($id);
         $payment->delete();
-        //flash('El proveedor '. $payment->name.' ha sido eliminado con exito!!', 'danger')->important();
+        flash('El pago ha sido eliminado con exito!!', 'danger')->important();
         return redirect()->route('payments.index');
     }
 
@@ -87,7 +88,6 @@ class PaymentsController extends Controller
     	
     	$payments = Payment::orderBy('id', 'DESC')->with('order')->get();
     	$orders = Order::orderBy('id', 'ASC')->get();
-        //$request['total'] = $sales[0]->total_sales;
 
         return view('admin.payments.pay', compact('orders', 'orders'));
     }
@@ -96,18 +96,20 @@ class PaymentsController extends Controller
     {	
 
     	$payment = Payment::find($id);
-    	$request['status'] = 'verified';
+    	$request['status'] = 'payment_verified';
     	$payment->update($request);
     	$id=$payment->order_id;
-    	$pay = Payment::orderBy('id', 'DESC')->where('order_id', $id)->where('status', 'verified')->sum('mount');
+    	$pay = Payment::orderBy('id', 'DESC')->where('order_id', $id)->where('status', 'payment_verified')->sum('mount');
     	$order = Order::find($id);
     	$total = $order->total;
         if ($pay >= $total) {
         	$request['status'] = 'payment_verified';
         	$order->update($request);
+            Flash::success('EL PAGO FUE VERIFICADO CON EXITO, Y ESTA COMPLETO!')->important();
+        }else{
+        Flash::success('EL PAGO FUE VERIFICADO PERO ES INSUFICIENTE!.. POR FAVOR REVISE SI HAY MAS PAGOS REGISTRADOS SIN VERIFICAR PARA ESTE EVENTO')->important();    
         }
-        
-        //$request['total'] = $sales[0]->total_sales;
+
         return view('admin.payments.verified')->with('payment', $payment);
     }
 

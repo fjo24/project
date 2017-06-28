@@ -20,6 +20,10 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Order');
     }
+    public function payments()
+    {
+        return $this->hasMany('App\Payment');
+    }
     public function articles()
     {
         return $this->hasMany('App\Article');

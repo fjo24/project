@@ -31,6 +31,7 @@ foreach ($orders as $order){
             $type=$order->type;
             $id=$order->id;
             $status=$order->status;
+            $date_order = $order->date;
             $products = Product::orderBy('name', 'ASC')->get();
             //Selecting just ids from the pivot table that is related to the id of order
 
@@ -60,6 +61,8 @@ foreach ($orders as $order){
                     }
                 }
             }
+
+        
         }
           
         return view('admin.products.index', compact('products'));

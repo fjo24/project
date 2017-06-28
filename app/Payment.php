@@ -7,11 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Payment extends Model
 {
     protected $table    = "payments";
-    protected $fillable = ['id', 'date', 'type', 'status', 'mount', 'ref', 'order_id'];
+    protected $fillable = ['id', 'date', 'type', 'status', 'mount', 'ref', 'order_id', 'user_id'];
 
     public function order()
     {
         return $this->belongsTo('App\Order');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
     }
 
     public function getdateAttribute($date)

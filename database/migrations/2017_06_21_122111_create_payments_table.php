@@ -20,9 +20,11 @@ class CreatePaymentsTable extends Migration
             $table->enum('status', ['on_hold', 'payment_verified'])->default('on_hold');
             $table->string('mount');
             $table->string('ref')->nullable();
-            $table->integer('order_id')->unsigned();            
+            $table->integer('order_id')->unsigned();     
+            $table->integer('user_id')->unsigned();       
 
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

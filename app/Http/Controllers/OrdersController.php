@@ -10,7 +10,7 @@ Use App\Provider;
 Use App\User;
 Use App\Event;
 Use App\Calendar;
-//use Laracasts\Flash\Flash;
+use Laracasts\Flash\Flash;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +20,57 @@ class OrdersController extends Controller
     public function index()
     {
         $orders = Order::orderBy('id', 'DESC')->with('user')->get();
+        $products = Product::orderBy('id', 'DESC')->where('type', 'rent')->get();
+
+    foreach ($orders as $order) {
+        $id = $order->id;
+        foreach ($order->products as $qua) {
+            $quantity= $qua->pivot->quantity;
+        }
+        
+        $events = Order::orderBy('id', 'ASC')->get();
+        $a = 0;
+            foreach ($events as $event){
+                $d = $event->date;
+                $status = $event->status;
+                    if ($d==$order->date) {
+                    foreach ($products as $product){
+                        $products_id = DB::table('order_product')
+                            ->join('orders', 'orders.id', '=', 'order_product.order_id')
+                            ->select('order_product.product_id AS ids')
+                            ->where('order_product.product_id', $product->id)
+                            ->where('order_product.order_id', $id)
+                            ->get();
+                               
+                            //if ($status=='confirmed') {
+                                //SUM mounts of id selected..
+                                //quantity field
+                                    foreach ($products_id as $product_id){
+                                        $quantity = DB::table('order_product')
+                                            ->join('products', 'products.id', '=', 'order_product.product_id')
+                                            ->select(DB::raw('order_product.quantity AS updated_quantity'))
+                                            ->where('order_product.order_id', $id)
+                                            ->where('products.id', $product_id->ids)
+                                            ->get();
+                                        $req = $quantity[0]->updated_quantity;
+
+                                       // $product->update(['available' => $req]);
+                                        
+                                        $sum= $a + $req;
+                                        //dd($order->availability);
+                                        if($sum >= $product->quantity ){
+                                          //  dd('si');
+                                            $order->availability='n';
+                                            $order->update();
+                                           // $order->update(['availability' => 'n']);
+
+                                        }
+                                    }
+                            //}    
+                        }
+                    }
+                }
+            }
         return view('admin.orders.index', compact('orders'));
     }
     
@@ -54,7 +105,7 @@ class OrdersController extends Controller
         //ready to sync
         $order->products()->sync($data);
 
-      //  Flash::success('Se ha registrado la orden de manera exitosa!')->important();
+        Flash::success('Se ha registrado la orden de manera exitosa!')->important();
         return redirect()->route('confirm', $order->id);
     }
 

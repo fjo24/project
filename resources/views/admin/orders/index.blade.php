@@ -30,7 +30,7 @@
                                 <th>CLIENTE</th>
                                 <th>TITULO</th>
                                 <th>UBICACION</th>
-                                <th>MONTO</th>
+                                <th>DISPONIBILIDAD</th>
                                 <th>ESTADO</th>
                                 <th>CONTACTO</th>
                                 <th>MONTO</th>
@@ -53,7 +53,19 @@
                                             {{ $order->locale }}
                                         </td>
                                         <td>
-                                            {{ $order->total }}
+                                            @if($order->availability == "y")
+                                                <span class="label label-primary">
+                                                    SI
+                                                </span>
+                                            @elseif($order->availability == "n")
+                                                <span class="label label-warning">
+                                                    NO
+                                                </span>
+                                            @else
+                                                <span class="label label-danger">
+                                                    CONFLICTO
+                                                </span>
+                                            @endif
                                         </td>
                                         <td>
                                             @if($order->status == "confirmed")
