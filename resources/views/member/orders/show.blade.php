@@ -6,11 +6,10 @@
     <div class="box">
         <div class="box-header with-border">
             <h3 class="box-title">
-                Detalles de la orden
             </h3>
             <div class="box-tools">
                 <div class="text-center">
-                    <a class="btn btn-success btn-sm" href="{{ route('pdf', $order->id) }}">
+                    <a class="btn btn-success btn-sm" href="{{ route('memberpdf', $order->id) }}">
                         DESCARGAR PDF
                     </a>
                 </div>
@@ -34,7 +33,7 @@
       <div class="row">
         <div class="col-xs-12">
           <h1 class="page-header">
-            <img alt="User Image" src="{{ asset ('AdminLTE/dist/img/francachela.png') }}"> <b>Agencia de Festejos Francachela C.A.</b>
+            <img alt="User Image" src="{{ asset ('AdminLTE/dist/img/francachela.png') }}"> <b>Agencia de Festejos Francachela C.A.</b><small>J-405021420.</small>
             <small class="pull-right">Fecha de registro: {{ $order->created_at }}</small>
           </h1>
         </div>
@@ -84,7 +83,7 @@
         <!-- /.col -->
       </div>
       <!-- /.row -->
-
+<CENTER><H1>{{ $order->title }}</H1></CENTER><BR>
       <!-- Table row -->
       <div class="row">
         <div class="col-xs-12 table-responsive">
@@ -149,52 +148,14 @@
                 </div>
             </div>
         </div>
-        @if($order->status == "confirmed")
+
             <div class="for text-center">
-                <a class="btn btn-success btn-sm" href="{{ route('orders.edit', $order->id) }}">
+                <a class="btn btn-success btn-sm" href="{{ route('editorder', $order->id) }}">
                     EDITAR
                 </a>
-                <a class="btn btn-danger btn-sm" href="{{ route('orders.index') }}">
+                <a class="btn btn-danger btn-sm" href="{{ route('indexorder') }}">
                     CANCELAR
                 </a>
             </div>
-        @else
-            <div class="for text-center">
-            @if(Auth::user()->level=='admin')
-                <a class="btn btn-success btn-sm" href="{{ route('indexconfirmed') }}">
-                    DEJAR EN ESPERA
-                </a>
-              @if($order->status=='payment_verified')
-                @if($order->availability=='y')
-                <a class="btn btn-success btn-sm" href="{{ route('eventconfirmed', $order->id) }}">
-                    COMFIRMAR
-                </a>
-                @else
-                <a class="btn btn-success btn-sm" href="{{ route('reconfirmed', $order->id) }}">
-                    COMFIRMAR
-                </a>
-                @endif
-              @else
-                <a class="btn btn-success btn-sm" href="{{ route('orders.index') }}">
-                    COMFIRMAR
-                </a>
-              @endif
-                <a class="btn btn-success btn-sm" href="{{ route('orders.edit', $order->id) }}">
-                    EDITAR
-                </a>
-                <a class="btn btn-danger btn-sm" href="{{ route('orders.index') }}">
-                    CANCELAR
-                </a>
-            @endif
-            @if(Auth::user()->level=='member')
-                <a class="btn btn-success btn-sm" href="{{ route('orders.edit', $order->id) }}">
-                    EDITAR
-                </a>
-                <a class="btn btn-danger btn-sm" href="{{ route('orders.index') }}">
-                    CANCELAR
-                </a>
-            @endif
-            </div>
-        @endif
     </div>
 @endsection

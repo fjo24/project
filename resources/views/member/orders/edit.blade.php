@@ -1,19 +1,14 @@
 @extends('layouts.admin')
 
-@section('title', 'Editar evento')
+@section('title', 'Nuevo evento')
 
 @section('contenido')
         @include('partials.errors')
-        @if($order->status == "confirmed")
-                            <H1>Esta orden no puede ser editada</H1>
-@else
-    
         <div class="box-body">
             <div class="row">
                 <div class="col-xs-12">
                     <div class="container">
-                            {!! Form::model($order, ['route' => ['orders.update', $order], 'method' => 'PUT']) !!}
-
+                    {!! Form::model($order, ['route' => ['updateorder', $order], 'method' => 'PUT']) !!}
                         <div class="col-md-10">
                             <div class="box box-primary">
                                 <div class="box-header with-border">
@@ -52,13 +47,10 @@
                                     </div>
                                 </div>
                                     <center> 
-
-
                                     <div class="col-md-12">
                    <div class="col-md-12">    
                         <h2>Seleccione producto y cantidad</h2>
                     </div>
-                        
                             <div class="row">
                                  @foreach ($order->products as $product)
                                     <div class="contacts">
@@ -93,17 +85,17 @@
                                 </div>
               
                     </div>
-                                </center>
-                                </div>
-                            </div>
-                        </div>
-                
-                </div>
-                <div class="for text-center">
+                    <div class="for text-center">
                     {!! Form::submit('Registrar', ['class'=> 'btn btn-primary  btn-sm']) !!}
                     <a class="btn btn-success btn-sm" href="{{route('orders.index')}}">
                         Cancelar
                     </a>
+                </div>
+                    </center>
+                                </div>
+                            </div>
+                        </div>
+                
                 </div>
                 {!! Form::close() !!}
                         <!-- /.box-body -->
@@ -117,7 +109,6 @@
     </div>
     <!-- /.box -->
 </div>
-@endif
 @endsection
 
 @section('js')

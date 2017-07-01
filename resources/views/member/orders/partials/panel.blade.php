@@ -26,13 +26,11 @@ folder instead of downloading all of them to reduce the load. -->
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.css"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.js"></script>
 
-
-
-    <link href="{{ asset ('AdminLTE/plugins/datatables/dataTables.bootstrap.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset ('AdminLTE/plugins/datepicker/bootstrap-datepicker3.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset ('AdminLTE/plugins/datepicker/bootstrap-datepicker.standalone.css') }}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{{ asset ('chosen/chosen.css') }}">
     <link href="{{ asset ('css/addrow.css') }}" rel="stylesheet" type="text/css">
 
 
@@ -85,13 +83,13 @@ folder instead of downloading all of them to reduce the load. -->
                     <li class="dropdown user user-menu">
                     @if (Auth::guest())
                         <li><a href="{{ url('/login') }}">ENTRAR</a></li>
-                        <li><a href="{{ url('member/type') }}">REGISTRO</a></li>
+                        <li><a href="{{ route('users.create')}}">REGISTRO</a></li>
                     @else
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <img alt="User Image" class="user-image" src="{{ asset ('AdminLTE/dist/img/avatar5.png') }}">
-                                <span class="hidden-xs">
-                                    {{ Auth::user()->fullname }} <span class="caret"></span>
-                                </span>
+                            <span class="hidden-xs">
+                                            {{ Auth::user()->fullname }} <span class="caret"></span>
+                                        </span>
                             </img>
                         </a>
                         <ul class="dropdown-menu">
@@ -113,15 +111,9 @@ folder instead of downloading all of them to reduce the load. -->
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                @if(Auth::user()->level == "admin")
                                     <a class="btn btn-default btn-flat" href="{{ route('users.show', Auth::user()->id) }}">
                                         Perfil
                                     </a>
-                                @else
-                                    <a class="btn btn-default btn-flat" href="{{ route('showmember', Auth::user()->id) }}">
-                                        Perfil
-                                    </a>
-                                @endif
                                 </div>
                                 <div class="pull-right">
                                     <a class="btn btn-default btn-flat" href="{{ url('/logout') }}">
@@ -384,7 +376,7 @@ folder instead of downloading all of them to reduce the load. -->
                         <i class="fa fa-users">
                         </i>
                         <span>
-                                Productos
+                                Opciones de usuario
                                 </span>
                         <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right">
@@ -393,10 +385,17 @@ folder instead of downloading all of them to reduce the load. -->
                     </a>
                     <ul class="treeview-menu">
                         <li>
-                            <a href="{{route('indexproducts')}}">
+                            <a href="{{route('users.index')}}">
                                 <i class="fa fa-circle-o">
                                 </i>
-                                Lista de productos y servicios
+                                Listado
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('users.create')}}">
+                                <i class="fa fa-circle-o">
+                                </i>
+                                Registrar
                             </a>
                         </li>
                     </ul>
@@ -406,59 +405,23 @@ folder instead of downloading all of them to reduce the load. -->
                         <i class="fa fa-calendar">
                         </i>
                         <span>
-                                Eventos
-                        </span>
+                                    Eventos
+                                </span>
                         <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right">
-                            </i>
-                        </span>
+                                    <i class="fa fa-angle-left pull-right">
+                                    </i>
+                                </span>
                     </a>
                     <ul class="treeview-menu">
+                 
                         <li>
-                            <a href="{{route('indexorder')}}">
-                                <i class="fa fa-circle-o">
-                                </i>
-                                Presupuestos solicitados
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="treeview-menu">
-                        <li>
-                            <a href="{{route('createorder')}}">
+                            <a href="{{route('createevent')}}">
                                 <i class="fa fa-circle-o">
                                 </i>
                                 Solicitar presupuesto
                             </a>
                         </li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-calendar">
-                        </i>
-                        <span>
-                                Pagos
-                                </span>
-                        <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right">
-                                    </i>
-                                </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li>
-                            <a href="{{route('createpay')}}">
-                                <i class="fa fa-circle-o">
-                                </i>
-                                Registrar pago
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{route('indexpay')}}">
-                                <i class="fa fa-circle-o">
-                                </i>
-                                Lista de pagos
-                            </a>
-                        </li>
+                      
                     </ul>
                 </li>
                 <li class="treeview">
@@ -769,6 +732,15 @@ folder instead of downloading all of them to reduce the load. -->
 <script type="text/javascript" src="{{ asset('AdminLTE/plugins/datatables/datatables.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('AdminLTE/plugins/input-mask/jquery.inputmask.js') }}"></script>
 <script type="text/javascript" src="{{ asset('AdminLTE/plugins/input-mask/jquery.inputmask.phone.extensions.js') }}"></script>
+<script type="text/javascript" src="{{ asset('AdminLTE/plugins/mask/jquery.mask.min.js') }}"></script>
+
+<script type="text/javascript" src="{{ asset('AdminLTE/plugins/mask/jquery.mask.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('AdminLTE/plugins/mask/jquery.mask.min.js') }}"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.js"></script>
+
+
 
 
 @yield('js')

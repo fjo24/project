@@ -9,6 +9,7 @@ use Laracasts\Flash\Flash;
 Use App\Order;
 Use App\User;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentsController extends Controller
 {
@@ -21,7 +22,7 @@ class PaymentsController extends Controller
     public function create()
     {	
         $users = User::orderBy('fullname', 'ASC')->pluck('fullname', 'id')->all();
-    	$orders = Order::orderBy('id', 'DESC')->pluck('title', 'id')->all();
+    	$orders = Order::orderBy('id', 'DESC')->where('status', 'on_hold')->pluck('title', 'id')->all();
         return view('admin.payments.create', compact('orders', 'users'));
     }
 
@@ -118,4 +119,61 @@ class PaymentsController extends Controller
         $payment = Payment::find($id);
         return view('admin.payments.pdf.ppdf', compact('payment'));
     }
+
+    //MEMBERS
+    public function indexpay()
+    {
+        $id = Auth()->user()->id;
+        $payments = Payment::orderBy('id', 'DESC')->where('user_id', $id)->with('order')->get();
+        return view('member.payments.index', compact('payments'));
+    }
+
+    public function createpay()
+    {   
+        $id = Auth()->user()->id;
+        $users = User::orderBy('fullname', 'ASC')->pluck('fullname', 'id')->all();
+        $orders = Order::orderBy('id', 'DESC')->where('user_id', $id)->where('status', 'on_hold')->pluck('title', 'id')->all();
+        return view('member.payments.create', compact('orders', 'users'));
+    }
+
+    public function storepay(PaymentsRequest $request)
+    {
+        $request = $request->all();
+        $request['user_id'] = Auth()->user()->id;
+        $payment = new Payment($request);
+        //$payment->id=$p;
+        $payment->save();
+        $id=$request['order_id'];
+        //dd($p);
+        $order = Order::find($id);
+        $paids = $order->paid_out;
+        $mount = $payment->mount;
+        $request['paid_out'] = $mount + $paids;
+        $paid = $request['paid_out'];
+        $total = $order->total;
+        if ($paid >= $total) {
+            $request['status'] = 'payment_received';
+            Flash::success('EL PAGO FUE REGISTRADO CON EXITO, DEBE ESPERAR A QUE SEA CONFIRMADO!')->important(); 
+        }else{
+            $rest=$total-$paid;
+            Flash::success('EL PAGO FUE REGISTRADO PERO ES INSUFICIENTE!.. Faltan '. $rest . ' BsF PARA COMPLETAR EL PAGO..!')->important();    
+        }
+
+        $order->update($request);
+
+        return redirect()->route('indexpay');
+    }
+
+    public function showpay($id)
+    {
+        $payment = Payment::find($id);
+        return view('member.payments.show', compact('payment'));
+    }
+
+    public function memberpdf($id)
+    {
+        $order = Order::find($id);
+        return view('member.orders.pdf.pdf', compact('order'));
+    }
+
 }

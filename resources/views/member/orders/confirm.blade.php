@@ -67,19 +67,11 @@
           <b>Orden numero #{{ $order->id }}</b><br>
           <b>Fecha del evento: </b>{{ $order->date }}<br>
           <b>Ubicacion del evento:</b> {{ $order->locale }}<br>
-          <b>Estado del evento: </b>
-          @if($order->status == "on_hold")
-            EN ESPERA
-          @elseif($order->status == "Rejected")
-            RECHAZADA
-          @elseif($order->status == "payment_received")
-            PAGO RECIBIDO
-          @elseif($order->status == "payment_verified")
-            PAGO VERIFICADO
-          @else
-            CONFIRMADO
-          @endif
-          <br>
+          <b>Estado del evento: </b>@if($order->status == "on_hold")
+                                      EN ESPERA
+                                  @else
+                                      CONFIRMADO
+                                  @endif<br>
         </div>
         <!-- /.col -->
       </div>
@@ -165,18 +157,12 @@
                     DEJAR EN ESPERA
                 </a>
               @if($order->status=='payment_verified')
-                @if($order->availability=='y')
                 <a class="btn btn-success btn-sm" href="{{ route('eventconfirmed', $order->id) }}">
                     COMFIRMAR
                 </a>
-                @else
-                <a class="btn btn-success btn-sm" href="{{ route('reconfirmed', $order->id) }}">
-                    COMFIRMAR
-                </a>
-                @endif
               @else
-                <a class="btn btn-success btn-sm" href="{{ route('orders.index') }}">
-                    COMFIRMAR
+                <a class="btn btn-success btn-sm" href="{{ route('payments.create') }}">
+                    REGISTRAR PAGO
                 </a>
               @endif
                 <a class="btn btn-success btn-sm" href="{{ route('orders.edit', $order->id) }}">

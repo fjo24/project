@@ -1,32 +1,15 @@
 @extends('layouts.admin')
+@if($order->type == "service")
+        @section('title', 'Orden de '.$order->user->fullname)
+	@elseif($order->type == "remove")
+      	@section('title', 'Orden de salida de productos de almacen')
+    @else
+    	@section('title', 'Orden de entrada de productos de almacen')
+@endif
 
-@section('title', 'Datos de orden')
 
 @section('contenido')
-    <div class="box">
-        <div class="box-header with-border">
-            <h3 class="box-title">
-                Detalles de la orden
-            </h3>
-            <div class="box-tools">
-                <div class="text-center">
-                    <a class="btn btn-success btn-sm" href="{{ route('pdf', $order->id) }}">
-                        DESCARGAR PDF
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="box-body">
-            <div class="col-md-12">
-                <div class="box box-solid box-default">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">
-                            Datos de orden:
-                        </h3>
-                    </div>
-
-
-  <body>
+	<body onload="window.print();">
   <div class="wrapper">
     <!-- Main content -->
     <section class="invoice">
@@ -67,24 +50,16 @@
           <b>Orden numero #{{ $order->id }}</b><br>
           <b>Fecha del evento: </b>{{ $order->date }}<br>
           <b>Ubicacion del evento:</b> {{ $order->locale }}<br>
-          <b>Estado del evento: </b>
-          @if($order->status == "on_hold")
-            EN ESPERA
-          @elseif($order->status == "Rejected")
-            RECHAZADA
-          @elseif($order->status == "payment_received")
-            PAGO RECIBIDO
-          @elseif($order->status == "payment_verified")
-            PAGO VERIFICADO
-          @else
-            CONFIRMADO
-          @endif
-          <br>
+          <b>Estado del evento: </b>@if($order->status == "on_hold")
+                                      EN ESPERA
+                                  @else
+                                      CONFIRMADO
+                                  @endif<br>
         </div>
         <!-- /.col -->
       </div>
       <!-- /.row -->
-
+<CENTER><H1>{{ $order->title }}</H1></CENTER><BR>
       <!-- Table row -->
       <div class="row">
         <div class="col-xs-12 table-responsive">
@@ -145,56 +120,5 @@
   </div>
   <!-- ./wrapper -->
   </body>
-
-                </div>
-            </div>
-        </div>
-        @if($order->status == "confirmed")
-            <div class="for text-center">
-                <a class="btn btn-success btn-sm" href="{{ route('orders.edit', $order->id) }}">
-                    EDITAR
-                </a>
-                <a class="btn btn-danger btn-sm" href="{{ route('orders.index') }}">
-                    CANCELAR
-                </a>
-            </div>
-        @else
-            <div class="for text-center">
-            @if(Auth::user()->level=='admin')
-                <a class="btn btn-success btn-sm" href="{{ route('indexconfirmed') }}">
-                    DEJAR EN ESPERA
-                </a>
-              @if($order->status=='payment_verified')
-                @if($order->availability=='y')
-                <a class="btn btn-success btn-sm" href="{{ route('eventconfirmed', $order->id) }}">
-                    COMFIRMAR
-                </a>
-                @else
-                <a class="btn btn-success btn-sm" href="{{ route('reconfirmed', $order->id) }}">
-                    COMFIRMAR
-                </a>
-                @endif
-              @else
-                <a class="btn btn-success btn-sm" href="{{ route('orders.index') }}">
-                    COMFIRMAR
-                </a>
-              @endif
-                <a class="btn btn-success btn-sm" href="{{ route('orders.edit', $order->id) }}">
-                    EDITAR
-                </a>
-                <a class="btn btn-danger btn-sm" href="{{ route('orders.index') }}">
-                    CANCELAR
-                </a>
-            @endif
-            @if(Auth::user()->level=='member')
-                <a class="btn btn-success btn-sm" href="{{ route('orders.edit', $order->id) }}">
-                    EDITAR
-                </a>
-                <a class="btn btn-danger btn-sm" href="{{ route('orders.index') }}">
-                    CANCELAR
-                </a>
-            @endif
-            </div>
-        @endif
-    </div>
+      <!-- /.col <body onload="window.print();">-->                    
 @endsection

@@ -114,7 +114,6 @@ return [
 
     'attributes'           => [
 
-        'SEX'               => 'sexo',
         'email'             => 'correo electronico',
         'identification'    => 'de identificacion', 
         'fullname'          => 'nombre',   
@@ -130,6 +129,7 @@ return [
         'title'             => 'titulo', 
         'event_id'          => 'tipo de evento', 
         'date'              => 'fecha', 
+        'locale'              => 'ubicacion', 
 
     ],
 

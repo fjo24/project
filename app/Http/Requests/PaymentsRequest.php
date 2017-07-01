@@ -28,7 +28,7 @@ class PaymentsRequest extends FormRequest
             'type'           => 'required', 
             'mount'          => 'required',
             'order_id'       => 'required',
-            'user_id'          => 'required',
+//            'user_id'        => 'required',
         ];
     }
 }

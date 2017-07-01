@@ -149,52 +149,15 @@
                 </div>
             </div>
         </div>
-        @if($order->status == "confirmed")
             <div class="for text-center">
-                <a class="btn btn-success btn-sm" href="{{ route('orders.edit', $order->id) }}">
-                    EDITAR
-                </a>
-                <a class="btn btn-danger btn-sm" href="{{ route('orders.index') }}">
-                    CANCELAR
-                </a>
+
+              <div class="jumbotron">
+                <h1>Existe un inconveniente!</h1>
+                <div class="alert alert-danger" role="alert"><p>El sistema nos dice que para esta fecha no hay suficiente disponibilidad de alguno de los productos solicitados... por favor has los ajustes necesarios. Puedes ignorar esta advertencia y confirmar de todos modos</p></div>
+                <p><a class="btn btn-primary btn-lg" href="{{ route('eventconfirmed', $order->id) }}" role="button">COMFIRMAR DE TODOS MODOS</a></p>
+                <p><a class="btn btn-danger btn-lg" href="{{ route('orders.index') }}" role="button">VOLVER</a></p>
+              </div>
             </div>
-        @else
-            <div class="for text-center">
-            @if(Auth::user()->level=='admin')
-                <a class="btn btn-success btn-sm" href="{{ route('indexconfirmed') }}">
-                    DEJAR EN ESPERA
-                </a>
-              @if($order->status=='payment_verified')
-                @if($order->availability=='y')
-                <a class="btn btn-success btn-sm" href="{{ route('eventconfirmed', $order->id) }}">
-                    COMFIRMAR
-                </a>
-                @else
-                <a class="btn btn-success btn-sm" href="{{ route('reconfirmed', $order->id) }}">
-                    COMFIRMAR
-                </a>
-                @endif
-              @else
-                <a class="btn btn-success btn-sm" href="{{ route('orders.index') }}">
-                    COMFIRMAR
-                </a>
-              @endif
-                <a class="btn btn-success btn-sm" href="{{ route('orders.edit', $order->id) }}">
-                    EDITAR
-                </a>
-                <a class="btn btn-danger btn-sm" href="{{ route('orders.index') }}">
-                    CANCELAR
-                </a>
-            @endif
-            @if(Auth::user()->level=='member')
-                <a class="btn btn-success btn-sm" href="{{ route('orders.edit', $order->id) }}">
-                    EDITAR
-                </a>
-                <a class="btn btn-danger btn-sm" href="{{ route('orders.index') }}">
-                    CANCELAR
-                </a>
-            @endif
-            </div>
-        @endif
+
     </div>
 @endsection

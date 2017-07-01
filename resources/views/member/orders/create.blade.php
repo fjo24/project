@@ -1,19 +1,14 @@
 @extends('layouts.admin')
 
-@section('title', 'Editar evento')
+@section('title', 'Nuevo evento')
 
 @section('contenido')
         @include('partials.errors')
-        @if($order->status == "confirmed")
-                            <H1>Esta orden no puede ser editada</H1>
-@else
-    
         <div class="box-body">
             <div class="row">
                 <div class="col-xs-12">
                     <div class="container">
-                            {!! Form::model($order, ['route' => ['orders.update', $order], 'method' => 'PUT']) !!}
-
+                        {!! Form::open(['route' => 'storeorder']) !!}
                         <div class="col-md-10">
                             <div class="box box-primary">
                                 <div class="box-header with-border">
@@ -35,12 +30,6 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        @if(Auth::user()->level=='admin')
-                                            <div class="form-group">
-                                                {!! Form::label('user_id', 'Cliente') !!}
-                                                {!! Form::select('user_id', $users, null, ['class' => 'form-control', 'placeholder' => 'Seleccione cliente']) !!}
-                                            </div>
-                                        @endif
                                         <div class="form-group">
                                             {!! Form::label('locale', 'Ubicacion del evento') !!}
                                             {!! Form::text('locale', null, ['class' => 'form-control', 'placeholder' => 'Ubicacion del evento']) !!}
@@ -52,58 +41,48 @@
                                     </div>
                                 </div>
                                     <center> 
-
-
                                     <div class="col-md-12">
                    <div class="col-md-12">    
                         <h2>Seleccione producto y cantidad</h2>
                     </div>
-                        
                             <div class="row">
-                                 @foreach ($order->products as $product)
+                                
                                     <div class="contacts">
                                     <div class="col-md-12">
                                         <div class="form-group multiple-form-group input-group">
-                                                    <div class="col-md-2">
-                                                    <span class="input-group-btn">
-                                                        <button type="button" class="btn btn-danger btn-remove">-</button>
-                                                    </span>
+                                            <div class="col-md-6">
+                                                <div class="input-group-btn input-group-select">
+                                                    <div class="form-group">
+                                                        {!! Form::select('product_id[]', $products, null, ['class' => 'form-control', 'placeholder' => 'Indique producto', 'required']) !!}
                                                     </div>
-                                                    <div class="col-md-4">
-                                                        <div class="input-group-btn input-group-select">
-                                                            <div class="form-group">
-                                                                {!! Form::select('product_id[]', $products, $product->id, ['class' => 'form-control', 'required']) !!}
-                                                            </div>
-
-                                                            <input type="hidden" class="input-group-select-val" name="contacts['type'][]" value="phone">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        {!! Form::text('quantity[]', $product->pivot->quantity, ['class' => 'form-control', 'placeholder' => 'cantidad', 'required']) !!}
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                    <span class="input-group-btn">
-                                                        <button type="button" class="btn btn-success btn-add">+</button>
-                                                    </span>
-                                                    </div>
+                                                    <input type="hidden" class="input-group-select-val" name="contacts['type'][]" value="phone">
                                                 </div>
                                             </div>
+                                            <div class="col-md-4">
+                                                {!! Form::text('quantity[]', null, ['class' => 'form-control', 'placeholder' => 'cantidad', 'required']) !!}
+                                            </div>
+                                            <div class="col-md-2">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-success btn-add">+</button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        </div>
                                     </div>
-                                    @endforeach
                                 </div>
               
                     </div>
-                                </center>
-                                </div>
-                            </div>
-                        </div>
-                
-                </div>
-                <div class="for text-center">
+                    <div class="for text-center">
                     {!! Form::submit('Registrar', ['class'=> 'btn btn-primary  btn-sm']) !!}
                     <a class="btn btn-success btn-sm" href="{{route('orders.index')}}">
                         Cancelar
                     </a>
+                </div>
+                    </center>
+                                </div>
+                            </div>
+                        </div>
+                
                 </div>
                 {!! Form::close() !!}
                         <!-- /.box-body -->
@@ -117,7 +96,6 @@
     </div>
     <!-- /.box -->
 </div>
-@endif
 @endsection
 
 @section('js')

@@ -7,11 +7,25 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
 	protected $table    = "orders";
-    protected $fillable = ['id', 'total', 'paid_out', 'status', 'date', 'title', 'locale', 'user_id', 'event_id', 'notes', 'created', 'updated', 'created_at'];
+    protected $fillable = ['id', 'user_id', 'total', 'paid_out', 'status', 'date', 'title', 'locale', 'event_id', 'notes', 'created', 'updated', 'created_at'];
 
     public function user()
     {
     	return $this->belongsTo('App\User');
+    }
+
+    public function creat()
+    {
+        return $this->belongsTo('App\User', 'created');
+    }
+    public function up()
+    {
+        return $this->belongsTo('App\User', 'updated');
+    }
+
+    public function event()
+    {
+        return $this->belongsTo('App\Event', 'event_id');
     }
 
     public function payments()
@@ -43,16 +57,6 @@ class Order extends Model
     {
         $this->attributes['date'] = \Carbon\Carbon::parse($date)->format('Y-m-d');
     }
-
-    public function creat()
-    {
-        return $this->belongsTo('App\User', 'created');
-    }
-    public function up()
-    {
-        return $this->belongsTo('App\User', 'updated');
-    }
-
     
     //for calendar
     public function getId() {

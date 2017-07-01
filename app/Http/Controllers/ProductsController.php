@@ -34,7 +34,6 @@ foreach ($orders as $order){
             $date_order = $order->date;
             $products = Product::orderBy('name', 'ASC')->get();
             //Selecting just ids from the pivot table that is related to the id of order
-
             foreach ($products as $product){
                 $products_id = DB::table('order_product')
                     ->join('orders', 'orders.id', '=', 'order_product.order_id')
@@ -115,4 +114,20 @@ foreach ($orders as $order){
         return view('admin.products.modal');
         
     }
+
+    // products from member users
+    public function indexproducts()
+    {
+        $products = Product::orderBy('type', 'DESC')->get();
+          
+        return view('member.products.index', compact('products'));
+    }
+
+    public function showproduct($id)
+    {
+        $product = Product::find($id);
+          
+        return view('member.products.show', compact('product'));
+    }
+
 }

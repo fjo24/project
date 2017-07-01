@@ -28,7 +28,6 @@ class OrderRequest extends FormRequest
             'title'      => 'max:100|required',
             'event_id'   => 'required',
             'date'       => 'date|required|after_or_equal:'.$date,
-            'user_id'    => 'required',
             'locale'     => 'required|max:200',
 
         ];
