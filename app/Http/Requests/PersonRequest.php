@@ -31,6 +31,7 @@ class PersonRequest extends FormRequest
             'email'          => 'email|required|unique:users', 
             'identification' => 'required|numeric|min:5|unique:users',
             'telephone'      => 'required|numeric|min:11',
+            
             //$this->route->getParameter('user'),
            // 'type'           => 'required',
             //. $this->route->getParameter('user'),

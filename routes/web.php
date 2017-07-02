@@ -44,6 +44,8 @@ Route::group(['prefix' => 'admin'], function () {
 	Route::resource('products','ProductsController');
     Route::resource('events','EventController');
 	Route::resource('orders','OrdersController');
+    Route::get('/select-client/', 'OrdersController@selectClient')->name('select-client');
+    Route::get('/orders/user/{user}', 'OrdersController@addorder')->name('add-order');
     Route::resource('payments','PaymentsController');
     Route::get('modal', 'ProductsController@modal')->name('modal');
     Route::get('pay', 'PaymentsController@pay')->name('pay');
@@ -82,12 +84,15 @@ Route::group(['prefix' => 'member'], function () {
     // orders:member
     Route::get('indexorder', 'OrdersController@indexorder')->name('indexorder');
     Route::get('createorder', 'OrdersController@createorder')->name('createorder');
+    
     Route::post('storeorder', 'OrdersController@storeorder')->name('storeorder');
     Route::get('total/{Order_id}', 'OrdersController@total')->name('total');
     Route::get('showorder/{Order_id}', 'OrdersController@showorder')->name('showorder');
     Route::get('orders/{Order_id}/editorder', 'OrdersController@editorder')->name('editorder');
     Route::put('orders/updateorder/{Order_id}', 'OrdersController@updateorder')->name('updateorder');
     Route::get('memberpdf/{Order_id}', 'OrdersController@memberpdf')->name('memberpdf');
+
+
     // PAYMENTS FOR MEMBERS
     Route::get('indexpay', 'PaymentsController@indexpay')->name('indexpay');
     Route::get('createpay', 'PaymentsController@createpay')->name('createpay');

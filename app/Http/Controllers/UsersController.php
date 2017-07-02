@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 Use App\User;
+Use App\Photo;
 use Laracasts\Flash\Flash;
 use Validator;
 use App\Http\Requests\PersonRequest;
@@ -13,6 +14,8 @@ use App\Http\Requests\UsersRequest;
 use App\Http\Requests\EditUsersRequest;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
+use Storage;
+
 class UsersController extends Controller
 {
 
@@ -38,11 +41,27 @@ class UsersController extends Controller
     public function storeperson(PersonRequest $request)
     {
         $request = $request->all();
+        
+
+ /*       if ($request->file('photo'))
+        {
+        $file = $request->file('photo'); //recibe la imagen en la variable $file
+        $name = 'francachela' . time() . '.' . $file->getClientOriginalExtension(); //asignamos nombre, agregamos el time() para que de un numero unico (tiempo)-> ya que cada segundo cambia
+        $path = public_path() .'/images/users/';//public_path es la direccion, se la asignamos a la variable $path, y si queremos en una carpeta diferente, terminamos de agregar el directorio (hay que crear carpetas)
+        $file->move($path, $name);//aqui tomamos la imagen que esta ya en la variable $file y la guardamos en el direcctorio creado y asignado a la variable $path, con el nombre ya creado y unico. (primer parametro es la direccion(path) y segundo parametro es el nombre que se le dara)
+        }
+*/      
+        /*$img=$request->file('avatar');
+        $file_route = time().'_'.$img->getClientOriginalName();
+        Storage::disk('imgUsers')->put($file_route, file_get_contents( $img->getRealPath() ) );
+*/
         $request['fullname'] = $request['name'] . " " . $request['lastname'];
         $request['type'] = 'person';
         $user = new User($request);
+      //  $user->avatar = $file_route;
         $user->password = bcrypt($request['password']);
         $user->save();
+
         //Flash::success('Se ha registrado el usuario '. $user->name. ' '. $user->last_name.' de manera exitosa!')->important();
         return view('member.users.member');
     }
@@ -80,10 +99,25 @@ class UsersController extends Controller
     public function storeorganization(OrganizationRequest $request)
     {
         $request = $request->all();
+
+       /* if ($request->file('photo'))
+        {
+        $file = $request->file('photo'); //recibe la imagen en la variable $file
+        $name = 'francachela' . time() . '.' . $file->getClientOriginalExtension(); //asignamos nombre, agregamos el time() para que de un numero unico (tiempo)-> ya que cada segundo cambia
+        $path = public_path() .'/images/users/';//public_path es la direccion, se la asignamos a la variable $path, y si queremos en una carpeta diferente, terminamos de agregar el directorio (hay que crear carpetas)
+        $file->move($path, $name);//aqui tomamos la imagen que esta ya en la variable $file y la guardamos en el direcctorio creado y asignado a la variable $path, con el nombre ya creado y unico. (primer parametro es la direccion(path) y segundo parametro es el nombre que se le dara)
+        }*/
+
         $request['type'] = 'organization';
         $user = new User($request);
         $user->password = bcrypt($request['password']);
         $user->save();
+/*
+        $image = new Photo();
+        $image->name = $name;
+        $image->user()->associate($user);//aqui estamos llamando al metodo que esta en el modelo image llamado article, y le aplicamos la funcion llamada associate... que lo que hace es tomar lo que lo asocia (en este caso el article_id)
+        $image->save();*/
+
         return view('member.users.member');
     }
 
@@ -131,11 +165,13 @@ class UsersController extends Controller
     public function store(UsersRequest $request)
     {
         $request = $request->all();
+
         $request['fullname'] = $request['name'] . " " . $request['lastname'];
         $user = new User($request);
         $user->password = bcrypt($request['password']);
         $user->save();
         //Flash::success('Se ha registrado el usuario '. $user->name. ' '. $user->last_name.' de manera exitosa!')->important();
+        
         return redirect()->route('users.index');
     }
 

@@ -11,12 +11,9 @@
             </h3>
             <div class="box-tools">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    REGISTRAR <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li><a href="{{ route('orders.create') }}">Nuevo evento</a></li>
-                  </ul>
+                  <a class="btn btn-danger btn-sm" href="{{ route('select-client') }}">
+                            NUEVO REGISTRO
+                        </a>
                 </div>
             </div>
         </div>

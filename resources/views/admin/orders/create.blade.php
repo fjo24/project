@@ -30,12 +30,6 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        @if(Auth::user()->level=='admin')
-                                            <div class="form-group">
-                                                {!! Form::label('user_id', 'Cliente') !!}
-                                                {!! Form::select('user_id', $users, null, ['class' => 'form-control', 'placeholder' => 'Seleccione cliente']) !!}
-                                            </div>
-                                        @endif
                                         <div class="form-group">
                                             {!! Form::label('locale', 'Ubicacion del evento') !!}
                                             {!! Form::text('locale', null, ['class' => 'form-control', 'placeholder' => 'Ubicacion del evento']) !!}
@@ -44,6 +38,10 @@
                                             {!! Form::label('notes', 'Información adicional') !!}
                                             {!! Form::text('notes', null, ['class' => 'form-control', 'placeholder' => 'Incluya aca cualquier información adicional de interes']) !!}
                                         </div>
+                                        <div class="form-group">
+                    <input type="hidden" value="{{$user->id}}" name="user_id" id="user_id">
+
+                </div>
                                     </div>
                                 </div>
                                     <center> 

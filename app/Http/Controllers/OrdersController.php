@@ -119,13 +119,20 @@ class OrdersController extends Controller
             }
         return view('admin.orders.index', compact('orders'));
     }
-    
-    public function create()
+
+    public function selectClient()
     {
-        $users = User::orderBy('fullname', 'ASC')->pluck('fullname', 'id')->all();
+        $users = User::orderBy('fullname', 'DESC')->get();
+
+        return view('admin.orders.select_client', compact('users'));
+    }
+    
+    public function addorder($user)
+    {
+        $user = User::find($user);
         $events = Event::orderBy('name', 'ASC')->pluck('name', 'id')->all();
         $products = Product::orderBy('name', 'ASC')->pluck('name', 'id')->all();
-        return view('admin.orders.create')->with('users', $users)->with('products', $products)->with('events', $events);
+        return view('admin.orders.create')->with('user', $user)->with('products', $products)->with('events', $events);
     }
 
     public function store(OrderRequest $request)

@@ -3,7 +3,7 @@
 @section('title', 'Registro de persona natural')
 @include('flash::message')
 @section('contenido')
-    {!! Form::open(['route' => 'storeperson', 'class' => 'form', 'method' => 'POST']) !!}         
+    {!! Form::open(['route' => 'storeperson', 'class' => 'form', 'method' => 'POST', 'enctype'='multipart/form-data']) !!}         
             @include('partials.errors')
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -41,6 +41,10 @@
                                                     <span class="input-group-addon"><i class="fa fa-phone"></i></span>
                                                     {!! Form::text('telephone', null, ['class' => 'form-control', 'placeholder' => '', 'required']) !!}
                                                 </div>
+                                            </div>
+                                            <div class="form-group">
+                                                {!!Form::label('avatar', 'Avatar') !!}
+                                                    {!!Form::file('avatar')!!}
                                             </div>
                                             <div class="form-group">
                                                 {!! Form::label('password', 'Contraseña') !!}

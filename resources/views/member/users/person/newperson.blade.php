@@ -3,7 +3,7 @@
 @section('title', 'Registro de persona natural')
 @include('flash::message')
 @section('contenido')
-    {!! Form::open(['route' => 'storeperson', 'class' => 'form', 'method' => 'POST']) !!}         
+    {!! Form::open(['route' => 'storeperson', 'class' => 'form', 'method' => 'POST', 'files' => true, 'enctype'=>'multipart/form-data']) !!}         
             @include('partials.errors')
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -49,6 +49,10 @@
                                             <div class="form-group">
                                                 {!! Form::label('password', 'Contraseña') !!}
                                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirme contraseña" required>
+                                            </div>
+                                            <div class="form-group">
+                                                {!!Form::label('avatar', 'Avatar') !!}
+                                                {!!Form::file('avatar')!!}
                                             </div>
                                         </div>
                                     </div>
