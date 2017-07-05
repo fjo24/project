@@ -67,21 +67,21 @@
                                                 <span class="label label-primary">
                                                     CONFIRMADO
                                                 </span>
+                                            @elseif($order->status == "approved")
+                                                <span class="label label-success">
+                                                    APROBADO - ESPERANDO PAGO
+                                                </span>
                                             @elseif($order->status == "Rejected")
                                                 <span class="label label-danger">
                                                     RECHAZADA
                                                 </span>
-                                            @elseif($order->status == "primary")
+                                            @elseif($order->status == "pending")
                                                 <span class="label label-danger">
-                                                    PAGO RECIBIDO
-                                                </span>
-                                            @elseif($order->status == "warning")
-                                                <span class="label label-primary">
-                                                    PAGO PENDIENTE
+                                                    PENDIENTE
                                                 </span>
                                             @else
                                                 <span class="label label-default">
-                                                    NO PROCESADO
+                                                    EN ESPERA
                                                 </span>
                                             @endif
                                         </td>
@@ -143,24 +143,24 @@
                                         </td>
                                         <td>
                                             @if($event->status == "confirmed")
-                                                <span class="label label-success">
+                                                <span class="label label-primary">
                                                     CONFIRMADO
+                                                </span>
+                                            @elseif($event->status == "approved")
+                                                <span class="label label-success">
+                                                    APROBADO - ESPERANDO PAGO
                                                 </span>
                                             @elseif($event->status == "Rejected")
                                                 <span class="label label-danger">
                                                     RECHAZADA
                                                 </span>
-                                            @elseif($event->status == "primary")
+                                            @elseif($event->status == "pending")
                                                 <span class="label label-danger">
-                                                    PAGO RECIBIDO
-                                                </span>
-                                            @elseif($event->status == "warning")
-                                                <span class="label label-primary">
-                                                    PAGO PENDIENTE
+                                                    PENDIENTE
                                                 </span>
                                             @else
                                                 <span class="label label-default">
-                                                    NO PROCESADO
+                                                    EN ESPERA
                                                 </span>
                                             @endif
                                         </td>

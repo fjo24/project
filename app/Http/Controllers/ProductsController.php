@@ -18,7 +18,7 @@ class ProductsController extends Controller
     {
         $products = Product::orderBy('id', 'DESC')->get();
         $date = Carbon::now()->format('d-m-Y');
-        $orders = Order::orderBy('title', 'ASC')->get();
+        $orders = Order::orderBy('title', 'ASC')->where('status', 'confirmed')->get();
         foreach ($products as $product){
             if ($product->type=='rent') {
         $mount=$product->quantity;
@@ -32,7 +32,7 @@ foreach ($orders as $order){
             $id=$order->id;
             $status=$order->status;
             $date_order = $order->date;
-            $products = Product::orderBy('name', 'ASC')->get();
+            //$products = Product::orderBy('name', 'ASC')->get();
             //Selecting just ids from the pivot table that is related to the id of order
             foreach ($products as $product){
                 $products_id = DB::table('order_product')
@@ -42,7 +42,7 @@ foreach ($orders as $order){
                     ->where('order_product.order_id', $id)
                     ->get();
                 if ($date == $order->date) {
-                    if ($status=='confirmed') {
+                   
                         //SUM mounts of id selected..
                         //quantity field
                             if ($product->type=='rent') {
@@ -57,7 +57,7 @@ foreach ($orders as $order){
                                 $product->update(['available' => $req]);
                             }
                         }
-                    }
+                    
                 }
             }
 

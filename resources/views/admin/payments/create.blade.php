@@ -3,9 +3,13 @@
 @section('title', 'Registrar pago')
 @include('flash::message')
 @section('contenido')
+@if($order->status=='approved')
     {!! Form::open(['route' => 'payments.store']) !!}
     @include('admin.payments.partials.fields')
     {!! Form::close() !!}
+@else
+<h1>LA ORDEN DEBE SER PREVIAMENTE APROBADA PARA PROCEDER A REALIZAR EL PAGO</h1>
+@endif
 @endsection
 @section('js')
     <script type="text/javascript">

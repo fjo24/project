@@ -11,7 +11,7 @@
             </h3>
             <div class="box-tools">
                 <div class="text-center">
-                    <a class="btn btn-primary btn-sm" href="{{ route('payments.create') }}">
+                    <a class="btn btn-primary btn-sm" href="{{ route('select-order') }}">
                         NUEVO PAGO
                     </a>
                 </div>

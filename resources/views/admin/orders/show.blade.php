@@ -160,9 +160,6 @@
                 <a class="btn btn-success" href="{{ route('approved-event', $order->id) }}" onclick="return confirm('Al aprobar habilita la opcion de pago para este evento. Esta seguro de poder cumplir con el compromiso?')"">
                     APROBAR EVENTO
                 </a>
-                <a class="btn btn-success" href="{{ route('add-pay', [$order]) }}">
-                    REALIZAR PAGO
-                </a>
                 <a class="btn btn-success" href="{{ route('orders.edit', $order->id) }}">
                     EDITAR
                 </a>
@@ -174,21 +171,25 @@
                 <a class="btn btn-success" href="{{ route('approved-event', $order->id) }}" onclick="return confirm('Al aprobar habilita la opcion de pago para este evento. Esta seguro de poder cumplir con el compromiso?')"">
                     APROBAR EVENTO
                 </a>
-                <a class="btn btn-success" href="{{ route('add-pay', [$order]) }}">
-                    REALIZAR PAGO
-                </a>
                 <a class="btn btn-success" href="{{ route('orders.edit', $order->id) }}">
                     EDITAR
                 </a>
                 <a class="btn btn-warning" href="{{ route('rejected-event', $order->id) }}" onclick="return confirm('El presupuesto sera marcado como RECHAZADO. Esta seguro de proceder?')"">
                     RECHAZAR EVENTO
                 </a>
+          @elseif($order->status == "approved")
+                <a class="btn btn-success" href="{{ route('add-pay', [$order]) }}">
+                    REALIZAR PAGO
+                </a>
+                <a class="btn btn-warning" href="{{ route('rejected-event', $order->id) }}" onclick="return confirm('El presupuesto sera marcado como RECHAZADO. Esta seguro de proceder?')"">
+                    RECHAZAR EVENTO
+                </a>
           @endif
-            <div class="for text-center">
+            
                 <a class="btn btn-danger" href="{{ route('orders.index') }}">
                     VOLVER
                 </a>
-            </div>
+            
         </div>
 
         <br>

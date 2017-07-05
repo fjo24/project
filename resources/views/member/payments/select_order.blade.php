@@ -47,20 +47,20 @@
                                         </td>
                                         <td>
                                             @if($order->status == "confirmed")
-                                                <span class="label label-success">
+                                                <span class="label label-primary">
                                                     CONFIRMADO
                                                 </span>
-                                            @elseif($order->status == "payment_received")
-                                                <span class="label label-warning">
-                                                    PAGO RECIBIDO
+                                            @elseif($order->status == "approved")
+                                                <span class="label label-success">
+                                                    APROBADO - ESPERANDO PAGO
                                                 </span>
                                             @elseif($order->status == "Rejected")
                                                 <span class="label label-danger">
-                                                    ORDEN RECHAZADA
+                                                    RECHAZADA
                                                 </span>
-                                            @elseif($order->status == "payment_verified")
-                                                <span class="label label-primary">
-                                                    PAGO VERIFICADO
+                                            @elseif($order->status == "pending")
+                                                <span class="label label-danger">
+                                                    PENDIENTE
                                                 </span>
                                             @else
                                                 <span class="label label-default">

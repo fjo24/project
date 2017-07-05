@@ -184,6 +184,11 @@
                     RECHAZAR EVENTO
                 </a>
           @endif
+            <div class="jumbotron">
+              <h1>Atención!</h1>
+              <p>La aprobación de esta orden no garantiza la confirmación de la misma.. Solo indica la disponibilidad del pedido al momento, y habilita el pago, el cual debes realizar para poder confirmarlo ya que puede ser rechazada sin previo aviso por el cambio en la disponibilidad de los mismos</p>
+              <p><a class="btn btn-success btn-lg" href="{{ route('add-pay', [$order]) }}" role="button">REGISTRAR PAGO</a></p>
+            </div>
             <div class="for text-center">
                 <a class="btn btn-danger" href="{{ route('orders.index') }}">
                     VOLVER

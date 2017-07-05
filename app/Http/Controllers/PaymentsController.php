@@ -22,7 +22,7 @@ class PaymentsController extends Controller
 
     public function selectOrder()
     {
-        $orders = Order::orderBy('id', 'DESC')->where('status', 'not_processed')->get();
+        $orders = Order::orderBy('id', 'DESC')->where('status', 'approved')->get();
 
         return view('admin.payments.select_Order', compact('orders'));
     }
@@ -167,7 +167,7 @@ class PaymentsController extends Controller
     {
 
         $id = Auth()->user()->id;
-        $orders = Order::orderBy('id', 'DESC')->where('status', 'not_processed')->where('user_id', $id)->get();
+        $orders = Order::orderBy('id', 'DESC')->where('status', 'approved')->where('user_id', $id)->get();
         return view('member.payments.select_Order', compact('orders'));
     }
 
