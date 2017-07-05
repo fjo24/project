@@ -7,7 +7,7 @@
         @include('partials.errors')
         <div class="box-header with-border">
             <h3 class="box-title">
-                Lista de entradas y salidas
+                Eventos de {{ Auth()->user()->fullname }}
             </h3>
             <div class="box-tools">
                 <div class="btn-group">
@@ -74,24 +74,13 @@
                                         <td>
                                             {{ $order->date }}
                                         </td>
-                                        <td>
-                                            {!! Form::open(['route' => ['orders.destroy',$order ], 'method' => 'DELETE']) !!}
+                                        <td class="text-center">
                                             <div class="form-group">
-                                                <a href="{{ route('showorder', $order->id) }}" title="">
-                                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                                <a href="{{ route('createpay', [$order]) }}">
+                                                    Siguiente
+                                                    <i class="glyphicon glyphicon-ok" aria-hidden="true"></i>
                                                 </a>
                                             </div>
-                                            <div class="form-group">
-                                                <a href="{{ route('editorder', $order->id) }}" title="Editar">
-                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                            <div class="form-group">
-                                                <button type="submit" class="btn btn-link" title="Eliminar" onclick="return confirm('¿Realmente deseas borrar el producto?')"">
-                                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                                </button>
-                                            </div>
-                                            {!! Form::close() !!}
                                         </td>
                                     </tr>
                             @endforeach

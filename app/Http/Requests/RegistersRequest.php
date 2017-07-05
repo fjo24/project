@@ -29,7 +29,6 @@ class RegistersRequest extends FormRequest
 
             'type'          => 'required',
             'date'          => 'date|required|before_or_equal:'.$date,
-            'provider_id'   => 'required',
         ];
     }
 }

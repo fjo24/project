@@ -8,7 +8,6 @@ Auth::routes();
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');//agregado para corregir error
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('confirm/{order_id}',  'OrdersController@confirm')->name('confirm');
 Route::post('storepivot',  'OrdersController@storepivot')->name('storepivot');
 
 Route::get('excelusers',  'UsersController@export')->name('exportusers');
@@ -43,11 +42,20 @@ Route::group(['prefix' => 'admin'], function () {
 	Route::resource('providers','ProvidersController');
 	Route::resource('products','ProductsController');
     Route::resource('events','EventController');
+
 	Route::resource('orders','OrdersController');
     Route::get('/select-client/', 'OrdersController@selectClient')->name('select-client');
     Route::get('/orders/user/{user}', 'OrdersController@addorder')->name('add-order');
+
+    //cambiar estado de ordenes (aprobada/rechazada)
+    Route::get('/approved-event/{order_id}',  'OrdersController@approvedEvent')->name('approved-event');
+    Route::get('/rejected-event/{order_id}',  'OrdersController@rejectedEvent')->name('rejected-event');
+
+    //pagos
     Route::resource('payments','PaymentsController');
-    Route::get('modal', 'ProductsController@modal')->name('modal');
+    Route::get('/select-order/', 'PaymentsController@selectOrder')->name('select-order');
+    Route::get('/payments/order/{order}', 'PaymentsController@addpay')->name('add-pay');
+
     Route::get('pay', 'PaymentsController@pay')->name('pay');
     Route::get('verified/{payment_id}',  'PaymentsController@verified')->name('verified');
     Route::get('ppdf/{payment_id}',  'PaymentsController@ppdf')->name('ppdf');
@@ -94,8 +102,10 @@ Route::group(['prefix' => 'member'], function () {
 
 
     // PAYMENTS FOR MEMBERS
+    Route::resource('pay', 'PaymentsController');
     Route::get('indexpay', 'PaymentsController@indexpay')->name('indexpay');
-    Route::get('createpay', 'PaymentsController@createpay')->name('createpay');
+    Route::get('/select-order-member/', 'PaymentsController@selectOrderMember')->name('select-order-member');
+    Route::get('/payments/order/{order}', 'PaymentsController@createpay')->name('createpay');
     Route::post('storepay', 'PaymentsController@storepay')->name('storepay');
     Route::get('showpay/{Pay_id}', 'PaymentsController@showpay')->name('showpay');
     Route::get('memberpaypdf/{Pay_id}', 'PaymentsController@memberpaypdf')->name('memberpaypdf');

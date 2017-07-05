@@ -11,6 +11,7 @@ Use App\User;
 Use App\Event;
 Use App\Calendar;
 Use App\Payment;
+Use App\Configuration;
 use Laracasts\Flash\Flash;
 use Carbon\Carbon;
 use DB;
@@ -20,104 +21,110 @@ class OrdersController extends Controller
 
     public function index()
     {
-        $orders = Order::orderBy('id', 'DESC')->with('user')->get();
-        $products = Product::orderBy('id', 'DESC')->where('type', 'rent')->get();
+
+        $events = Order::orderBy('id', 'ASC')->where('status', 'confirmed')->get();
+        $orders = Order::orderBy('id', 'ASC')->where('status', '<>', 'confirmed')->get();
+        $products = Product::orderBy('id', 'DESC')->get();
 
     foreach ($orders as $order) {
-        $id = $order->id;
-        $events = Order::orderBy('id', 'ASC')->get();
         $a = 0;
         $b = 0;
+        $id2 = $order->id;
         $order->availability='y';
-        $order->update();
-    $status=$order->status;
-    $pay = Payment::orderBy('id', 'DESC')->where('order_id', $id)->where('status', 'payment_verified')->sum('mount');
-    $rec = Payment::orderBy('id', 'DESC')->where('order_id', $id)->sum('mount');
-    $total = $order->total;
-        if ($pay >= $total) {
-            $request['status'] = 'payment_verified';
-            $order->update($request);
-        }elseif($rec >= $total) {
-            $request['status'] = 'payment_received';
-            $order->update($request);  
-        }else{
-            $request['status'] = 'on_hold';
-            $order->update($request);
-        }
-        /*if ($status!='confirmed') {
-            foreach ($products as $product){
-                $products_id = DB::table('order_product')
+$order->update();
+
+     
+                        //selecting id products of events with status confirmed
+    foreach ($products as $product){
+        
+
+        if($product->type=='rent'){
+            $prod_orders = DB::table('order_product')
+                                ->join('orders', 'orders.id', '=', 'order_product.order_id')
+                                ->select('order_product.product_id AS ids')
+                                ->where('order_product.product_id', $product->id)
+                                ->where('order_product.order_id', $id2)
+                                ->get();
+            foreach ($prod_orders as $prod_order){
+                                            $quantity2 = DB::table('order_product')
+                                                ->join('products', 'products.id', '=', 'order_product.product_id')
+                                                ->select(DB::raw('order_product.quantity AS updated_quantity2'))
+                                                ->where('order_product.order_id', $id2)
+                                                ->where('products.id', $prod_order->ids)
+                                                ->get();
+                                            $req2 = $quantity2[0]->updated_quantity2;
+                                            
+                                       
+
+                            foreach ($events as $event){
+
+                                $event->availability='y';
+                                $id = $event->id;
+                                $dat = $event->date;
+
+                                if ($dat==$order->date) {
+                                    $prod_events = DB::table('order_product')
                                 ->join('orders', 'orders.id', '=', 'order_product.order_id')
                                 ->select('order_product.product_id AS ids')
                                 ->where('order_product.product_id', $product->id)
                                 ->where('order_product.order_id', $id)
                                 ->get();
-                    foreach ($products_id as $product_id){
-                        $sale = DB::table('order_product')
-                            ->join('products', 'products.id', '=', 'order_product.product_id')
-                            ->select(DB::raw('order_product.quantity AS updated_sale'))
-                            ->where('order_product.order_id', $id)
-                            ->where('products.id', $product_id->ids)
-                            ->get();
-                        $req2 = $sale[0]->updated_sale;
-                        $sum2= $b + $req2;
-                        //dd($order->availability);
-                            if($product->type=='sale' ){
-                                if($sum2 >= $product->quantity ){
-                                    //  dd('si');
-                                    $order->availability='n';
-                                    $order->update();
-                                        // $order->update(['availability' => 'n']);
-                                        }else{
-                                    $order->update();
-                                    }
-                                }
-                            }
-                        }
-                    }*/
-            foreach ($events as $event){
-                $d = $event->date;
-                    if ($d==$order->date && $event->status=='confirmed') {
-                    foreach ($products as $product){
-                        $products_id = DB::table('order_product')
-                            ->join('orders', 'orders.id', '=', 'order_product.order_id')
-                            ->select('order_product.product_id AS ids')
-                            ->where('order_product.product_id', $product->id)
-                            ->where('order_product.order_id', $id)
-                            ->get();
-                               
+                                   
+
+                                
                             //if ($status=='confirmed') {
                                 //SUM mounts of id selected..
                                 //quantity field
-                                    foreach ($products_id as $product_id){
+                                    foreach ($prod_events as $p_event){
+                                        //confirmed
                                         $quantity = DB::table('order_product')
                                             ->join('products', 'products.id', '=', 'order_product.product_id')
                                             ->select(DB::raw('order_product.quantity AS updated_quantity'))
                                             ->where('order_product.order_id', $id)
-                                            ->where('products.id', $product_id->ids)
+                                            ->where('products.id', $p_event->ids)
                                             ->get();
                                         $req = $quantity[0]->updated_quantity;
-
-                                       // $product->update(['available' => $req]);
-                                        
-                                        $sum= $a + $req;
-                                        //dd($order->availability);
-                                       
-                                            if($sum >= $product->available && $product->type=='rent' || $product->type=='sale' && $req >= $product->quantity){
-                                              //  dd('si');
-                                                $order->availability='n';
-                                                $order->update();
-                                               // $order->update(['availability' => 'n']);
-
+                                        $available = $product->quantity-$req;
+                                        //no confirmed
+                                        if($req2 >= $available){
+                                            //  dd('si');
+                                            $order->availability='n';
+                                            $order->update();
+                                            // $order->update(['availability' => 'n']);
                                             }
-                                 
                                     }
-                            //}    
-                        }
+                                    
+                                } //endif
+                            } //events
+ }
+                    }elseif ($product->type=='sale') {
+                        # code...
+                        $prod_orders = DB::table('order_product')
+                            ->join('orders', 'orders.id', '=', 'order_product.order_id')
+                            ->select('order_product.product_id AS ids')
+                            ->where('order_product.product_id', $product->id)
+                            ->where('order_product.order_id', $id2)
+                            ->get();
+                    foreach ($prod_orders as $prod_order){
+                        $quantity2 = DB::table('order_product')
+                            ->join('products', 'products.id', '=', 'order_product.product_id')
+                            ->select(DB::raw('order_product.quantity AS updated_quantity2'))
+                            ->where('order_product.order_id', $id2)
+                            ->where('products.id', $prod_order->ids)
+                            ->get();
+                        $req2 = $quantity2[0]->updated_quantity2;
+                            if($req2 >= $product->quantity){
+                            //  dd('si');
+                            $order->availability='n';
+                            $order->update();
+                        // $order->update(['availability' => 'n']);
+                        } 
                     }
-                }
-            }
-        return view('admin.orders.index', compact('orders'));
+                }//else type
+            } //products
+        }//orders
+
+        return view('admin.orders.index', compact('orders', 'events'));
     }
 
     public function selectClient()
@@ -132,93 +139,48 @@ class OrdersController extends Controller
         $user = User::find($user);
         $events = Event::orderBy('name', 'ASC')->pluck('name', 'id')->all();
         $products = Product::orderBy('name', 'ASC')->pluck('name', 'id')->all();
-        return view('admin.orders.create')->with('user', $user)->with('products', $products)->with('events', $events);
+        $aux = Product::orderBy('name', 'ASC')->get();
+        $prod = $aux->toJson();
+        $config = Configuration::first();
+        return view('admin.orders.create')->with('user', $user)->with('config', $config)->with('products', $products)->with('prod', $prod)->with('events', $events);
     }
 
-    public function store(OrderRequest $request)
+    public function store(Request $request)
     {
-       // $date = Carbon::now()->format('Y-m-d');
-        $request = $request->all();
-        $request['created'] = Auth()->user()->id;
-        $request['updated'] = Auth()->user()->id;
-       // $request['date'] = $date;
-        $request['paid_out'] = 0;
-        $order = new Order($request);
+        $date = Carbon::now()->format('Y-m-d');
+
+        $this->validate($request, [
+            'title'      => 'max:100|required',
+            'event_id'   => 'required',
+            'date'       => 'date|required|after_or_equal:'.$date,
+            'locale'     => 'required|max:200',
+        ]);
+
+        $order = Order::create([
+            'title' => $request->get('title'),
+            'date' => $request->get('date'),
+            'user_id' => $request->get('user_id'),
+            'event_id' => $request->get('event_id'),
+            'locale' => $request->get('locale'),
+            'notes' => $request->get('notes'),
+            'neto' => $request->get('neto'),
+            'iva' => $request->get('iva'),
+            'total' => $request->get('total'),
+            'discount' => $request->get('discount'),
+            'created' => Auth()->user()->id,
+            'updated' => Auth()->user()->id,
+        ]);
+
+        for ($i = 0; $i < count($request->product_id); $i++) {
+            $order->products()->attach($request->product_id[$i], ['quantity' => $request->quantity[$i]]);
+        }
+
         $order->save();
 
-        $id=$order->id;
-        $q = $request['quantity'];
-        $p = $request['product_id'];
-        //formating array
-        $extra = array_map(function($q){
-            return ['quantity' => $q];
-        }, $q);
-        //combining array
-        $data = array_combine($p, $extra);
-        //ready to sync
-        $order->products()->sync($data);
-
         Flash::success('Se ha registrado la orden de manera exitosa!')->important();
-        return redirect()->route('confirm', $order->id);
-    }
-    //second part of store
-    public function confirm($id)
-    {
-        $order = Order::find($id);
-        //updating total field
-        
-        $sales = DB::table('order_product')
-            ->join('orders', 'orders.id', '=', 'order_product.order_id')
-            ->join('products', 'products.id', '=', 'order_product.product_id')
-            ->select(DB::raw('sum(order_product.quantity*products.cost) AS total_sales'))
-            ->where('order_product.order_id', $id)
-            ->get();
-        $request['total'] = $sales[0]->total_sales;
-        //$order->products;
-        //dd($request['total']);
-        $order->update($request);
-        //products
-        $status=$order->status;
-        $products = Product::orderBy('name', 'ASC')->get();
-            //Selecting just ids from the pivot table that is related to the id of order
+        return redirect()->route('orders.show', $order->id);
 
-/*    foreach ($products as $product){
-            $products_id = DB::table('order_product')
-                ->join('orders', 'orders.id', '=', 'order_product.order_id')
-                ->select('order_product.product_id AS ids')
-                ->where('order_product.product_id', $product->id)
-                ->where('order_product.order_id', $id)
-                ->get();
-
-              if ($status=='confirmed') {
-                    //SUM mounts of id selected..
-                    //quantity field
-                    if ($product->type=='sale') {
-                        foreach ($products_id as $product_id){
-                            $quantity = DB::table('product_register')
-                                ->join('products', 'products.id', '=', 'product_register.product_id')
-                                ->select(DB::raw('sum(products.quantity-product_register.quantity) AS updated_quantity'))
-                                ->where('product_register.register_id', $id)
-                                ->where('products.id', $product_id->ids)
-                                ->get();
-                            $req = $quantity[0]->updated_quantity;
-                            //available field
-                            $available = DB::table('product_register')
-                                ->join('products', 'products.id', '=', 'product_register.product_id')
-                                ->select(DB::raw('sum(products.available-product_register.quantity) AS updated_available'))
-                                ->where('product_register.register_id', $id)
-                                ->where('products.id', $product_id->ids)
-                                ->get();
-                            $req2 = $available[0]->updated_available;
-
-                            $product->update(['available' => $req2, 'quantity' => $req]);
-                        }
-                    }
-                }           
-        }
-*/
-        return view('admin.orders.confirm')->with('order', $order)->with('sales', $sales);
-    }
+}
 
     public function show($id)
     {
@@ -231,40 +193,63 @@ class OrdersController extends Controller
             ->where('order_product.order_id', $id)
             ->get();
 
-        return view('admin.orders.show')->with('order', $order)->with('sales', $sales);
+        $net = ($order->total*10)/90;
+
+        return view('admin.orders.show')->with('order', $order)->with('sales', $sales)->with('net', $net);
     }
 
     public function edit($id)
     {
         $order= Order::find($id);
-        $users = User::orderBy('fullname', 'ASC')->pluck('fullname', 'id')->all();
+
+        $iduser = $order->user_id;
+        $user = User::find($iduser);
+
         $events = Event::orderBy('name', 'ASC')->pluck('name', 'id')->all();
         $products = Product::orderBy('name', 'ASC')->pluck('name', 'id')->all();
-        $my_products = $order->products->pluck('id')->toArray();
-        return view('admin.orders.edit')->with('users', $users)->with('products', $products)->with('order', $order)->with('my_products', $my_products)->with('events', $events);
+        $aux = Product::orderBy('name', 'ASC')->get();
+        $prod = $aux->toJson();
+        $config = Configuration::first();
+        return view('admin.orders.edit')->with('config', $config)->with('order', $order)->with('products', $products)->with('prod', $prod)->with('events', $events)->with('user', $user);
     }
 
-    public function update(OrderRequest $request, order $order)
+    public function update(Request $request, $id)
     {
-        $request = $request->all();
-        $request['updated'] = Auth()->user()->id;
-       // $request['date'] = $date;
-        $order->update($request);
+        $date = Carbon::now()->format('Y-m-d');
 
-        $id=$order->id;
-        $q = $request['quantity'];
-        $p = $request['product_id'];
-        //formating array
-        $extra = array_map(function($q){
-            return ['quantity' => $q];
-        }, $q);
-        //combining array
-        $data = array_combine($p, $extra);
-        //ready to sync
-        $order->products()->sync($data);
+        $this->validate($request, [
+            'title'      => 'max:100|required',
+            'event_id'   => 'required',
+            'date'       => 'date|required|after_or_equal:'.$date,
+            'locale'     => 'required|max:200',
+        ]);
 
-        Flash::success('Se ha registrado la orden de manera exitosa!')->important();
-        return redirect()->route('confirm', $order->id);
+        $order = Order::find($id);
+
+        if ($order->products()->count() > 0) {
+            $order->products()->detach();
+        }
+
+        for ($i = 0; $i < count($request->product_id); $i++) {
+            $order->products()->attach($request->product_id[$i], ['quantity' => $request->quantity[$i]]);
+        }
+
+        $order->title = $request->get('title');
+        $order->date = $request->get('date');
+        $order->user_id = $request->get('user_id');
+        $order->event_id = $request->get('event_id');
+        $order->iva = $request->get('iva');
+        $order->total = $request->get('total');
+        $order->locale = $request->get('locale');
+        $order->discount = $request->get('discount');
+        $order->notes = $request->get('notes');
+        $order->neto = $request->get('neto');
+        $order->updated = Auth()->user()->id;
+
+        $order->save();
+
+        Flash::success('Se ha editado la orden de manera exitosa!')->important();
+        return redirect()->route('orders.show', $order->id);
 
     }
 
@@ -272,7 +257,7 @@ class OrdersController extends Controller
     {
         $order = Order::find($id);
         $order->delete();
-       // flash('La orden ha sido eliminado con exito!!', 'danger')->important();
+        flash('La orden ha sido eliminado con exito!!', 'danger')->important();
         return redirect()->route('orders.index');
     }
 
@@ -297,12 +282,6 @@ class OrdersController extends Controller
         }
         $calendar = \Calendar::addEvents($events);
         return view('admin.orders.calendar.calendar', compact('calendar'));
-    }
-
-    public function pdf($id)
-    {
-        $order = Order::find($id);
-        return view('admin.orders.pdf.pdf', compact('order'));
     }
 
     public function eventconfirmed($id)
@@ -387,40 +366,119 @@ class OrdersController extends Controller
     }
 
     //products for users of type member                      <<<MEMBER>>><<<MEMBER>>><<<MEMBER>>>
+
+    public function indexorder()
+    {
+        $id = Auth()->user()->id;
+        $orders = Order::orderBy('id', 'DESC')->where('user_id', $id)->get();
+        return view('member.orders.index', compact('orders'));
+    }
+
     public function createorder()
     {
-        $users = User::orderBy('fullname', 'ASC')->pluck('fullname', 'id')->all();
+        $user = Auth()->user();
         $events = Event::orderBy('name', 'ASC')->pluck('name', 'id')->all();
         $products = Product::orderBy('name', 'ASC')->pluck('name', 'id')->all();
-        return view('member.orders.create')->with('users', $users)->with('products', $products)->with('events', $events);
+        $aux = Product::orderBy('name', 'ASC')->get();
+        $prod = $aux->toJson();
+        $config = Configuration::first();
+        return view('member.orders.create')->with('user', $user)->with('config', $config)->with('products', $products)->with('prod', $prod)->with('events', $events);
     }
 
     public function storeorder(OrderRequest $request)
     {
-       // $date = Carbon::now()->format('Y-m-d');
-        $request = $request->all();
-        $request['created'] = Auth()->user()->id;
-        $request['updated'] = Auth()->user()->id;
-        $request['user_id'] = Auth()->user()->id;
-       // $request['date'] = $date;
-        $request['paid_out'] = 0;
-        $order = new Order($request);
+        $date = Carbon::now()->format('Y-m-d');
+
+        $this->validate($request, [
+            'title'      => 'max:100|required',
+            'event_id'   => 'required',
+            'date'       => 'date|required|after_or_equal:'.$date,
+            'locale'     => 'required|max:200',
+        ]);
+
+        $order = Order::create([
+            'title' => $request->get('title'),
+            'date' => $request->get('date'),
+            'user_id' => $request->get('user_id'),
+            'event_id' => $request->get('event_id'),
+            'locale' => $request->get('locale'),
+            'notes' => $request->get('notes'),
+            'neto' => $request->get('neto'),
+            'iva' => $request->get('iva'),
+            'total' => $request->get('total'),
+            'discount' => $request->get('discount'),
+            'created' => Auth()->user()->id,
+            'updated' => Auth()->user()->id,
+        ]);
+
+
+        for ($i = 0; $i < count($request->product_id); $i++) {
+            $order->products()->attach($request->product_id[$i], ['quantity' => $request->quantity[$i]]);
+        }
+
+
+        //$order->products()->attach(1, ['quantity' => $request->get('product_quantity'), 'price' => $request->get('product_price')]);
+
         $order->save();
 
-        $id=$order->id;
-        $q = $request['quantity'];
-        $p = $request['product_id'];
-        //formating array
-        $extra = array_map(function($q){
-            return ['quantity' => $q];
-        }, $q);
-        //combining array
-        $data = array_combine($p, $extra);
-        //ready to sync
-        $order->products()->sync($data);
-
         Flash::success('Se ha registrado la orden de manera exitosa!')->important();
-        return redirect()->route('total', $order->id);
+        return redirect()->route('showorder', $order->id);
+    }
+
+    public function editorder($id)
+    {
+    
+        $order= Order::find($id);
+
+        $iduser = $order->user_id;
+        $user = User::find($iduser);
+
+        $events = Event::orderBy('name', 'ASC')->pluck('name', 'id')->all();
+        $products = Product::orderBy('name', 'ASC')->pluck('name', 'id')->all();
+        $aux = Product::orderBy('name', 'ASC')->get();
+        $prod = $aux->toJson();
+        $config = Configuration::first();
+        return view('member.orders.edit')->with('config', $config)->with('order', $order)->with('products', $products)->with('prod', $prod)->with('events', $events)->with('user', $user);
+    }
+
+    public function updateorder(OrderRequest $request, order $order, $id)
+    {
+
+        $date = Carbon::now()->format('Y-m-d');
+
+        $this->validate($request, [
+            'title'      => 'max:100|required',
+            'event_id'   => 'required',
+            'date'       => 'date|required|after_or_equal:'.$date,
+            'locale'     => 'required|max:200',
+        ]);
+
+        $order = Order::find($id);
+
+        if ($order->products()->count() > 0) {
+            $order->products()->detach();
+        }
+
+        for ($i = 0; $i < count($request->product_id); $i++) {
+            $order->products()->attach($request->product_id[$i], ['quantity' => $request->quantity[$i]]);
+        }
+
+        $order->title = $request->get('title');
+        $order->date = $request->get('date');
+        $order->user_id = $request->get('user_id');
+        $order->event_id = $request->get('event_id');
+        $order->iva = $request->get('iva');
+        $order->total = $request->get('total');
+        $order->locale = $request->get('locale');
+        $order->notes = $request->get('notes');
+        $order->neto = $request->get('neto');
+        $order->updated = Auth()->user()->id;
+
+        $order->save();
+
+        Flash::success('Se ha editado la orden de manera exitosa!')->important();
+        return redirect()->route('showorder', $order->id);
+
     }
 
     public function total($id)
@@ -460,99 +518,25 @@ class OrdersController extends Controller
         return view('member.orders.show')->with('order', $order)->with('sales', $sales);
     }
 
-    public function editorder($id)
-    {
-        $order= Order::find($id);
-        $users = User::orderBy('fullname', 'ASC')->pluck('fullname', 'id')->all();
-        $events = Event::orderBy('name', 'ASC')->pluck('name', 'id')->all();
-        $products = Product::orderBy('name', 'ASC')->pluck('name', 'id')->all();
-        $my_products = $order->products->pluck('id')->toArray();
-        return view('member.orders.edit')->with('users', $users)->with('events', $events)->with('products', $products)->with('order', $order)->with('my_products', $my_products);
-    }
+    //estado de los eventos
 
-    public function updateorder(OrderRequest $request, order $order, $id)
-    {
-        $request = $request->all();
-        $order= Order::find($id);
-        $request['updated'] = Auth()->user()->id;
-        $order->update($request);
-
-        //$id=$order->id;
-        //dd($id);
-        $q = $request['quantity'];
-        $p = $request['product_id'];
-        $extra = array_map(function($q){
-            return ['quantity' => $q];
-        }, $q);
-
-        $data = array_combine($p, $extra);
-        foreach ($order->products as $valor) {
-        }
-
-        $order->products()->sync($data);
-
-        Flash::success('Se ha registrado la orden de manera exitosa!')->important();
-        return redirect()->route('total', $order->id);
-    }
-
-    public function indexorder()
-    {
-        $id = Auth()->user()->id;
-        $orders = Order::orderBy('id', 'DESC')->where('user_id', $id)->get();
-        /*$products = Product::orderBy('id', 'DESC')->where('type', 'rent')->get();
-
-    foreach ($orders as $order) {
-        $id = $order->id;
-     //   dd($id);
-        $events = Order::orderBy('id', 'ASC')->get();
-        $a = 0;
-            foreach ($events as $event){
-                $d = $event->date;
-                    if ($d==$order->date) {
-                    foreach ($products as $product){
-                        $products_id = DB::table('order_product')
-                            ->join('orders', 'orders.id', '=', 'order_product.order_id')
-                            ->select('order_product.product_id AS ids')
-                            ->where('order_product.product_id', $product->id)
-                            ->where('order_product.order_id', $id)
-                            ->get();
-                               
-                            //if ($status=='confirmed') {
-                                //SUM mounts of id selected..
-                                //quantity field
-                                    foreach ($products_id as $product_id){
-                                        $quantity = DB::table('order_product')
-                                            ->join('products', 'products.id', '=', 'order_product.product_id')
-                                            ->select(DB::raw('order_product.quantity AS updated_quantity'))
-                                            ->where('order_product.order_id', $id)
-                                            ->where('products.id', $product_id->ids)
-                                            ->get();
-                                        $req = $quantity[0]->updated_quantity;
-
-                                       // $product->update(['available' => $req]);
-                                        
-                                        $sum= $a + $req;
-                                        //dd($order->availability);
-                                        if($sum >= $product->quantity ){
-                                          //  dd('si');
-                                            $order->availability='n';
-                                            $order->update();
-                                           // $order->update(['availability' => 'n']);
-
-                                        }
-                                    }
-                            //}    
-                        }
-                    }
-                }
-            }*/
-        return view('member.orders.index', compact('orders'));
-    }
-
-    public function memberpdf($id)
-    {
+    public function approvedEvent($id)
+    {   
         $order = Order::find($id);
-        return view('member.orders.pdf.pdf', compact('order'));
+        $request['status'] = 'approved';
+        $order->update($request);
+        
+        Flash::success('LA orden paso a APROBADA.. Ya se puede realizar el pago correspondiente')->important();    
+        return view('admin.orders.status.approved')->with('order', $order);
     }
 
+    public function rejectedEvent($id)
+    {   
+        $order = Order::find($id);
+        $request['status'] = 'rejected';
+        $order->update($request);
+        
+        Flash::success('LA orden paso a RECHAZADA..')->important();    
+        return view('admin.orders.status.rejected')->with('order', $order);
+    }
 }

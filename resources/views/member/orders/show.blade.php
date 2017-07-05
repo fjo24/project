@@ -3,91 +3,86 @@
 @section('title', 'Datos de orden')
 
 @section('contenido')
-    <div class="box">
-        <div class="box-header with-border">
-            <h3 class="box-title">
-            </h3>
+
+
+    <section class="content-header">
+        <h1>
+            Orden Nr.
+            <small>#0{{$order->id }}</small>
             <div class="box-tools">
-                <div class="text-center">
-                    <a class="btn btn-success btn-sm" href="{{ route('memberpdf', $order->id) }}">
-                        DESCARGAR PDF
-                    </a>
+                <div class="text-right">
+                    <button type="button" class="btn btn-success printer" id="print">DESCARGAR
+                        <i class="glyphicon glyphicon-print"></i>
+                    </button>
                 </div>
             </div>
-        </div>
-        <div class="box-body">
-            <div class="col-md-12">
-                <div class="box box-solid box-default">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">
-                            Datos de orden:
-                        </h3>
-                    </div>
+        </h1>
+    </section>
 
-
-  <body>
-  <div class="wrapper">
     <!-- Main content -->
     <section class="invoice">
-      <!-- title row -->
-      <div class="row">
-        <div class="col-xs-12">
-          <h1 class="page-header">
-            <img alt="User Image" src="{{ asset ('AdminLTE/dist/img/francachela.png') }}"> <b>Agencia de Festejos Francachela C.A.</b><small>J-405021420.</small>
-            <small class="pull-right">Fecha de registro: {{ $order->created_at }}</small>
-          </h1>
+        <!-- title row -->
+        <div class="row">
+            <div class="col-xs-12">
+                <h1 class="page-header">
+                  <center>
+                    <img alt="User Image" src="{{ asset ('AdminLTE/dist/img/f.png') }}">
+                  </center>
+                </h1>
+            </div>
         </div>
-        <!-- /.col -->
-      </div>
-      <!-- info row -->
-      <div class="row invoice-info">
-        <div class="col-sm-4 invoice-col">
-          <address>
-            <strong>Agencia de Festejos Francachela C.A.</strong><br>
-            <b>RIF: </b>J-405021420.<br>
-            <b>Dirección:</b> Avenida los Llanos Nº 53.<br>
-            San juan de los morros, Estado Guárico.<br>
-            <b>TLF:</b> 0246-4320357<br>
-            <b>Email:</b> festejosfrancachela@gmail.com
-          </address>
+        <!-- info row -->
+        <div class="row invoice-info">
+            <div class="col-sm-4 invoice-col">
+                <address>
+                    <b>Agencia de Festejos Francachela</b><br>
+                    <b>RIF: </b>J-405021420.<br>
+                    <b>Dirección:</b>Av. los Llanos N° 53.<br>
+                    San juan de los morros, Estado Guárico. 0246-4320357. festejosfrancachela@gmail.com
+                </address>
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-4 invoice-col">
+                <address>
+                  <strong>Datos del cliente</strong><br>
+                  <b>Cliente:</b> {{ $order->user->fullname }}<br>
+                  <b>Numero de cedula o rif:</b> {{ $order->user->identification }}<br>
+                  <b>TLF:</b> {{ $order->user->telephone }}<br>
+                  <b>Email:</b> {{ $order->user->email }}<br>
+                </address>
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-4 invoice-col">
+                <address>
+                    <b>Orden numero #0{{ $order->id }}</b><br>
+                    <b>Titulo: {{ $order->id }}</b><br>
+                    <b>Fecha del evento: </b>{{ $order->date }}<br>
+                    <b>Ubicacion del evento:</b> {{ $order->locale }}<br>
+                    <b>Estado del evento: </b>
+                    @if($order->status == "on_hold")
+                      EN ESPERA
+                    @elseif($order->status == "Rejected")
+                      RECHAZADA
+                    @elseif($order->status == "payment_received")
+                      PAGO RECIBIDO
+                    @elseif($order->status == "payment_verified")
+                      PAGO VERIFICADO
+                    @else
+                      CONFIRMADO
+                    @endif
+                    <br>
+                </address>
+            </div>
+            <!-- /.col -->
         </div>
-        <!-- /.col -->
-        <div class="col-sm-4 invoice-col">
-          <address>
-            <strong>Datos del cliente</strong><br>
-            <b>Cliente:</b> {{ $order->user->fullname }}<br>
-            <b>Numero de cedula o rif:</b> {{ $order->user->identification }}<br>
-            <b>TLF:</b> {{ $order->user->telephone }}<br>
-            <b>Email:</b> {{ $order->user->email }}<br>
-          </address>
-        </div>
-        <!-- /.col -->
-        <div class="col-sm-4 invoice-col">
-          <b>Orden numero #{{ $order->id }}</b><br>
-          <b>Fecha del evento: </b>{{ $order->date }}<br>
-          <b>Ubicacion del evento:</b> {{ $order->locale }}<br>
-          <b>Estado del evento: </b>
-          @if($order->status == "on_hold")
-            EN ESPERA
-          @elseif($order->status == "Rejected")
-            RECHAZADA
-          @elseif($order->status == "payment_received")
-            PAGO RECIBIDO
-          @elseif($order->status == "payment_verified")
-            PAGO VERIFICADO
-          @else
-            CONFIRMADO
-          @endif
-          <br>
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-<CENTER><H1>{{ $order->title }}</H1></CENTER><BR>
-      <!-- Table row -->
-      <div class="row">
-        <div class="col-xs-12 table-responsive">
-          <table class="table table-striped">
+        <!-- /.row -->
+
+    @if(count($order->products)>0)
+        <!-- Table row -->
+            <div class="row">
+                <div class="col-xs-12 table-responsive">
+                    <h3>Productos o servicios</h3>
+                    <table class="table table-striped">
                           <thead>
                           <tr>
                               <th>ITEM</th>
@@ -107,55 +102,92 @@
                           @endforeach
                           </tbody>
                       </table>
-        </div>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        @endif
+<br><br><br>
+        <div class="row">
+            <!-- accepted payments column -->
         <!-- /.col -->
-      </div>
-      <!-- /.row -->
+            <div class="col-xs-6">
+              <p class="lead">Metodos de pago:</p>
+              <img src="{{ asset ('AdminLTE/dist/img/bancaribe.png') }}" alt="Bancaribe">
 
-      <div class="row">
-        <!-- accepted payments column -->
-        <div class="col-xs-6">
-          <p class="lead">Metodos de pago:</p>
-          <img src="{{ asset ('AdminLTE/dist/img/bancaribe.png') }}" alt="Bancaribe">
+              <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                Puede pagar en efectivo directamente en nuestra oficina o con un deposito o transferencia: BANCO DEL CARIBE. Cuenta corriente N° 0114-0206-2720-6010-7338. A nombre de Agencia de Festejos Francachela. RIF: J-405021420.
+              </p>
+            </div>
+            <div class="col-xs-6 pull-right">
 
-          <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-            Puede pagar en efectivo directamente en nuestra oficina o con un deposito o transferencia: BANCO DEL CARIBE. Cuenta corriente N° 0114-0206-2720-6010-7338. A nombre de Agencia de Festejos Francachela. RIF: J-405021420.
-          </p>
-        </div>
-        <!-- /.col -->
-        <div class="col-xs-6">
-          <p class="lead">Fecha del evento {{ $order->date }}</p>
+                <div class="form-group">
 
-          <div class="table-responsive">
-            <table class="table">
-            <br><br>
-              <tr>
-                <th><h1>Total:</h1></th>
-                <td><h1><b>{{ $order->total }} BsF<b></h1></td>
-              </tr>
-            </table>
-          </div>
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- ./wrapper -->
-  </body>
-
+                    <div class="table-responsive">
+                      <table class="table">
+                      <br><br>
+                      @if($order->discount != null)
+                          <tr>
+                            <th>Descuento ({{ $order->discount }}%)</th>
+                            <td></td>
+                          </tr>
+                        @endif
+                        <tr>
+                          <th>Subtotal:</th>
+                          <td>{{ $order->neto }}</td>
+                        </tr>
+                        <tr>
+                          <th>Iva:</th>
+                          <td>{{ $order->iva }}</td>
+                        </tr>
+                        <tr>
+                          <th><h3>Total a pagar:</h3></th>
+                          <td><h3><b>{{ $order->total }} BsF<b></h3></td>
+                        </tr>
+                      </table>
+                    </div>
                 </div>
             </div>
+            <!-- /.col -->
+
         </div>
 
+        <!-- /.row -->
+        <div class="row text-center no-print">
+            @if($order->status == "confirmed")
             <div class="for text-center">
-                <a class="btn btn-success btn-sm" href="{{ route('editorder', $order->id) }}">
+                <a class="btn btn-success" href="{{ route('editorder', $order->id) }}">
                     EDITAR
                 </a>
-                <a class="btn btn-danger btn-sm" href="{{ route('indexorder') }}">
+                <a class="btn btn-danger" href="{{ route('indexorder') }}">
                     CANCELAR
                 </a>
             </div>
-    </div>
+        @else
+            <div class="for text-center">
+                <a class="btn btn-success" href="{{ route('createpay', [$order]) }}">
+                    REALIZAR PAGO
+                </a>
+                <a class="btn btn-success" href="{{ route('editorder', $order->id) }}">
+                    EDITAR
+                </a>
+                <a class="btn btn-danger" href="{{ route('indexorder') }}">
+                    CANCELAR
+                </a>
+            </div>
+        @endif
+        </div>
+
+        <br>
+
+
+    </section>
+@endsection
+
+@section('js')
+    <script type="text/javascript">
+        $('.printer').on('click', function () {
+            window.print();
+        });
+    </script>
 @endsection

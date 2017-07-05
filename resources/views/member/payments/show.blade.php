@@ -1,59 +1,87 @@
 @extends('layouts.admin')
-@section('title', 'Notificación de pago')
+
+@section('title', 'Datos de orden')
+
 @section('contenido')
-<div class="box-header with-border">
-<h3 class="box-title">
-            </h3>
+
+
+    <section class="content-header">
+        <h1>
+            Orden Nr.
+            <small>#0{{$order->id }}</small>
             <div class="box-tools">
-                <div class="text-center">
-                    <a class="btn btn-success btn-sm" href="{{ route('memberpaypdf', $payment->id) }}">
-                        DESCARGAR PDF
-                    </a>
+                <div class="text-right">
+                    <button type="button" class="btn btn-success printer" id="print">DESCARGAR
+                        <i class="glyphicon glyphicon-print"></i>
+                    </button>
                 </div>
             </div>
-        </div>
-    <div class="box">
-        <div class="box-body">
-            <div class="col-md-12">
+ 
+        </h1>
+    </section>
 
-  <body>
-  <div class="wrapper">
     <!-- Main content -->
     <section class="invoice">
-      <!-- title row -->
-      <div class="row">
-        <div class="col-xs-12">
-    
-          <div class="col-xs-3">
-            <img alt="User Image" src="{{ asset ('AdminLTE/dist/img/loguito1.png') }}"> 
-          </div>
-          <div class="col-xs-9">
-          <small class="pull-right">Fecha de registro: {{ $payment->created_at }}</small>
-          <h3>  Agencia de Festejos Francachela C.A.</h3>
-          <b> RIF: </b>J-405021420.
-            <b> Dirección:</b> Avenida los Llanos Nº 53.
-            San juan de los morros, Estado Guárico.<br>
-            <b>TLF:</b> 0246-4320357
-            <b>Email:</b> festejosfrancachela@gmail.com
-          </div>
-
+        <!-- title row -->
+        <div class="row">
+            <div class="col-xs-12">
+                <h1 class="page-header">
+                  <center>
+                    <img alt="User Image" src="{{ asset ('AdminLTE/dist/img/f.png') }}">
+                  </center>
+                </h1>
+            </div>
         </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-<div class="pull-right">
-Estado del pago: 
-<strong> 
-@if($payment->status == "on_hold")
-  No verificado
-@else
-  Verificado
-@endif
-</strong>
-</div>
-      <!-- Table row -->
-      <div class="row">
-      <center><h3><b>NOTIFICACION DE PAGO</b></h3></center>
+        <!-- info row -->
+        <div class="row invoice-info">
+            <div class="col-sm-4 invoice-col">
+                <address>
+                    <b>Agencia de Festejos Francachela</b><br>
+                    <b>RIF: </b>J-405021420.<br>
+                    <b>Dirección:</b>Av. los Llanos N° 53.<br>
+                    San juan de los morros, Estado Guárico. 0246-4320357. festejosfrancachela@gmail.com
+                </address>
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-4 invoice-col">
+                <address>
+                  <strong>Datos del cliente</strong><br>
+                  <b>Cliente:</b> {{ $order->user->fullname }}<br>
+                  <b>Numero de cedula o rif:</b> {{ $order->user->identification }}<br>
+                  <b>TLF:</b> {{ $order->user->telephone }}<br>
+                  <b>Email:</b> {{ $order->user->email }}<br>
+                </address>
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-4 invoice-col">
+                <address>
+                    <b>Orden numero #0{{ $order->id }}</b><br>
+                    <b>Titulo: {{ $order->id }}</b><br>
+                    <b>Fecha del evento: </b>{{ $order->date }}<br>
+                    <b>Ubicacion del evento:</b> {{ $order->locale }}<br>
+                    <b>Estado del evento: </b>
+                    @if($order->status == "confirmed")
+                      CONFIRMADO
+                    @elseif($order->status == "Rejected")
+                      RECHAZADA
+                    @elseif($order->status == "approved")
+                      APROBADO - ESPERANDO PAGO
+                    @elseif($order->status == "pending")
+                      PENDIENTE
+                    @else
+                      PENDIENTE
+                    @endif
+                    <br>
+                </address>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+
+    @if(count($order->products)>0)
+        <!-- Table row -->
+            <div class="row">
+                <center><h3><b>NOTIFICACION DE PAGO</b></h3></center>
         <div class="col-xs-8 col-xs-offset-2 table-responsive">
           <table class="table table-striped">
                           <thead>
@@ -82,23 +110,40 @@ Estado del pago:
                           </tbody>
                       </table>
         </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-
-      <!-- /.row -->
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- ./wrapper -->
-  </body>
-
+                <!-- /.col -->
             </div>
+            <!-- /.row -->
+        @endif
+<br><br><br>
+
+
+        <!-- /.row -->
+        <div class="row text-center no-print">
+            @if($order->status == "confirmed")
+            <div class="for text-center">
+                <a class="btn btn-danger" href="{{ route('indexpay') }}">
+                    CANCELAR
+                </a>
+            </div>
+        @else
+            <div class="for text-center">
+                <a class="btn btn-danger" href="{{ route('indexpay') }}">
+                    VOLVER
+                </a>
+            </div>
+        @endif
         </div>
-    </div>
-    <div class="for text-center">
-      <a class="btn btn-danger btn-lg" href="{{ route('indexpay') }}">
-        Volver
-      </a>
-    </div>
+
+        <br>
+
+
+    </section>
+@endsection
+
+@section('js')
+    <script type="text/javascript">
+        $('.printer').on('click', function () {
+            window.print();
+        });
+    </script>
 @endsection

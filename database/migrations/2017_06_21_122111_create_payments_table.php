@@ -16,8 +16,8 @@ class CreatePaymentsTable extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->increments('id');
             $table->date('date');
-            $table->enum('type', ['bank', 'cash']);
-            $table->enum('status', ['on_hold', 'payment_verified'])->default('on_hold');
+            $table->enum('type', ['bank', 'cash', 'another']);
+            $table->enum('status', ['pending', 'sended', 'verified'])->default('pending');
             $table->string('mount');
             $table->string('ref')->nullable();
             $table->integer('order_id')->unsigned();     

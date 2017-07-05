@@ -7,7 +7,7 @@
         @include('partials.errors')
         <div class="box-header with-border">
             <h3 class="box-title">
-                Lista de entradas y salidas
+                Lista de eventos
             </h3>
             <div class="box-tools">
                 <div class="btn-group">
@@ -32,9 +32,7 @@
                                 <th>CONTACTO</th>
                                 <th>MONTO</th>
                                 <th>FECHA DEL EVENTO</th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
+                                <th>ACCIONES</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -51,11 +49,11 @@
                                         </td>
                                         <td>
                                             @if($order->availability == "y")
-                                                <span class="label label-primary">
+                                                <span class="label label-success">
                                                     SI
                                                 </span>
                                             @elseif($order->availability == "n")
-                                                <span class="label label-warning">
+                                                <span class="label label-danger">
                                                     NO
                                                 </span>
                                             @else
@@ -66,24 +64,24 @@
                                         </td>
                                         <td>
                                             @if($order->status == "confirmed")
-                                                <span class="label label-success">
+                                                <span class="label label-primary">
                                                     CONFIRMADO
-                                                </span>
-                                            @elseif($order->status == "payment_received")
-                                                <span class="label label-warning">
-                                                    PAGO RECIBIDO
                                                 </span>
                                             @elseif($order->status == "Rejected")
                                                 <span class="label label-danger">
-                                                    ORDEN RECHAZADA
+                                                    RECHAZADA
                                                 </span>
-                                            @elseif($order->status == "payment_verified")
+                                            @elseif($order->status == "primary")
+                                                <span class="label label-danger">
+                                                    PAGO RECIBIDO
+                                                </span>
+                                            @elseif($order->status == "warning")
                                                 <span class="label label-primary">
-                                                    PAGO VERIFICADO
+                                                    PAGO PENDIENTE
                                                 </span>
                                             @else
                                                 <span class="label label-default">
-                                                    EN ESPERA
+                                                    NO PROCESADO
                                                 </span>
                                             @endif
                                         </td>
@@ -97,19 +95,101 @@
                                             {{ $order->date }}
                                         </td>
                                         <td>
-                                            <a href="{{ route('orders.show', $order->id) }}">
-                                                <i class="fa fa-eye" aria-hidden="true"></i>
-                                            </a>
+                                            {!! Form::open(['route' => ['orders.destroy',$order ], 'method' => 'DELETE']) !!}
+                                            <div class="form-group">
+                                                <a href="{{ route('orders.show', $order->id) }}" title="">
+                                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+                                            <div class="form-group">
+                                                <a href="{{ route('orders.edit', $order->id) }}" title="Editar">
+                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-link" title="Eliminar" onclick="return confirm('¿Realmente deseas borrar el evento?')"">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button>
+                                            </div>
+                                            {!! Form::close() !!}
+                                        </td>
+                                    </tr>
+                            @endforeach
+                            @foreach($events as $event)
+                                    <tr>
+                                        <td>
+                                            {{ $event->user->fullname }}
                                         </td>
                                         <td>
-                                            <a href="{{ route('orders.edit', $order->id) }}">
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                            </a>
+                                            {{ $event->title }}
                                         </td>
                                         <td>
-                                            {!! Form::open(['route' => ['orders.destroy', $order->id], 'method' => 'DELETE']) !!}
-                                            <button class="glyphicon glyphicon-remove" onclick="return confirm('¿Realmente deseas borrar el producto?')"">
-                                            </button>
+                                            {{ $event->locale }}
+                                        </td>
+                                        <td>
+                                            @if($event->availability == "y")
+                                                <span class="label label-success">
+                                                    SI
+                                                </span>
+                                            @elseif($event->availability == "n")
+                                                <span class="label label-danger">
+                                                    NO
+                                                </span>
+                                            @else
+                                                <span class="label label-danger">
+                                                    CONFLICTO
+                                                </span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($event->status == "confirmed")
+                                                <span class="label label-success">
+                                                    CONFIRMADO
+                                                </span>
+                                            @elseif($event->status == "Rejected")
+                                                <span class="label label-danger">
+                                                    RECHAZADA
+                                                </span>
+                                            @elseif($event->status == "primary")
+                                                <span class="label label-danger">
+                                                    PAGO RECIBIDO
+                                                </span>
+                                            @elseif($event->status == "warning")
+                                                <span class="label label-primary">
+                                                    PAGO PENDIENTE
+                                                </span>
+                                            @else
+                                                <span class="label label-default">
+                                                    NO PROCESADO
+                                                </span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            {{ $event->user->telephone }}
+                                        </td>
+                                        <td>
+                                            {{ $event->total }}
+                                        </td>
+                                        <td>
+                                            {{ $event->date }}
+                                        </td>
+                                        <td>
+                                            {!! Form::open(['route' => ['orders.destroy',$event ], 'method' => 'DELETE']) !!}
+                                            <div class="form-group">
+                                                <a href="{{ route('orders.show', $event->id) }}" title="">
+                                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+                                            <div class="form-group">
+                                                <a href="{{ route('orders.edit', $event->id) }}" title="Editar">
+                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-link" title="Eliminar" onclick="return confirm('¿Realmente deseas borrar el evento?')"">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button>
+                                            </div>
                                             {!! Form::close() !!}
                                         </td>
                                     </tr>

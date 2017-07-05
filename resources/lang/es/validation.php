@@ -129,7 +129,9 @@ return [
         'title'             => 'titulo', 
         'event_id'          => 'tipo de evento', 
         'date'              => 'fecha', 
-        'locale'              => 'ubicacion', 
+        'locale'            => 'ubicacion', 
+        'mount'             => 'monto', 
+
 
     ],
 

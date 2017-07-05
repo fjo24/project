@@ -297,7 +297,7 @@ folder instead of downloading all of them to reduce the load. -->
                             </a>
                         </li>
                         <li>
-                            <a href="{{route('orders.create')}}">
+                            <a href="{{route('select-client')}}">
                                 <i class="fa fa-circle-o">
                                 </i>
                                 Nuevo evento
@@ -333,7 +333,7 @@ folder instead of downloading all of them to reduce the load. -->
                     </a>
                     <ul class="treeview-menu">
                         <li>
-                            <a href="{{route('payments.create')}}">
+                            <a href="{{route('select-order')}}">
                                 <i class="fa fa-circle-o">
                                 </i>
                                 Registrar pago
@@ -344,36 +344,6 @@ folder instead of downloading all of them to reduce the load. -->
                                 <i class="fa fa-circle-o">
                                 </i>
                                 Lista de pagos
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{route('payments.index')}}">
-                                <i class="fa fa-circle-o">
-                                </i>
-                                Pagos totales por evento
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-info">
-                        </i>
-                        <span>
-                                    Actividades
-                                </span>
-                        <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right">
-                                    </i>
-                                </span>
-                    </a>
-                    <ul class="treeview-menu">
-                 
-                        <li>
-                            <a href="{{route('activities')}}">
-                                <i class="fa fa-circle-o">
-                                </i>
-                                Tareas pendientes
                             </a>
                         </li>
                     </ul>
@@ -415,19 +385,19 @@ folder instead of downloading all of them to reduce the load. -->
                     </a>
                     <ul class="treeview-menu">
                         <li>
-                            <a href="{{route('indexorder')}}">
+                            <a href="{{route('createorder')}}">
                                 <i class="fa fa-circle-o">
                                 </i>
-                                Presupuestos solicitados
+                                NUEVO presupuesto
                             </a>
                         </li>
                     </ul>
                     <ul class="treeview-menu">
                         <li>
-                            <a href="{{route('createorder')}}">
+                            <a href="{{route('indexorder')}}">
                                 <i class="fa fa-circle-o">
                                 </i>
-                                Solicitar presupuesto
+                                Listado
                             </a>
                         </li>
                     </ul>
@@ -446,7 +416,7 @@ folder instead of downloading all of them to reduce the load. -->
                     </a>
                     <ul class="treeview-menu">
                         <li>
-                            <a href="{{route('createpay')}}">
+                            <a href="{{route('select-order-member')}}">
                                 <i class="fa fa-circle-o">
                                 </i>
                                 Registrar pago
@@ -500,17 +470,21 @@ folder instead of downloading all of them to reduce the load. -->
         </section>
         <!-- Main content -->
         <section class="content">
+        <div class="row no-print">
             @include('flash::message')
+        </div>
             @yield('contenido')
-            <center><h1>
+            <div class="row text-center no-print">
+            <h1>
                 <img alt="User Image" src="{{ asset ('AdminLTE/dist/img/f.png') }}">
                     </img>
-            </h1></center>       
+            </h1>
+            </div>    
         </section>
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-    <footer class="main-footer">
+    <footer class="main-footer no-print">
         <div class="pull-right hidden-xs">
             <b>
                 2017
@@ -522,7 +496,7 @@ folder instead of downloading all of them to reduce the load. -->
         Todos los derechos reservados.
     </footer>
     <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
+    <aside class="control-sidebar control-sidebar-dark no-print">
         <!-- Create the tabs -->
         <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
             <li>
@@ -749,7 +723,7 @@ folder instead of downloading all of them to reduce the load. -->
     <!-- /.control-sidebar -->
     <!-- Add the sidebar's background. This div must be placed
  immediately after the control sidebar -->
-    <div class="control-sidebar-bg">
+    <div class="control-sidebar-bg no-print">
     </div>
 </div>
 <!-- ./wrapper -->

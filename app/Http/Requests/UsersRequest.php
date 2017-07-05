@@ -28,7 +28,7 @@ class UsersRequest extends FormRequest
             'name'       => 'max:50',   
             'lastname'       => 'max:50',   
             'email'          => 'email|required|unique:users', 
-            'identification' => 'required|numeric|min:7|unique:users',
+            'identification' => 'required|min:5|unique:users',
             'telephone'      => 'required|numeric|min:11',
             'password'       => 'required|confirmed|min:6', 
         ];

@@ -1,17 +1,17 @@
 @extends('layouts.admin')
 
-@section('title', 'Lista de eventos')
+@section('title', 'Seleccione evento a pagar')
 
 @section('contenido')
     <div class="box">
         @include('partials.errors')
         <div class="box-header with-border">
             <h3 class="box-title">
-                Lista de entradas y salidas
+            Seleccione evento a pagar
             </h3>
             <div class="box-tools">
                 <div class="btn-group">
-                  <a class="btn btn-danger btn-sm" href="{{ route('createorder') }}">
+                  <a class="btn btn-danger btn-sm" href="{{ route('select-client') }}">
                             NUEVO EVENTO
                         </a>
                 </div>
@@ -74,24 +74,13 @@
                                         <td>
                                             {{ $order->date }}
                                         </td>
-                                        <td>
-                                            {!! Form::open(['route' => ['orders.destroy',$order ], 'method' => 'DELETE']) !!}
+                                        <td class="text-center">
                                             <div class="form-group">
-                                                <a href="{{ route('showorder', $order->id) }}" title="">
-                                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                                <a href="{{ route('add-pay', [$order]) }}">
+                                                    Siguiente
+                                                    <i class="glyphicon glyphicon-ok" aria-hidden="true"></i>
                                                 </a>
                                             </div>
-                                            <div class="form-group">
-                                                <a href="{{ route('editorder', $order->id) }}" title="Editar">
-                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                            <div class="form-group">
-                                                <button type="submit" class="btn btn-link" title="Eliminar" onclick="return confirm('¿Realmente deseas borrar el producto?')"">
-                                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                                </button>
-                                            </div>
-                                            {!! Form::close() !!}
                                         </td>
                                     </tr>
                             @endforeach
@@ -124,5 +113,3 @@
         });
     </script>
 @endsection
-
-

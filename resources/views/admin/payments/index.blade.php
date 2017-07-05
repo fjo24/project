@@ -28,10 +28,8 @@
                                 <th>EVENTO</th>
                                 <th>FORMA DE PAGO</th>
                                 <th>MONTO</th>
-                                <th>NUMERO DE REFERENCIA</th>
+                                <th>NUM REFERENCIA</th>
                                 <th>ESTADO DEL PAGO</th>
-                                <th></th>
-                                <th></th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -58,30 +56,26 @@
                                         {{ $payment->ref }}
                                     </td>
                                     <td>
-                                        @if($payment->status == "on_hold")
-                                            <span class="label label-danger">
-                                        NO VERIFICADO
-                                            </span>
-                                        @else
+                                        @if($payment->status == "verified")
                                             <span class="label label-primary">
                                         VERIFICADO
+                                            </span>
+                                        @else
+                                            <span class="label label-warning">
+                                        NO VERIFICADO
                                             </span>
                                         @endif
                                     </td>
                                     <td>
+                                        {!! Form::open(['route' => ['payments.destroy', $payment->id], 'method' => 'DELETE']) !!}
                                         <a href="{{ route('payments.show', $payment->id) }}">
                                             <i class="fa fa-eye" aria-hidden="true"></i>
                                         </a>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('payments.edit', $payment->id) }}">
-                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        {!! Form::open(['route' => ['payments.destroy', $payment->id], 'method' => 'DELETE']) !!}
-                                        <button class="glyphicon glyphicon-remove" onclick="return confirm('¿Realmente deseas borrar el pago?')"">
-                                        </button>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-link" title="Eliminar" onclick="return confirm('¿Realmente deseas borrar el pago?')"">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>

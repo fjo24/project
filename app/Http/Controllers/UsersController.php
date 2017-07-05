@@ -166,13 +166,13 @@ class UsersController extends Controller
     {
         $request = $request->all();
 
-        $request['fullname'] = $request['name'] . " " . $request['lastname'];
+        
         $user = new User($request);
         $user->password = bcrypt($request['password']);
         $user->save();
         //Flash::success('Se ha registrado el usuario '. $user->name. ' '. $user->last_name.' de manera exitosa!')->important();
         
-        return redirect()->route('users.index');
+        return redirect()->route('select-client', $user)->with('success', 'Se ha registrado de manera exitosa!');
     }
 
     public function show($id)

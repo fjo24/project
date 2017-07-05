@@ -28,6 +28,7 @@
                             <tr>
                                 <th>FECHA</th>
                                 <th>PROVEEDOR</th>
+                                <th>DESCRIPCION</th>
                                 <th>TIPO DE REGISTRO</th>
                                 <th></th>
                                 <th></th>
@@ -46,6 +47,9 @@
                                     @else
                                         N/A
                                     @endif
+                                    </td>
+                                    <td>
+                                        {{ $register->info }}
                                     </td>
                                     <td>
                                     @if($register->type == "entry")

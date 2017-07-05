@@ -11,7 +11,7 @@
             </h3>
             <div class="box-tools">
                 <div class="text-center">
-                    <a class="btn btn-primary btn-sm" href="{{ route('createpay') }}">
+                    <a class="btn btn-primary btn-sm" href="{{ route('select-order-member') }}">
                         NUEVO PAGO
                     </a>
                 </div>
@@ -58,9 +58,9 @@
                                         {{ $payment->ref }}
                                     </td>
                                     <td>
-                                        @if($payment->status == "on_hold")
-                                            <span class="label label-danger">
-                                        NO VERIFICADO
+                                        @if($payment->status == "pending")
+                                            <span class="label label-warning">
+                                        ENVIADO
                                             </span>
                                         @else
                                             <span class="label label-primary">
@@ -69,9 +69,17 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('showpay', $payment->id) }}">
-                                            <i class="fa fa-eye" aria-hidden="true"></i>
-                                        </a>
+                                        {!! Form::open(['route' => ['pay.destroy',$payment ], 'method' => 'DELETE']) !!}
+                              
+                                            <div class="form-group">
+                                            <a href="{{ route('showpay', $payment->id) }}" title="">
+                                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                                </a>
+                                                <button type="submit" class="btn btn-link" title="Eliminar" onclick="return confirm('¿Realmente deseas borrar el pago?')"">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button>
+                                            </div>
+                                        {!! Form::close() !!}
                                     </td>
                                 </tr>
                             @endforeach

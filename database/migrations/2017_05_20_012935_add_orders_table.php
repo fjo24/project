@@ -14,10 +14,15 @@ class AddOrdersTable extends Migration
             $table->date('date');
             $table->string('title');
             $table->integer('user_id')->unsigned();
-            $table->enum('status', ['Rejected', 'on_hold', 'payment_received', 'payment_verified', 'confirmed'])->default('on_hold');
-            $table->enum('availability', ['y', 'n', 'in_conflict'])->default('y');
+            $table->enum('status', ['not_processed', 'pending', 'approved', 'confirmed', 'Rejected'])->default('not_processed');
+            $table->enum('availability', ['y', 'n'])->default('y');
             $table->string('locale');
             $table->string('notes')->nullable();
+
+            $table->string('discount')->default(0)->nullable();
+            $table->string('neto')->nullable();
+            $table->string('iva')->nullable();
+            
             $table->string('total')->nullable();
             $table->string('paid_out')->nullable();
             $table->integer('created')->unsigned();

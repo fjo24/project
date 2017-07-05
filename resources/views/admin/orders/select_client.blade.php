@@ -80,6 +80,7 @@
         </div>
         <!-- /.box -->
     </div>
+    @include('admin.orders.modal.client-modal');
 @endsection
 
 @section('js')
