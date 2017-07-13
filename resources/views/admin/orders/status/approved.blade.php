@@ -56,7 +56,7 @@
             <div class="col-sm-4 invoice-col">
                 <address>
                     <b>Orden numero #0{{ $order->id }}</b><br>
-                    <b>Titulo: {{ $order->id }}</b><br>
+                    <b>Titulo: {{ $order->title }}</b><br>
                     <b>Fecha del evento: </b>{{ $order->date }}<br>
                     <b>Ubicacion del evento:</b> {{ $order->locale }}<br>
                     <b>Estado del evento: </b>

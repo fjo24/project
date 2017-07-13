@@ -37,6 +37,9 @@ Route::get('we',  'InfoController@we')->name('we');
 Route::get('activities',  'ActivitiesController@index')->name('activities');
 
 Route::group(['prefix' => 'admin'], function () {
+    //stats for admin
+    Route::get('/', 'StatsController@index')->name('stats');
+    Route::resource('/stats', 'StatsController');
     //se agrego el middleware para que deba autenticarse para acceder a las rutas siguientes
 	Route::resource('users','UsersController');
 	Route::resource('providers','ProvidersController');
@@ -45,7 +48,9 @@ Route::group(['prefix' => 'admin'], function () {
 
 	Route::resource('orders','OrdersController');
     Route::get('/select-client/', 'OrdersController@selectClient')->name('select-client');
-    Route::get('/orders/user/{user}', 'OrdersController@addorder')->name('add-order');
+    Route::get('/orders/date/user/{user}', 'OrdersController@selectDate')->name('select-date');
+    Route::post('/add-order/', 'OrdersController@addorder')->name('add-order');
+    Route::post('/store-order/', 'OrdersController@orderstore')->name('store-order');
 
     //cambiar estado de ordenes (aprobada/rechazada)
     Route::get('/approved-event/{order_id}',  'OrdersController@approvedEvent')->name('approved-event');

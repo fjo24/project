@@ -51,18 +51,26 @@
                                                     <div class="col-md-4">
                                                         <label>Producto o servicio</label>
                                                         <div class="input-group-btn input-group-select">
-                                                            <div class="form-group">
-                                                                {!! Form::select('product_id[]', $products, $product->id, ['class' => 'form-control select-product', 'placeholder' => 'Indique producto', 'required']) !!}
-                                                            </div>
-                                                        </div>
+                                        <div class="form-group">
+                                            <select class="form-control select-product" name="product_id[]">
+                                            <option selected="selected" disabled="disabled" hidden="hidden" value="">---
+                                                Indique producto ---
+                                            </option>
+                                            @foreach($products as $product)
+                                                <option value="{{$product->id}}">{{$product->name}}</option>
+                                            @endforeach
+                                        </select>
+                                        </div>
+                                        <input type="hidden" class="input-group-select-val" name="contacts['type'][]" value="phone">
+                                    </div>
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>Precio</label>
                                                         {!! Form::text('product_cost[]', $product->cost, ['class' => 'form-control producto-price', 'placeholder' => 'precio']) !!}
                                                     </div>
                                                     <div class="col-md-2">
-                                                        <label>En almacen</label>
-                                                        {!! Form::text('producto-stock[]', $product->quantity, ['class' => 'form-control producto-stock', 'placeholder' => 'cantidad', 'required', 'disabled' => 'true']) !!}
+                                                        <label>Disponible</label>
+                                                        {!! Form::text('producto-stock[]', $product->available, ['class' => 'form-control producto-stock', 'placeholder' => 'cantidad', 'required', 'disabled' => 'true']) !!}
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>Cantidad</label>
@@ -80,20 +88,27 @@
                                             <div class="col-md-4">
                                                 <label>Producto o servicio</label>
                                                 <div class="input-group-btn input-group-select">
-                                                    <div class="form-group">
-                                                        {!! Form::select('product_id[]', $products, null, ['class' => 'form-control select-product', 'placeholder' => 'Indique producto']) !!}
-                                                    </div>
-                                                    <input type="hidden" class="input-group-select-val" name="contacts['type'][]" value="phone">
-                                                </div>
+                                        <div class="form-group">
+                                            <select class="form-control select-product" name="product_id[]">
+                                            <option selected="selected" disabled="disabled" hidden="hidden" value="">---
+                                                Indique producto ---
+                                            </option>
+                                            @foreach($products as $product)
+                                                <option value="{{$product->id}}">{{$product->name}}</option>
+                                            @endforeach
+                                        </select>
+                                        </div>
+                                        <input type="hidden" class="input-group-select-val" name="contacts['type'][]" value="phone">
+                                    </div>
                                             </div>
                                             <div class="col-md-2">
                                                 <label>Precio</label>
                                                 {!! Form::text('product_cost[]', null, ['class' => 'form-control producto-price', 'placeholder' => 'precio']) !!}
                                             </div>
                                             <div class="col-md-2">
-                                                <label>En almacen</label>
-                                                {!! Form::text('producto-stock[]', null, ['class' => 'form-control producto-stock', 'placeholder' => 'cantidad', 'disabled' => 'true']) !!}
-                                            </div>
+                                    <label>Disponible</label>
+                                    {!! Form::text('producto-stock[]', null, ['class' => 'form-control producto-stock', 'placeholder' => 'cantidad', 'disabled' => 'true']) !!}
+                                </div>
                                             <div class="col-md-2">
                                                 <label>Cantidad</label>
                                                 {!! Form::text('quantity[]', null, ['class' => 'form-control producto-quantity', 'placeholder' => 'cantidad']) !!}

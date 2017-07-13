@@ -6,8 +6,7 @@
 
     <!-- Main content -->
     <section class="content">
-
-        {!! Form::open(['route' => 'orders.store', 'method' => 'POST']) !!}
+        {!! Form::model($order, ['route' => ['orders.update', $order], 'method' => 'PUT']) !!}
             @include('admin.orders.partials.fields')
         {!! Form::close() !!}
     </section>
@@ -172,8 +171,8 @@
                 return val.id == id ? val.price : null;
             });
 
-            var quantity = $.map(myArray, function (val) {
-                return val.id == id ? val.quantity : null;
+            var available = $.map(myArray, function (val) {
+                return val.id == id ? val.available : null;
             });
 
             var cost = $.map(myArray, function (val) {
@@ -181,7 +180,7 @@
             });
 
             $(this).closest('.multiple-form-group').find('.producto-price').val(cost[0]);
-            $(this).closest('.multiple-form-group').find('.producto-stock').val(quantity[0]);
+            $(this).closest('.multiple-form-group').find('.producto-stock').val(available[0]);
             //$(this).closest('.multiple-form-group').find('.producto-cost').val(cost[0]);
 
             console.log(found[0]);

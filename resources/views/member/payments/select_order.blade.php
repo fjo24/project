@@ -7,7 +7,7 @@
         @include('partials.errors')
         <div class="box-header with-border">
             <h3 class="box-title">
-                Eventos de {{ Auth()->user()->fullname }}
+                Eventos aprobados y habilitados para realizar pago.<b> {{ Auth()->user()->fullname }}</b>
             </h3>
             <div class="box-tools">
                 <div class="btn-group">

@@ -7,6 +7,7 @@ use App\Http\Requests\PaymentsRequest;
 Use App\Payment;
 use Laracasts\Flash\Flash;
 Use App\Order;
+Use App\Product;
 use Carbon\Carbon;
 Use App\User;
 use DB;
@@ -107,6 +108,44 @@ class PaymentsController extends Controller
         if ($pay >= $total) {
             $request['status'] = 'confirmed';
             $order->update($request);
+
+            //updating products
+        $type=$order->type;
+            $id=$order->id;
+            $status=$order->status;
+            $products = Product::orderBy('name', 'ASC')->get();
+            //Selecting just ids from the pivot table that is related to the id of order
+            foreach ($products as $product){
+                $products_id = DB::table('order_product')
+                    ->join('orders', 'orders.id', '=', 'order_product.order_id')
+                    ->select('order_product.product_id AS ids')
+                    ->where('order_product.product_id', $product->id)
+                    ->where('order_product.order_id', $id)
+                    ->get();
+            
+                    if ($product->type=='sale') {
+                        foreach ($products_id as $product_id){
+                            $quantity = DB::table('order_product')
+                                ->join('products', 'products.id', '=', 'order_product.product_id')
+                                ->select(DB::raw('sum(products.quantity-order_product.quantity) AS updated_quantity'))
+                                ->where('order_product.order_id', $id)
+                                ->where('products.id', $product_id->ids)
+                                ->get();
+                            $req = $quantity[0]->updated_quantity;
+                            //available field
+                            $available = DB::table('order_product')
+                                ->join('products', 'products.id', '=', 'order_product.product_id')
+                                ->select(DB::raw('sum(products.available-order_product.quantity) AS updated_available'))
+                                ->where('order_product.order_id', $id)
+                                ->where('products.id', $product_id->ids)
+                                ->get();
+                            $req2 = $available[0]->updated_available;
+
+                            $product->update(['available' => $req2, 'quantity' => $req]);
+                        }
+                    }
+                
+            }
             Flash::success('EL PAGO FUE VERIFICADO CON EXITO, Y ESTA COMPLETO!')->important();
         }else{
         Flash::success('EL PAGO FUE VERIFICADO PERO ES INSUFICIENTE!.. POR FAVOR REVISE SI HAY MAS PAGOS REGISTRADOS SIN VERIFICAR PARA ESTE EVENTO')->important();    

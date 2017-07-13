@@ -63,7 +63,7 @@
                                                     </div>
                                                     <div class="col-md-3">
                                                         <label>Precio</label>
-                                                        {!! Form::text('product_cost[]', $product->cost, ['class' => 'form-control producto-price', 'placeholder' => 'precio']) !!}
+                                                        {!! Form::text('product_cost[]', $product->cost, ['class' => 'form-control producto-price', 'placeholder' => 'precio', 'disabled' => 'true']) !!}
                                                     </div>
                                                     <div class="col-md-3">
                                                         <label>Cantidad</label>
@@ -89,7 +89,7 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <label>Precio</label>
-                                                {!! Form::text('product_cost[]', null, ['class' => 'form-control producto-price', 'placeholder' => 'precio']) !!}
+                                                {!! Form::text('product_cost[]', null, ['class' => 'form-control producto-price', 'placeholder' => 'precio', 'disabled' => 'true']) !!}
                                             </div>
                                             <div class="col-md-3">
                                                 <label>Cantidad</label>

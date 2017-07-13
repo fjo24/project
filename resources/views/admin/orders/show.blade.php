@@ -56,7 +56,7 @@
             <div class="col-sm-4 invoice-col">
                 <address>
                     <b>Orden numero #0{{ $order->id }}</b><br>
-                    <b>Titulo: {{ $order->id }}</b><br>
+                    <b>Titulo: {{ $order->title }}</b><br>
                     <b>Fecha del evento: </b>{{ $order->date }}<br>
                     <b>Ubicacion del evento:</b> {{ $order->locale }}<br>
                     <b>Estado del evento: </b>
@@ -89,16 +89,26 @@
                               <th>ITEM</th>
                               <th>PRECIO UNITARIO</th>
                               <th>CANTIDAD</th>
+                              <th class="no-print">DISPONIBILIDAD</th>
                               <th>TOTALES</th>
                           </tr>
                           </thead>
                           <tbody>
                           @foreach($order->products as $product)
                               <tr>
-                                  <td>{{ $product->name   }}</td>
-                                  <td>{{ $product->cost }}</td>
-                                  <td>{{ $product->pivot->quantity }}</td>
-                                  <td>{{ $product->pivot->quantity*$product->cost }}</td>
+                                    <td>{{ $product->name   }}</td>
+                                    <td>{{ $product->cost }}</td>
+                                    <td>{{ $product->pivot->quantity }}</td>
+                                @if($product->type=='rent'||$product->type=='sale')
+                                  @if($product->pivot->quantity<=$product->available)
+                                    <td class="no-print"><i class="glyphicon glyphicon-ok" aria-hidden="true"></i></td>
+                                  @else
+                                    <td class="no-print">Faltan {{$product->pivot->quantity-$product->available}} {{$product->name}}</td>
+                                  @endif
+                                @elseif($product->type=='service')
+                                    <td class="no-print">Ver disponibilidad</td>
+                                @endif
+                                    <td>{{ $product->pivot->quantity*$product->cost }}</td>
                               </tr>
                           @endforeach
                           </tbody>

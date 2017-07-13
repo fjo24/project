@@ -55,20 +55,20 @@
             <div class="col-sm-4 invoice-col">
                 <address>
                     <b>Orden numero #0{{ $order->id }}</b><br>
-                    <b>Titulo: {{ $order->id }}</b><br>
+                    <b>Titulo: {{ $order->title }}</b><br>
                     <b>Fecha del evento: </b>{{ $order->date }}<br>
                     <b>Ubicacion del evento:</b> {{ $order->locale }}<br>
                     <b>Estado del evento: </b>
-                    @if($order->status == "on_hold")
-                      EN ESPERA
+                    @if($order->status == "confirmed")
+                      CONFIRMADO
                     @elseif($order->status == "Rejected")
                       RECHAZADA
-                    @elseif($order->status == "payment_received")
-                      PAGO RECIBIDO
-                    @elseif($order->status == "payment_verified")
-                      PAGO VERIFICADO
+                    @elseif($order->status == "approved")
+                      APROBADO - ESPERANDO PAGO
+                    @elseif($order->status == "pending")
+                      PENDIENTE
                     @else
-                      CONFIRMADO
+                      PENDIENTE
                     @endif
                     <br>
                 </address>
@@ -107,7 +107,7 @@
             </div>
             <!-- /.row -->
         @endif
-<br><br><br>
+<br>
         <div class="row">
             <!-- accepted payments column -->
         <!-- /.col -->
@@ -154,33 +154,27 @@
 
         <!-- /.row -->
         <div class="row text-center no-print">
-            @if($order->status == "confirmed")
+
+        @if($order->status == "pending")
             <div class="for text-center">
                 <a class="btn btn-success" href="{{ route('editorder', $order->id) }}">
                     EDITAR
                 </a>
-                <a class="btn btn-danger" href="{{ route('indexorder') }}">
-                    CANCELAR
-                </a>
             </div>
-        @else
-            <div class="for text-center">
+          @elseif($order->status == "not_processed")
+
+                <a class="btn btn-success" href="{{ route('editorder', $order->id) }}">
+                    EDITAR
+                </a>
+          @elseif($order->status == "approved")
                 <a class="btn btn-success" href="{{ route('createpay', [$order]) }}">
                     REALIZAR PAGO
                 </a>
-                <a class="btn btn-success" href="{{ route('editorder', $order->id) }}">
-                    EDITAR
-                </a>
+          @endif
                 <a class="btn btn-danger" href="{{ route('indexorder') }}">
-                    CANCELAR
+                    VOLVER
                 </a>
-            </div>
-        @endif
         </div>
-
-        <br>
-
-
     </section>
 @endsection
 

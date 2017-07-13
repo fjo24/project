@@ -21,10 +21,6 @@
                                                 {!! Form::label('event_id', 'Tipo de evento') !!}
                                                 {!! Form::select('event_id', $events, null, ['class' => 'form-control', 'placeholder' => 'Seleccione tipo de evento', 'required']) !!}
                                             </div>
-                                            <div class="form-group">
-                                                {!! Form::label('date', 'Fecha') !!}
-                                                {!! Form::text('date', null, ['class' => 'form-control datepicker', 'placeholder' => 'Ingrese fecha', 'required']) !!}
-                                            </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -36,9 +32,11 @@
                                                 {!! Form::text('notes', null, ['class' => 'form-control', 'placeholder' => 'Incluya aca cualquier información adicional de interes', 'required']) !!}
                                             </div>
                                             <div class="form-group">
-                        <input type="hidden" value="{{$user->id}}" name="user_id" id="user_id">
-
-                    </div>
+                                                <input type="hidden" value="{{$user->id}}" name="user_id" id="user_id">
+                                            </div>
+                                            <div class="form-group">
+                                                {!! Form::hidden('date', null, ['class' => 'form-control datepicker', 'placeholder' => 'Ingrese fecha', 'required']) !!}
+                                            </div>
                                         </div>
                                     </div>
 
@@ -56,7 +54,14 @@
                                     <label>Producto o servicio</label>
                                     <div class="input-group-btn input-group-select">
                                         <div class="form-group">
-                                            {!! Form::select('product_id[]', $products, null, ['class' => 'form-control select-product', 'placeholder' => 'Indique producto', 'required']) !!}
+                                            <select class="form-control select-product" name="product_id[]">
+                                            <option selected="selected" disabled="disabled" hidden="hidden" value="">---
+                                                Indique producto ---
+                                            </option>
+                                            @foreach($products as $product)
+                                                <option value="{{$product->id}}">{{$product->name}}</option>
+                                            @endforeach
+                                        </select>
                                         </div>
                                         <input type="hidden" class="input-group-select-val" name="contacts['type'][]" value="phone">
                                     </div>
@@ -66,8 +71,8 @@
                                     {!! Form::text('product_cost[]', null, ['class' => 'form-control producto-price', 'placeholder' => 'precio']) !!}
                                 </div>
                                 <div class="col-md-2">
-                                    <label>En almacen</label>
-                                    {!! Form::text('producto-stock[]', null, ['class' => 'form-control producto-stock', 'placeholder' => 'cantidad', 'required', 'disabled' => 'true']) !!}
+                                    <label>Disponible</label>
+                                    {!! Form::text('producto-stock[]', null, ['class' => 'form-control producto-stock', 'placeholder' => 'cantidad', 'disabled' => 'true']) !!}
                                 </div>
                                 <div class="col-md-2">
                                     <label>Cantidad</label>

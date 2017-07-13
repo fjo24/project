@@ -56,7 +56,7 @@
                                     </td>
                                     <td class="text-center">
                                         <div class="form-group">
-                                            <a href="{{ route('add-order', [$user]) }}">
+                                            <a href="{{ route('select-date', [$user]) }}">
                                                 Siguiente
                                                 <i class="glyphicon glyphicon-ok" aria-hidden="true"></i>
                                             </a>

@@ -42,7 +42,7 @@ folder instead of downloading all of them to reduce the load. -->
 <script src="AdminLTE/plugins/iCheck/icheck.js"></script>
 
 -->
-
+@yield('top')
 </head>
 <body class="hold-transition skin-red sidebar-mini">
 <!-- Site wrapper -->
@@ -346,6 +346,30 @@ folder instead of downloading all of them to reduce the load. -->
                                 Lista de pagos
                             </a>
                         </li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-info">
+                        </i>
+                        <span>
+                                    Estadisticas
+                                </span>
+                        <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right">
+                                    </i>
+                                </span>
+                    </a>
+                    <ul class="treeview-menu">
+                 
+                        <li>
+                            <a href="{{route('stats')}}">
+                                <i class="fa fa-circle-o">
+                                </i>
+                                Ver
+                            </a>
+                        </li>
+                      
                     </ul>
                 </li>
                 @elseif(Auth::user() && Auth::user()->level=='member')

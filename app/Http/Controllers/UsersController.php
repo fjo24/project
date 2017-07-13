@@ -40,7 +40,7 @@ class UsersController extends Controller
 
     public function storeperson(PersonRequest $request)
     {
-        $request = $request->all();
+
         
 
  /*       if ($request->file('photo'))
@@ -55,12 +55,18 @@ class UsersController extends Controller
         $file_route = time().'_'.$img->getClientOriginalName();
         Storage::disk('imgUsers')->put($file_route, file_get_contents( $img->getRealPath() ) );
 */
-        $request['fullname'] = $request['name'] . " " . $request['lastname'];
-        $request['type'] = 'person';
-        $user = new User($request);
-      //  $user->avatar = $file_route;
-        $user->password = bcrypt($request['password']);
+        $user = User::create([
+            'name' => $request['name'],
+            'lastname' => $request['lastname'],
+            'fullname' => $request['name'] . " " . $request['lastname'],
+            'type' => 'person',
+            'identification' => $request['identification'],
+            'telephone' => $request['telephone'],
+            'email' => $request['email'],
+            'password' => bcrypt($request['password']),
+        ]);
         $user->save();
+
 
         //Flash::success('Se ha registrado el usuario '. $user->name. ' '. $user->last_name.' de manera exitosa!')->important();
         return view('member.users.member');

@@ -35,9 +35,6 @@
                                                 {!! Form::label('notes', 'Información adicional') !!}
                                                 {!! Form::text('notes', null, ['class' => 'form-control', 'placeholder' => 'Incluya aca cualquier información adicional de interes', 'required']) !!}
                                             </div>
-                                            <div class="form-group">
-                                                <input type="hidden" value="{{$user->id}}" name="user_id" id="user_id">
-                                            </div>
                                         </div>
                                     </div>
 
@@ -62,7 +59,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label>Precio</label>
-                                    {!! Form::text('product_cost[]', null, ['class' => 'form-control producto-price', 'placeholder' => 'precio']) !!}
+                                    {!! Form::text('product_cost[]', null, ['class' => 'form-control producto-price', 'placeholder' => 'precio', 'disabled' => 'true']) !!}
                                 </div>
                                 <div class="col-md-3">
                                     <label>Cantidad</label>
