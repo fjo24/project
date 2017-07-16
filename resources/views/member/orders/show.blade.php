@@ -156,24 +156,23 @@
         <div class="row text-center no-print">
 
         @if($order->status == "pending")
-            <div class="for text-center">
-                <a class="btn btn-success" href="{{ route('editorder', $order->id) }}">
-                    EDITAR
-                </a>
-            </div>
+        <div class="jumbotron">
+                <h1>Su orden fue recibida!</h1>
+                <p>Una vez revisada esta orden, procederemos a aprobarla o rechazarla según nuestra disponibilidad.. Si es aprobada posteriormente usted pueda cargar el pago correspondiente.. Este procedimiento puede tardar maximo 2 dias habiles.. Si olvido algun detalle aun puede editar la orden..</p>
+                <p><a class="btn btn-primary btn-lg" href="{{ route('editorder', $order->id) }}" role="button">EDITAR</a><a class="btn btn-danger btn-lg" href="{{ route('indexorder') }}" role="button">VOLVER</a></p>
+        </div>
           @elseif($order->status == "not_processed")
-
-                <a class="btn btn-success" href="{{ route('editorder', $order->id) }}">
-                    EDITAR
-                </a>
+<div class="jumbotron">
+                <h1>Su orden fue recibida!</h1>
+                <p>Una vez revisada esta orden, procederemos a aprobarla o rechazarla según nuestra disponibilidad.. Si es aprobada posteriormente usted pueda cargar el pago correspondiente.. Este procedimiento puede tardar maximo 2 dias habiles.. Si olvido algun detalle aun puede editar la orden..</p>
+                <p><a class="btn btn-primary btn-lg" href="{{ route('editorder', $order->id) }}" role="button">EDITAR</a><a class="btn btn-danger btn-lg" href="{{ route('indexorder') }}" role="button">VOLVER</a></p>
+        </div>
           @elseif($order->status == "approved")
                 <a class="btn btn-success" href="{{ route('createpay', [$order]) }}">
                     REALIZAR PAGO
                 </a>
           @endif
-                <a class="btn btn-danger" href="{{ route('indexorder') }}">
-                    VOLVER
-                </a>
+
         </div>
     </section>
 @endsection

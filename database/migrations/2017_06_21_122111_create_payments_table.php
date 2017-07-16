@@ -17,7 +17,7 @@ class CreatePaymentsTable extends Migration
             $table->increments('id');
             $table->date('date');
             $table->enum('type', ['bank', 'cash', 'another']);
-            $table->enum('status', ['pending', 'sended', 'verified'])->default('pending');
+            $table->enum('status', ['pending', 'verified'])->default('pending');
             $table->string('mount');
             $table->string('ref')->nullable();
             $table->integer('order_id')->unsigned();     

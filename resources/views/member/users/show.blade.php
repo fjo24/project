@@ -10,7 +10,7 @@
             </h3>
             <div class="box-tools">
                 <div class="text-center">
-                    <a class="btn btn-success btn-sm" href="{{ route('member') }}">
+                    <a class="btn btn-success" href="{{ route('member') }}">
                         Volver
                     </a>
                 </div>
@@ -69,16 +69,16 @@
         </div>
         <div class="for text-center">
             @if($user->type == "person")
-                <a class="btn btn-success btn-sm" href="{{ route('editperson', Auth::user()->id) }}">
+                <a class="btn btn-success" href="{{ route('editperson', Auth::user()->id) }}">
                 Editar
                 </a>
             @else
-                <a class="btn btn-success btn-sm" href="{{ route('editorganization', Auth::user()->id) }}">
+                <a class="btn btn-success" href="{{ route('editorganization', Auth::user()->id) }}">
                 Editar
                 </a>
             @endif
             
-            <a class="btn btn-danger btn-sm" href="{{ route('member') }}">
+            <a class="btn btn-danger" href="{{ route('member') }}">
                 Volver
             </a>
         </div>

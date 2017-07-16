@@ -11,8 +11,8 @@
             </h3>
             <div class="box-tools">
                 <div class="text-center">
-                    <a class="btn btn-primary btn-sm" href="{{ route('products.create') }}">
-                        NUEVO PRODUCTO
+                    <a class="btn btn-primary btn-sm" href="{{ route('productpdf') }}">
+                        IMPRIMIR LISTADO DE PRECIOS
                     </a>
                 </div>
             </div>

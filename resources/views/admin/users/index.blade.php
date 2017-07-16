@@ -11,11 +11,19 @@
             </h3>
             <div class="box-tools">
                 <div class="text-center">
-                    <a class="btn btn-primary btn-sm" href="{{ route('users.create') }}">
-                        NUEVO REGISTRO
-                    </a>
-                    <a class="btn btn-success btn-sm" href="{{route('exportusers')}}">
-                        IMPRIMIR REPORTE
+
+                    <!-- Single button -->
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        NUEVO REGISTRO <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><a href="{{ url('member/newperson') }}">PERSONA</a></li>
+                        <li><a href="{{ url('member/neworganization') }}">ORGANIZACIÓN</a></li>
+                      </ul>
+                    </div>
+                    <a class="btn btn-success" href="{{route('exportusers')}}">
+                        IMPRIMIR LISTADO
                     </a>
                 </div>
             </div>
@@ -125,6 +133,9 @@
                     "url": "{{ asset('AdminLTE/plugins/datatables/esp.lang') }}"
                 }
             });
+        });
+        $('.printer').on('click', function () {
+            window.print();
         });
     </script>
 @endsection

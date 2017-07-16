@@ -14,7 +14,7 @@ class AddOrdersTable extends Migration
             $table->date('date');
             $table->string('title');
             $table->integer('user_id')->unsigned();
-            $table->enum('status', ['not_processed', 'pending', 'approved', 'confirmed', 'Rejected'])->default('not_processed');
+            $table->enum('status', ['not_processed', 'approved', 'confirmed', 'Rejected'])->default('not_processed');
             $table->enum('availability', ['y', 'n'])->default('y');
             $table->string('locale');
             $table->string('notes')->nullable();

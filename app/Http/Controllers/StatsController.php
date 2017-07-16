@@ -57,7 +57,7 @@ class StatsController extends Controller
         //Fin
         $days_total_cost = $this->calculatePieCharData();
         $days_total = $this->calculateTotalPieCharData();
-        return view('admin.stats.index', compact('orders', 'total', 'total_products', 'approved', 'confirmed', 'days_total_cost'));
+        return view('admin.stats.show', compact('orders', 'total', 'total_products', 'approved', 'confirmed', 'days_total_cost'));
     }
 
     private function calculatePieCharData()

@@ -59,8 +59,13 @@
                 <div class="row">
                     <div class="6u 12u(mobile)">
                         @if (Auth::check())
-                            <p>Crea tu presupuesto online...!!</p>
-                            <a href="{{ url('createorder') }}" class="button-big">Ordena ya!</a>
+                            @if(Auth::user()->level=='admin')
+                                <p>Crea tu presupuesto online...!!</p>
+                                <a href="{{route('select-client')}}" class="button-big">Ordena ya!</a>
+                            @elseif(Auth::user()->level=='member')
+                                <p>Crea tu presupuesto online...!!</p>
+                                <a href="{{route('createorder')}}" class="button-big">Ordena ya!</a>
+                            @endif
                         @else
                             <p>Crea tu presupuesto online... debes estar registrado antes!! solo te tomara 5 minutos!!</p>
                             <a href="{{ url('/login') }}" class="button-big">Ya tengo cuenta!</a>

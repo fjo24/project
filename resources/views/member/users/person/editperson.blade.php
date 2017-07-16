@@ -53,8 +53,8 @@
                                         </div>
                                     </div>
                                         <div class="for text-center">
-                                            {!! Form::submit('REGISTRAR', ['class'=> 'btn btn-primary  btn-sm']) !!}
-                                            <a class="btn btn-success btn-sm" href="{{route('type')}}">
+                                            {!! Form::submit('REGISTRAR', ['class'=> 'btn btn-primary']) !!}
+                                            <a class="btn btn-success" href="{{route('type')}}">
                                                         ATRAS
                                             </a>
                                         </div>

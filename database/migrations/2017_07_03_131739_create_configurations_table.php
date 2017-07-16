@@ -15,8 +15,8 @@ class CreateConfigurationsTable extends Migration
     {
         Schema::create('configurations', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('iva');
-            $table->string('price_hh');
+            $table->string('iva')->default(12)->nullable();
+
             $table->timestamps();
         });
     }

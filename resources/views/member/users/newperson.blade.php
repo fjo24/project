@@ -43,10 +43,6 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                {!!Form::label('avatar', 'Avatar') !!}
-                                                    {!!Form::file('avatar')!!}
-                                            </div>
-                                            <div class="form-group">
                                                 {!! Form::label('password', 'Contraseña') !!}
                                                 {!! Form::password('password', ['class' => 'form-control', 'placeholder' => 'Ingrese contraseña', 'required']) !!}
                                             </div>

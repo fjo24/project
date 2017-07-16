@@ -329,7 +329,7 @@ foreach ($ors as $or){
                     $order->date, //end time (you can also use Carbon instead of DateTime)
                     0, //optionally, you can specify an event ID
                     [
-                        'url' => 'orders/show', $order->id,
+                        'url' => route('showorder', $order->id),
                         //any other full-calendar supported parameters
                     ]
                 );

@@ -68,6 +68,9 @@ Route::group(['prefix' => 'admin'], function () {
 	Route::resource('registers','RegistersController');
     Route::get('registers/confirmregister/{register_id}',  'RegistersController@confirmregister')->name('confirmregister');
     Route::get('rpdf/{register_id}',  'RegistersController@rpdf')->name('rpdf');
+
+    //edif config IVA
+    Route::resource('configuration','ConfigurationsController');
 });
 
 Route::group(['prefix' => 'member'], function () {
@@ -92,6 +95,7 @@ Route::group(['prefix' => 'member'], function () {
     // products:member
     Route::get('indexproducts', 'ProductsController@indexproducts')->name('indexproducts');
     Route::get('showproduct/{Product_id}', 'ProductsController@showproduct')->name('showproduct');
+    Route::get('productpdf',  'ProductsController@productpdf')->name('productpdf');
 
                             //ORDERS-ORDERS-ORDERS-ORDERS
     // orders:member

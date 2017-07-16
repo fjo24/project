@@ -16,14 +16,24 @@
             <!-- /.box-header -->
             <div class="box-body">
 	            <div class="box-tools">
-	                <div class="text-center">
-	                    <a class="btn btn-primary btn-sm" href="{{ url('member/newperson') }}">
-	                        PERSONA NATURAL
-	                    </a>
-	                    <a class="btn btn-primary btn-sm" href="{{ url('member/neworganization') }}">
-	                        ORGANIZACION
-	                    </a>
-	                </div>
+                <div class="row">
+                  <div class="text-center">
+                    <div class="col-md-12">
+                      <div class="col-md-6">
+                        <a href="{{ url('member/newperson') }}" class="thumbnail">
+                          <img src="{{asset('AdminLTE/dist/img/natural.jpg')}}" alt="...">
+                        </a>
+                        <b>Persona natural</b>
+                      </div>
+                      <div class="col-md-6">
+                        <a href="{{ url('member/neworganization') }}" class="thumbnail">
+                          <img src="{{asset('AdminLTE/dist/img/organiza.jpg')}}" alt="...">
+                        </a>
+                        <b>Organización</b>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 	            </div>  
             </div>
             <!-- /.box-body -->

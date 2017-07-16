@@ -372,6 +372,30 @@ folder instead of downloading all of them to reduce the load. -->
                       
                     </ul>
                 </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-info">
+                        </i>
+                        <span>
+                                    Configuracion
+                                </span>
+                        <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right">
+                                    </i>
+                                </span>
+                    </a>
+                    <ul class="treeview-menu">
+                 
+                        <li>
+                            <a href="{{ route('configuration.edit', 1)}}">
+                                <i class="fa fa-circle-o">
+                                </i>
+                                iva
+                            </a>
+                        </li>
+                      
+                    </ul>
+                </li>
                 @elseif(Auth::user() && Auth::user()->level=='member')
                 <li class="treeview">
                     <a href="#">
@@ -455,31 +479,6 @@ folder instead of downloading all of them to reduce the load. -->
                         </li>
                     </ul>
                 </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-info">
-                        </i>
-                        <span>
-                                    Info
-                                </span>
-                        <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right">
-                                    </i>
-                                </span>
-                    </a>
-                    <ul class="treeview-menu">
-                 
-                        <li>
-                            <a href="{{route('we')}}">
-                                <i class="fa fa-circle-o">
-                                </i>
-                                Nosotros
-                            </a>
-                        </li>
-                      
-                    </ul>
-                </li>
-
                 @endif
             </ul>
         </section>

@@ -41,20 +41,6 @@ class UsersController extends Controller
     public function storeperson(PersonRequest $request)
     {
 
-        
-
- /*       if ($request->file('photo'))
-        {
-        $file = $request->file('photo'); //recibe la imagen en la variable $file
-        $name = 'francachela' . time() . '.' . $file->getClientOriginalExtension(); //asignamos nombre, agregamos el time() para que de un numero unico (tiempo)-> ya que cada segundo cambia
-        $path = public_path() .'/images/users/';//public_path es la direccion, se la asignamos a la variable $path, y si queremos en una carpeta diferente, terminamos de agregar el directorio (hay que crear carpetas)
-        $file->move($path, $name);//aqui tomamos la imagen que esta ya en la variable $file y la guardamos en el direcctorio creado y asignado a la variable $path, con el nombre ya creado y unico. (primer parametro es la direccion(path) y segundo parametro es el nombre que se le dara)
-        }
-*/      
-        /*$img=$request->file('avatar');
-        $file_route = time().'_'.$img->getClientOriginalName();
-        Storage::disk('imgUsers')->put($file_route, file_get_contents( $img->getRealPath() ) );
-*/
         $user = User::create([
             'name' => $request['name'],
             'lastname' => $request['lastname'],
@@ -68,8 +54,8 @@ class UsersController extends Controller
         $user->save();
 
 
-        //Flash::success('Se ha registrado el usuario '. $user->name. ' '. $user->last_name.' de manera exitosa!')->important();
-        return view('member.users.member');
+        Flash::success('Se ha registrado de manera exitosa. Ya '. $user->fullname.' puede iniciar sesión!')->important();
+        return view('/home');
     }
 
     public function editperson($id)
@@ -92,8 +78,8 @@ class UsersController extends Controller
         $user = User::find($id);
         $user->fill($request->all());
         $user->save();
-        //flash('El usuario '. $user->fullname.' ha sido editado con exito!!', 'success')->important();
-        return view('member.users.member');
+        flash('El usuario '. $user->fullname.' ha sido editado con exito!!', 'success')->important();
+        return view('/home');
     }
     //create user type organization
 
@@ -105,26 +91,13 @@ class UsersController extends Controller
     public function storeorganization(OrganizationRequest $request)
     {
         $request = $request->all();
-
-       /* if ($request->file('photo'))
-        {
-        $file = $request->file('photo'); //recibe la imagen en la variable $file
-        $name = 'francachela' . time() . '.' . $file->getClientOriginalExtension(); //asignamos nombre, agregamos el time() para que de un numero unico (tiempo)-> ya que cada segundo cambia
-        $path = public_path() .'/images/users/';//public_path es la direccion, se la asignamos a la variable $path, y si queremos en una carpeta diferente, terminamos de agregar el directorio (hay que crear carpetas)
-        $file->move($path, $name);//aqui tomamos la imagen que esta ya en la variable $file y la guardamos en el direcctorio creado y asignado a la variable $path, con el nombre ya creado y unico. (primer parametro es la direccion(path) y segundo parametro es el nombre que se le dara)
-        }*/
-
         $request['type'] = 'organization';
         $user = new User($request);
         $user->password = bcrypt($request['password']);
         $user->save();
-/*
-        $image = new Photo();
-        $image->name = $name;
-        $image->user()->associate($user);//aqui estamos llamando al metodo que esta en el modelo image llamado article, y le aplicamos la funcion llamada associate... que lo que hace es tomar lo que lo asocia (en este caso el article_id)
-        $image->save();*/
 
-        return view('member.users.member');
+        Flash::success('Se ha registrado de manera exitosa. Ya '. $user->fullname.' puede iniciar sesión!')->important();
+        return view('/home');
     }
 
     public function editorganization($id)
@@ -145,8 +118,8 @@ class UsersController extends Controller
         $user = User::find($id);
         $user->fill($request->all());
         $user->save();
-        //flash('El usuario '. $user->fullname.' ha sido editado con exito!!', 'success')->important();
-        return view('member.users.member');
+        flash('El usuario '. $user->fullname.' ha sido editado con exito!!', 'success')->important();
+        return view('/home');
     }
 
     //show user type member

@@ -178,16 +178,6 @@
                     <canvas id="salesChart" style="height: 180px" ;></canvas>
                 </div>
 
-                <div class="box-header with-border">
-                    <h3 class="box-title"><span class="text-primary">Ingresos ultimos meses</span>
-                    </h3>
-                </div>
-
-                <div class="chart">
-                    <!-- Sales Chart Canvas -->
-                    <canvas id="barChart" style="height: 180px" ;></canvas>
-                </div>
-
             </div>
             <!-- /.box -->
         </div>
@@ -227,6 +217,87 @@
                 }
             });
         });
+
+               // -------------
+        // - PIE CHART -
+        // -------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart').get(0).getContext('2d');
+        var pieChart = new Chart(pieChartCanvas);
+        var PieData = [
+            {
+                value: {!!  $approved !!},
+                color: '#008000',
+                highlight: '#008000',
+                label: 'Solo aprobados'
+            },
+            {
+                value: {!!  $confirmed !!},
+                color: '#0000FF',
+                highlight: '#0000FF',
+                label: 'Confirmados'
+            },
+        ];
+        var pieOptions = {
+            // Boolean - Whether we should show a stroke on each segment
+            segmentShowStroke: true,
+            // String - The colour of each segment stroke
+            segmentStrokeColor: '#fff',
+            // Number - The width of each segment stroke
+            segmentStrokeWidth: 1,
+            // Number - The percentage of the chart that we cut out of the middle
+            percentageInnerCutout: 50, // This is 0 for Pie charts
+            // Number - Amount of animation steps
+            animationSteps: 100,
+            // String - Animation easing effect
+            animationEasing: 'easeOutBounce',
+            // Boolean - Whether we animate the rotation of the Doughnut
+            animateRotate: true,
+            // Boolean - Whether we animate scaling the Doughnut from the centre
+            animateScale: false,
+            // Boolean - whether to make the chart responsive to window resizing
+            responsive: true,
+            // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+            maintainAspectRatio: false,
+            // String - A legend template
+            // String - A tooltip template
+        };
+        // Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        pieChart.Doughnut(PieData, pieOptions);
+        // -----------------
+        // - END PIE CHART -
+        // -----------------
+
+        //Date range as a button
+        //Date range picker
+        $('#reservation').daterangepicker(
+                {
+                    //showDropdowns: true,
+//                    ranges: {
+//                        'Esta semana': [moment().startOf('week'), moment().endOf('week')],
+//                        'Última semana': [moment().subtract(6, 'days'), moment()],
+//                        'Últimas 2 semanas': [moment().subtract(13, 'days'), moment()],
+//                        'Este mes': [moment().startOf('month'), moment().endOf('month')],
+//                        'Mes anterior': [moment().subtract(1, 'month').startOf('month'),
+//                            moment().subtract(1, 'month').endOf('month')]
+//                    },
+                    autoUpdateInput: true,
+                    locale: {
+                        format: 'DD/MM/YYYY',
+                        applyLabel: 'Aplicar',
+                        cancelLabel: 'Limpiar',
+                        fromLabel: 'Desde',
+                        toLabel: 'Hasta',
+                        customRangeLabel: 'Seleccionar rango',
+                        daysOfWeek: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre',
+                            'Diciembre'],
+                        firstDay: 1
+                    }
+                }
+        )
                 // -----------------------
         // - MONTHLY SALES CHART -
         // -----------------------
@@ -321,89 +392,8 @@
         barChart.Bar(barChartData, salesChartOptions)
 
 //-------------
-        //- BAR CHART -
-        //-------------
 
-        // -------------
-        // - PIE CHART -
-        // -------------
-        // Get context with jQuery - using jQuery's .get() method.
-        var pieChartCanvas = $('#pieChart').get(0).getContext('2d');
-        var pieChart = new Chart(pieChartCanvas);
-        var PieData = [
-            {
-                value: {!!  $approved !!},
-                color: '#008000',
-                highlight: '#008000',
-                label: 'Solo aprobados'
-            },
-            {
-                value: {!!  $confirmed !!},
-                color: '#0000FF',
-                highlight: '#0000FF',
-                label: 'Confirmados'
-            },
-        ];
-        var pieOptions = {
-            // Boolean - Whether we should show a stroke on each segment
-            segmentShowStroke: true,
-            // String - The colour of each segment stroke
-            segmentStrokeColor: '#fff',
-            // Number - The width of each segment stroke
-            segmentStrokeWidth: 1,
-            // Number - The percentage of the chart that we cut out of the middle
-            percentageInnerCutout: 50, // This is 0 for Pie charts
-            // Number - Amount of animation steps
-            animationSteps: 100,
-            // String - Animation easing effect
-            animationEasing: 'easeOutBounce',
-            // Boolean - Whether we animate the rotation of the Doughnut
-            animateRotate: true,
-            // Boolean - Whether we animate scaling the Doughnut from the centre
-            animateScale: false,
-            // Boolean - whether to make the chart responsive to window resizing
-            responsive: true,
-            // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-            maintainAspectRatio: false,
-            // String - A legend template
-            // String - A tooltip template
-        };
-        // Create pie or douhnut chart
-        // You can switch between pie and douhnut using the method below.
-        pieChart.Doughnut(PieData, pieOptions);
-        // -----------------
-        // - END PIE CHART -
-        // -----------------
-
-        //Date range as a button
-        //Date range picker
-        $('#reservation').daterangepicker(
-                {
-                    //showDropdowns: true,
-//                    ranges: {
-//                        'Esta semana': [moment().startOf('week'), moment().endOf('week')],
-//                        'Última semana': [moment().subtract(6, 'days'), moment()],
-//                        'Últimas 2 semanas': [moment().subtract(13, 'days'), moment()],
-//                        'Este mes': [moment().startOf('month'), moment().endOf('month')],
-//                        'Mes anterior': [moment().subtract(1, 'month').startOf('month'),
-//                            moment().subtract(1, 'month').endOf('month')]
-//                    },
-                    autoUpdateInput: true,
-                    locale: {
-                        format: 'DD/MM/YYYY',
-                        applyLabel: 'Aplicar',
-                        cancelLabel: 'Limpiar',
-                        fromLabel: 'Desde',
-                        toLabel: 'Hasta',
-                        customRangeLabel: 'Seleccionar rango',
-                        daysOfWeek: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
-                        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-                            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre',
-                            'Diciembre'],
-                        firstDay: 1
-                    }
-                }
-        )
+ 
     </script>
 
 @endsection

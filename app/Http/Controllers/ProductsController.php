@@ -130,4 +130,12 @@ foreach ($orders as $order){
         return view('member.products.show', compact('product'));
     }
 
+    public function productpdf()
+    {
+        $date = Carbon::now()->format('d-m-Y');
+        $products = Product::orderBy('type', 'DESC')->get();
+        return view('member.products.pdf', compact('products', 'date'));
+    }
+
+
 }
