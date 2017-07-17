@@ -40,10 +40,7 @@
                                 <th>NUMERO DE DOCUMENTO</th>
                                 <th>TELEFONO</th>
                                 <th>CORREO ELECTRONICO</th>
-                                <th>MIEMBRO DESDE</th>
                                 <th>NIVEL DE USUARIO</th>
-                                <th></th>
-                                <th></th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -70,9 +67,6 @@
                                         {{ $user->email }}
                                     </td>
                                     <td>
-                                        {{ $user->created_at }}
-                                    </td>
-                                    <td>
                                         @if($user->level == "admin")
                                             <span class="label label-danger">
                                         Admin
@@ -83,27 +77,24 @@
                                     </span>
                                         @endif
                                     </td>
-                                    <td>
-                                        <a href="{{ route('users.show', $user->id) }}">
+                                   <td>
+                                            {!! Form::open(['route' => ['users.destroy', $user->id], 'method' => 'DELETE']) !!}
+                                            <div class="form-group">
+                                                <a href="{{ route('users.show', $user->id) }}">
                                             <i class="fa fa-eye" aria-hidden="true"></i>
                                         </a>
-                                    </td>
-                                    <td>
-                                        @if($user->type == "person")
-                                            <a href="{{ route('editperson', $user->id) }}">
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                            </a>
-                                        @else
-                                            <a href="{{ route('editorganization', $user->id) }}">
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                            </a>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        {!! Form::open(['route' => ['users.destroy', $user->id], 'method' => 'DELETE']) !!}
-                                        <button class="glyphicon glyphicon-remove" onclick="return confirm('¿Realmente deseas borrar el usuario?')"">
-                                        </button>
-                                        {!! Form::close() !!}
+                                            </div>
+                                            <div class="form-group">
+                                                <a href="{{ route('users.edit', $user->id) }}">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                        </a>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-link" title="Eliminar" onclick="return confirm('¿Realmente deseas borrar el producto?')"">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button>
+                                            </div>
+                                            {!! Form::close() !!}
                                     </td>
                                 </tr>
                             @endforeach

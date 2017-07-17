@@ -12,7 +12,12 @@ class ConfigurationsController extends Controller
     {
 
         $config = Configuration::find(1);
-        return view('admin.configurations.edit', compact('config'));
+        if (Auth()->user()->level=='admin') {
+            return view('admin.configurations.edit', compact('config'));
+        }else{
+            return view('/home');
+        }
+        
     }
 
     public function update(Request $request)

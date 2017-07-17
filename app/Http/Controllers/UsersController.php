@@ -61,7 +61,13 @@ class UsersController extends Controller
     public function editperson($id)
     {
         $user = User::find($id);
+        if (Auth()->user()->id==$id) {
         return view('member.users.person.editperson', compact('user'));
+        }else{
+            Flash::success('ACCESO NO AUTORIZADO!!!')->important();
+            return view('/home');
+        }
+        
     }
 
     public function updateperson(Request $request, $id)
@@ -103,7 +109,13 @@ class UsersController extends Controller
     public function editorganization($id)
     {
         $user = User::find($id);
+        if (Auth()->user()->id==$id) {
         return view('member.users.organization.editorganization', compact('user'));
+        }else{
+            Flash::success('ACCESO NO AUTORIZADO!!!')->important();
+            return view('/home');
+        }
+        
     }
 
     public function updateorganization(Request $request, $id)
@@ -133,37 +145,68 @@ class UsersController extends Controller
     public function index()
     {
         $users = User::orderBy('fullname', 'DESC')->get();
+        if (Auth()->user()->level=='admin') {
         return view('admin.users.index', compact('users', $users));
+        }else{
+            Flash::success('ACCESO NO AUTORIZADO!!!')->important();
+            return view('/home');
+        }
     }
 
     public function create()
     {
+        if (Auth()->user()->level=='admin') {
         return view('admin.users.create');
+        }else{
+            Flash::success('ACCESO NO AUTORIZADO!!!')->important();
+            return view('/home');
+        }
+        
     }
 
     public function store(UsersRequest $request)
     {
-        $request = $request->all();
-
-        
-        $user = new User($request);
-        $user->password = bcrypt($request['password']);
+        $user = User::create([
+            'name' => $request['name'],
+            'lastname' => $request['lastname'],
+            'fullname' => $request['name'] . " " . $request['lastname'],
+            'type' => 'person',
+            'identification' => $request['identification'],
+            'telephone' => $request['telephone'],
+            'email' => $request['email'],
+            'password' => bcrypt($request['password']),
+        ]);
         $user->save();
+        $date = $request->get('date');
         //Flash::success('Se ha registrado el usuario '. $user->name. ' '. $user->last_name.' de manera exitosa!')->important();
         
-        return redirect()->route('select-client', $user)->with('success', 'Se ha registrado de manera exitosa!');
+        return view('admin.orders.select_client')->with('date', $date)->with('success', 'Se ha registrado de manera exitosa!');
+
     }
 
     public function show($id)
     {
         $user = User::find($id);
+        if (Auth()->user()->level=='admin') {
         return view('admin.users.show', compact('user'));
+        }else{
+            Flash::success('ACCESO NO AUTORIZADO!!!')->important();
+            return view('/home');
+        }
+        
     }
 
     public function edit($id)
     {
+
         $user = User::find($id);
-        return view('admin.users.edit', compact('user'));
+        if (Auth()->user()->level=='admin') {
+return view('admin.users.edit', compact('user'));
+        }else{
+            Flash::success('ACCESO NO AUTORIZADO!!!')->important();
+            return view('/home');
+        }
+        
     }
 
     public function update(Request $request, $id)

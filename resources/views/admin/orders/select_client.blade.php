@@ -7,13 +7,21 @@
         @include('partials.errors')
         <div class="box-header with-border">
             <h3 class="box-title">
-                SELECCIONE CLIENTE
+                FECHA {{$order->date}} | SELECCIONE CLIENTE
             </h3>
             <div class="box-tools">
                 <div class="text-center">
-                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
-                            NUEVO CLIENTE
-                        </button>
+
+                    <!-- Single button -->
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        NUEVO REGISTRO <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><a href="{{ url('member/newperson') }}">PERSONA</a></li>
+                        <li><a href="{{ url('member/neworganization') }}">ORGANIZACIÓN</a></li>
+                      </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -56,7 +64,7 @@
                                     </td>
                                     <td class="text-center">
                                         <div class="form-group">
-                                            <a href="{{ route('select-date', [$user]) }}">
+                                            <a href="{{ route('add-order', [$user, $order]) }}">
                                                 Siguiente
                                                 <i class="glyphicon glyphicon-ok" aria-hidden="true"></i>
                                             </a>
@@ -67,6 +75,7 @@
                             </tbody>
                         </table>
                         <div class="text-center">
+
                         </div>
                     </div>
                     <!-- /.box-body -->

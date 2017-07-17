@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Lista de usuarios')
+@section('title', 'Nuevo evento')
 
 @section('contenido')
     <div class="box">
@@ -20,16 +20,17 @@
                 <div class="col-xs-12">
                     <div class="box-body table-responsive no-padding">
                     <center>
-                        {!! Form::open(['route' => 'add-order', 'method' => 'POST']) !!}
+                        {!! Form::open(['route' => 'select-client', 'method' => 'POST']) !!}
                             <div class="jumbotron">
-                              <h1>{{$user->fullname}}</h1>
+                              
                               <p>Por favor escoje la fecha del evento</p>
                               <p>
+                              <br>
                                 <div class="col-md-4 col-md-offset-4">
                                     <div class="form-group">
                                         {!! Form::label('date', 'Fecha') !!}
                                         {!! Form::text('date', null, ['class' => 'form-control datepicker', 'placeholder' => 'Ingrese fecha', 'required']) !!}
-                                        {!! Form::hidden('user_id', $user->id, ['class' => 'form-control']) !!}
+                                       
                                     </div>
                                 </div>
                               </p>
@@ -51,7 +52,7 @@
         </div>
         <!-- /.box -->
     </div>
-    @include('admin.orders.modal.client-modal');
+    
 @endsection
 
 @section('js')

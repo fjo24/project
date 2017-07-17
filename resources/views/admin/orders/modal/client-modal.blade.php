@@ -90,7 +90,9 @@
                             <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirme contraseña" required>
                         </div>
                     </div>
-
+                    <div class="form-group">
+{!! Form::hidden('date', $date, ['class' => 'form-control']) !!}
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

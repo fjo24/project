@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-Use App\Order;
+Use App\User;
 
 class OrderApproved extends Notification
 {
@@ -17,9 +17,10 @@ class OrderApproved extends Notification
      *
      * @return void
      */
-    public function __construct(Order $order)
+    public function __construct(User $order)
     {
         //
+        $this->orders = $order;
     }
 
     /**

@@ -11,7 +11,7 @@
             </h3>
             <div class="box-tools">
                 <div class="text-center">
-                    <a class="btn btn-primary btn-sm" href="{{ route('orders.create') }}">
+                    <a class="btn btn-primary btn-sm" href="{{ route('select-date') }}">
                         NUEVO EVENTO
                     </a>
                 </div>

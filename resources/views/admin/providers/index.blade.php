@@ -28,7 +28,6 @@
                                 <th>RIF</th>
                                 <th>CORREO ELECTRONICO</th>
                                 <th></th>
-                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -44,20 +43,23 @@
                                         {{ $provider->email }}
                                     </td>
                                     <td>
-                                        <a href="{{ route('providers.show', $provider->id) }}">
+                                            {!! Form::open(['route' => ['providers.destroy', $provider->id], 'method' => 'DELETE']) !!}
+                                            <div class="form-group">
+                                                <a href="{{ route('providers.show', $provider->id) }}">
                                             <i class="fa fa-eye" aria-hidden="true"></i>
                                         </a>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('providers.edit', $provider->id) }}">
+                                            </div>
+                                            <div class="form-group">
+                                                <a href="{{ route('providers.edit', $provider->id) }}">
                                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                         </a>
-                                    </td>
-                                    <td>
-                                        {!! Form::open(['route' => ['providers.destroy', $provider->id], 'method' => 'DELETE']) !!}
-                                        <button class="glyphicon glyphicon-remove" onclick="return confirm('¿Realmente deseas borrar el proveedor?')"">
-                                        </button>
-                                        {!! Form::close() !!}
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-link" title="Eliminar" onclick="return confirm('¿Realmente deseas borrar el proveedor?')"">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button>
+                                            </div>
+                                            {!! Form::close() !!}
                                     </td>
                                 </tr>
                             @endforeach

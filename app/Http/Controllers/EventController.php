@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 Use App\Event;
-
+use Laracasts\Flash\Flash;
 class EventController extends Controller
 {
 
@@ -16,7 +16,13 @@ class EventController extends Controller
 
     public function create()
     {
-        return view('admin.events.create');
+        if (Auth()->user()->level=='admin') {
+            return view('admin.events.create');
+        }else{
+            Flash::success('ACCESO NO AUTORIZADO!!!')->important();
+            return view('/home');
+        }
+        
     }
 
     public function store(Request $request)
@@ -36,7 +42,13 @@ class EventController extends Controller
     public function edit($id)
     {
         $event = Event::find($id);
-        return view('admin.events.edit', compact('event'));
+        if (Auth()->user()->level=='admin') {
+            return view('admin.events.edit', compact('event'));
+        }else{
+            Flash::success('ACCESO NO AUTORIZADO!!!')->important();
+            return view('/home');
+        }
+        
     }
 
     public function update(Request $request, $id)

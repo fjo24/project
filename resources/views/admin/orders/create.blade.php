@@ -15,6 +15,7 @@
 @section('js')
     <script type="text/javascript">
         //SERVICES (Lista dinamica)  formgroup2
+        //SERVICES (Lista dinamica)  formgroup2
         (function ($) {
             $(function () {
                 var addFormGroup2 = function (event) {

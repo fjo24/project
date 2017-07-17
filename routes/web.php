@@ -36,10 +36,13 @@ Route::get('we',  'InfoController@we')->name('we');
 //activities
 Route::get('activities',  'ActivitiesController@index')->name('activities');
 
-Route::group(['prefix' => 'admin'], function () {
+
+Route::middleware('auth')->prefix('admin')->group(function () {
     //stats for admin
     Route::get('/', 'StatsController@index')->name('stats');
     Route::resource('/stats', 'StatsController');
+    Route::get('spdf',  'StatsController@spdf')->name('spdf');
+
     //se agrego el middleware para que deba autenticarse para acceder a las rutas siguientes
 	Route::resource('users','UsersController');
 	Route::resource('providers','ProvidersController');
@@ -47,9 +50,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('events','EventController');
 
 	Route::resource('orders','OrdersController');
-    Route::get('/select-client/', 'OrdersController@selectClient')->name('select-client');
-    Route::get('/orders/date/user/{user}', 'OrdersController@selectDate')->name('select-date');
-    Route::post('/add-order/', 'OrdersController@addorder')->name('add-order');
+    Route::post('/select-client/', 'OrdersController@selectClient')->name('select-client');
+    Route::get('/select-date/', 'OrdersController@selectDate')->name('select-date');
+    Route::get('/add-order/user/{user}/order/{order}', 'OrdersController@addorder')->name('add-order');
+    //Route::get('/orders/date/user/{user}', 'OrdersController@selectDate')->name('select-date');
+   // Route::post('/add-order/', 'OrdersController@addorder')->name('add-order');
     Route::post('/store-order/', 'OrdersController@orderstore')->name('store-order');
 
     //cambiar estado de ordenes (aprobada/rechazada)

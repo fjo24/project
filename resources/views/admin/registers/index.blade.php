@@ -31,8 +31,6 @@
                                 <th>DESCRIPCION</th>
                                 <th>TIPO DE REGISTRO</th>
                                 <th></th>
-                                <th></th>
-                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -63,20 +61,23 @@
                                     @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('registers.show', $register->id) }}">
-                                            <i class="fa fa-eye" aria-hidden="true"></i>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('registers.edit', $register->id) }}">
-                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        {!! Form::open(['route' => ['registers.destroy', $register->id], 'method' => 'DELETE']) !!}
-                                            <button class="glyphicon glyphicon-remove" onclick="return confirm('¿Realmente deseas borrar el registro?')"">
-                                            </button>                           
-                                        {!! Form::close() !!}
+                                        {!! Form::open(['route' => ['registers.destroy',$register ], 'method' => 'DELETE']) !!}
+                                            <div class="form-group">
+                                                <a href="{{ route('registers.show', $register->id) }}" title="">
+                                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+                                            <div class="form-group">
+                                                <a href="{{ route('registers.edit', $register->id) }}" title="Editar">
+                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-link" title="Eliminar" onclick="return confirm('¿Realmente deseas borrar el registro?')"">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button>
+                                            </div>
+                                            {!! Form::close() !!}
                                     </td>
                                 </tr>
                             @endforeach

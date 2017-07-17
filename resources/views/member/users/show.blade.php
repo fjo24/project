@@ -21,7 +21,7 @@
                 <div class="box box-solid box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">
-                            Datos de {{ $user->name }}
+                            Datos de {{ $user->fullname }}
                         </h3>
                     </div>
                     <table class="table table-striped">

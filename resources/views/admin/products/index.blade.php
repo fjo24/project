@@ -14,6 +14,9 @@
                     <a class="btn btn-primary btn-sm" href="{{ route('products.create') }}">
                         NUEVO PRODUCTO
                     </a>
+                    <a class="btn btn-danger btn-sm" href="{{ route('productpdf') }}">
+                        IMPRIMIR LISTADO DE PRECIOS
+                    </a>
                 </div>
             </div>
         </div>
@@ -29,8 +32,6 @@
                                 <th>CANTIDAD TOTAL</th>
                                 <th>DISPONIBLE EN ALMACEN</th>
                                 <th>TIPO DE PRODUCTO</th>
-                                <th></th>
-                                <th></th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -73,21 +74,25 @@
                                     </span>
                                     </td>
                                     <td>
-                                        <a href="{{ route('products.show', $product->id) }}">
+                                            {!! Form::open(['route' => ['products.destroy', $product->id], 'method' => 'DELETE']) !!}
+                                            <div class="form-group">
+                                                <a href="{{ route('products.show', $product->id) }}">
                                             <i class="fa fa-eye" aria-hidden="true"></i>
                                         </a>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('products.edit', $product->id) }}">
+                                            </div>
+                                            <div class="form-group">
+                                                <a href="{{ route('products.edit', $product->id) }}">
                                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                         </a>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-link" title="Eliminar" onclick="return confirm('¿Realmente deseas borrar el producto?')"">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button>
+                                            </div>
+                                            {!! Form::close() !!}
                                     </td>
-                                    <td>
-                                        {!! Form::open(['route' => ['products.destroy', $product->id], 'method' => 'DELETE']) !!}
-                                        <button class="glyphicon glyphicon-remove" onclick="return confirm('¿Realmente deseas borrar el producto?')"">
-                                        </button>
-                                        {!! Form::close() !!}
-                                    </td>
+
                                 </tr>
                             @endforeach
                             </tbody>

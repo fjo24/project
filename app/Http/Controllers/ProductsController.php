@@ -63,13 +63,26 @@ foreach ($orders as $order){
 
         
         }
-          
-        return view('admin.products.index', compact('products'));
+        $product = Product::find($id);
+        if (Auth()->user()->level=='admin') {
+            return view('admin.products.index', compact('products'));
+        }else{
+            Flash::success('ACCESO NO AUTORIZADO!!!')->important();
+            return view('/home');
+        }
+
+        
     }
 
     public function create()
     {
-        return view('admin.products.create');
+        if (Auth()->user()->level=='admin') {
+            return view('admin.products.create');
+        }else{
+            Flash::success('ACCESO NO AUTORIZADO!!!')->important();
+            return view('/home');
+        }
+        
     }
 
     public function store(ProductRequest $request)
@@ -90,7 +103,13 @@ foreach ($orders as $order){
     public function edit($id)
     {
         $product = Product::find($id);
-        return view('admin.products.edit', compact('product'));
+        if (Auth()->user()->level=='admin') {
+            return view('admin.products.edit', compact('product'));
+        }else{
+            Flash::success('ACCESO NO AUTORIZADO!!!')->important();
+            return view('/home');
+        }
+        
     }
 
     public function update(ProductRequest $request, product $product)
@@ -106,7 +125,13 @@ foreach ($orders as $order){
         $product = Product::find($id);
         $product->delete();
         //flash('El producto '. $product->name.' ha sido eliminado con exito!!', 'danger')->important();
-        return redirect()->route('products.index');
+        if (Auth()->user()->level=='admin') {
+            return redirect()->route('products.index');
+        }else{
+            Flash::success('ACCESO NO AUTORIZADO!!!')->important();
+            return view('/home');
+        }
+        
     }
 
     public function modal()
@@ -133,7 +158,7 @@ foreach ($orders as $order){
     public function productpdf()
     {
         $date = Carbon::now()->format('d-m-Y');
-        $products = Product::orderBy('type', 'DESC')->get();
+        $products = Product::orderBy('type', 'ASC')->get();
         return view('member.products.pdf', compact('products', 'date'));
     }
 

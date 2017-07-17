@@ -31,20 +31,23 @@
             <div class="box-header with-border">
                 <h3 class="box-title">
                     <b>Estadisticas de los utimos 7 dias</b>
+                    <button type="button" class="btn btn-success printer no-print" id="print">DESCARGAR
+                        <i class="glyphicon glyphicon-print"></i>
+                    </button>
                 </h3>
                 <div class="box-tools">
                         {{Form::open(['route' => 'stats.store', 'class'=>'form-inline','method' => 'POST'])}}
-                        <div class="form-group">
-                            <label>Rango de fechas:</label>
+                        <div class="form-group no-print">
+                            <label class="no-print">Rango de fechas:</label>
 
-                            <div class="input-group">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
+                            <div class="input-group no-print">
+                                <div class="input-group-addon no-print">
+                                    <i class="fa fa-calendar no-print"></i>
                                 </div>
-                                <input name="date" type="text" class="form-control pull-right" id="reservation">
+                                <input name="date" type="text" class="form-control pull-right no-print" id="reservation">
 
                             </div>
-                            <div class="input-group">
+                            <div class="input-group no-print">
                                 {!! Form::submit('Aplicar', ['class'=> 'btn btn-primary']) !!}
                             </div>
                             <!-- /.input group -->
@@ -64,17 +67,16 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="box-body table-responsive no-padding">
-                            <table class="table table-hover display table-responsive table-condensed" id="table">
+                            <table class="table table-hover display table-responsive table-condensed">
                             <thead>
                             <tr>
                                 <th>CLIENTE</th>
                                 <th>TITULO</th>
                                 <th>UBICACION</th>
-                                <th>ESTADO</th>
+                                <th class="no-print">ESTADO</th>
                                 <th>CONTACTO</th>
                                 <th>MONTO</th>
                                 <th>FECHA DEL EVENTO</th>
-                                <th>ACCIONES</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -89,7 +91,7 @@
                                         <td>
                                             {{ $order->locale }}
                                         </td>
-                                        <td>
+                                        <td class="no-print">
                                             @if($order->status == "confirmed")
                                                 <span class="label label-primary">
                                                     CONFIRMADO
@@ -121,25 +123,6 @@
                                         <td>
                                             {{ $order->date }}
                                         </td>
-                                        <td>
-                                            {!! Form::open(['route' => ['orders.destroy',$order ], 'method' => 'DELETE']) !!}
-                                            <div class="form-group">
-                                                <a href="{{ route('orders.show', $order->id) }}" title="">
-                                                    <i class="fa fa-eye" aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                            <div class="form-group">
-                                                <a href="{{ route('orders.edit', $order->id) }}" title="Editar">
-                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                            <div class="form-group">
-                                                <button type="submit" class="btn btn-link" title="Eliminar" onclick="return confirm('¿Realmente deseas borrar el evento?')"">
-                                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                                </button>
-                                            </div>
-                                            {!! Form::close() !!}
-                                        </td>
                                     </tr>
                             @endforeach
                            
@@ -153,14 +136,14 @@
                             <strong>Ingresos:</strong>
                         </p>
                         <h4 class="text-success bg-success">Numero de eventos confirmados: <b>{{$confirmed}}</b></h4>
-                        <h4 class="text-info bg-info">Ingresos ultimos 7 dias: <b>{{$total}} BsF</b></h4>
+                        <h4 class="text-info bg-info">Ingresos en periodo seleccionado: <b>{{$total}} BsF</b></h4>
                         
                     </div>
                     <div class="col-xs-6">
-                        <p class="text-center">
+                        <p class="text-center no-print">
                             <strong>Confirmados vs Solo aprobados</strong>
                         </p>
-                        <div class="chart">
+                        <div class="chart no-print">
                             <!-- Sales Chart Canvas -->
                             <canvas id="pieChart" style="height: 180px" ;></canvas>
                         </div>
@@ -210,6 +193,11 @@
     </script>
 
     <script type="text/javascript">
+            $('.printer').on('click', function () {
+            window.print();
+        });
+
+
         $(document).ready(function () {
             $('#table').DataTable({
                 "language": {

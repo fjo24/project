@@ -6,7 +6,7 @@
                     <div class="box box-danger">
                         <div class="box-header with-border">
                             @include('partials.errors')
-                            <h3 class="box-title">Datos del evento</h3>
+                            <h3 class="box-title">Cliente: {{$user->fullname}} | Fecha del evento: {{$order->date}} </h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -37,22 +37,25 @@
                                             <div class="form-group">
                                                 {!! Form::hidden('date', null, ['class' => 'form-control datepicker', 'placeholder' => 'Ingrese fecha', 'required']) !!}
                                             </div>
+
+{!! Form::hidden('user_id', $user->id, ['class' => 'form-control']) !!}
                                         </div>
                                     </div>
 
 
-    <div class="col-md-12">
-                    <div class="box box-danger">
-                        <div class="box-header">
-                            <h3 class="box-title">Seleccione producto o servicio</h3>
-                            <div class="pull-right">
-                            </div>
-                        </div>
-                        <div class="contacts">
-                            <div class="form-group multiple-form-group input-group">
-                                <div class="col-md-4">
-                                    <label>Producto o servicio</label>
-                                    <div class="input-group-btn input-group-select">
+<div class="col-md-12">
+                            <div class="box box-danger">
+                                <div class="box-header">
+                                    <h3 class="box-title">Seleccione producto o servicio</h3>
+                                        <div class="pull-right">
+                                        </div>
+                                </div>
+                                    <div class="contacts">
+                                        @foreach ($order->products as $product)
+                                        <div class="form-group multiple-form-group input-group">
+                                                    <div class="col-md-4">
+                                                        <label>Producto o servicio</label>
+                                                        <div class="input-group-btn input-group-select">
                                         <div class="form-group">
                                             <select class="form-control select-product" name="product_id[]">
                                             <option selected="selected" disabled="disabled" hidden="hidden" value="">---
@@ -65,29 +68,67 @@
                                         </div>
                                         <input type="hidden" class="input-group-select-val" name="contacts['type'][]" value="phone">
                                     </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <label>Precio</label>
-                                    {!! Form::text('product_cost[]', null, ['class' => 'form-control producto-price', 'placeholder' => 'precio']) !!}
-                                </div>
-                                <div class="col-md-2">
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label>Precio</label>
+                                                        {!! Form::text('product_cost[]', $product->cost, ['class' => 'form-control producto-price', 'placeholder' => 'precio']) !!}
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label>Disponible</label>
+                                                        {!! Form::text('producto-stock[]', $product->available, ['class' => 'form-control producto-stock', 'placeholder' => 'cantidad', 'required', 'disabled' => 'true']) !!}
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label>Cantidad</label>
+                                                        {!! Form::text('quantity[]', $product->pivot->quantity, ['class' => 'form-control producto-quantity', 'placeholder' => 'cantidad']) !!}
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label> - </label>
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-danger btn-remove">-</button>
+                                                        </span>
+                                                    </div>
+                                            </div>
+                                        @endforeach
+                                        <div class="form-group multiple-form-group input-group">
+                                            <div class="col-md-4">
+                                                <label>Producto o servicio</label>
+                                                <div class="input-group-btn input-group-select">
+                                        <div class="form-group">
+                                            <select class="form-control select-product" name="product_id[]">
+                                            <option selected="selected" disabled="disabled" hidden="hidden" value="">---
+                                                Indique producto ---
+                                            </option>
+                                            @foreach($products as $product)
+                                                <option value="{{$product->id}}">{{$product->name}}</option>
+                                            @endforeach
+                                        </select>
+                                        </div>
+                                        <input type="hidden" class="input-group-select-val" name="contacts['type'][]" value="phone">
+                                    </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label>Precio</label>
+                                                {!! Form::text('product_cost[]', null, ['class' => 'form-control producto-price', 'placeholder' => 'precio']) !!}
+                                            </div>
+                                            <div class="col-md-2">
                                     <label>Disponible</label>
                                     {!! Form::text('producto-stock[]', null, ['class' => 'form-control producto-stock', 'placeholder' => 'cantidad', 'disabled' => 'true']) !!}
                                 </div>
-                                <div class="col-md-2">
-                                    <label>Cantidad</label>
-                                    {!! Form::text('quantity[]', null, ['class' => 'form-control producto-quantity', 'placeholder' => 'cantidad']) !!}
-                                </div>
-                                <div class="col-md-2">
-                                    <label> - </label>
-                                    <span class="input-group-btn">
-                                <button type="button" class="btn btn-success btn-add">+</button>
-                                    </span>
+                                            <div class="col-md-2">
+                                                <label>Cantidad</label>
+                                                {!! Form::text('quantity[]', null, ['class' => 'form-control producto-quantity', 'placeholder' => 'cantidad']) !!}
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label> - </label>
+                                                <span class="input-group-btn">
+                                            <button type="button" class="btn btn-success btn-add">+</button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
+
 
 
 

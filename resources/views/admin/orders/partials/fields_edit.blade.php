@@ -21,10 +21,6 @@
                                                 {!! Form::label('event_id', 'Tipo de evento') !!}
                                                 {!! Form::select('event_id', $events, null, ['class' => 'form-control', 'placeholder' => 'Seleccione tipo de evento', 'required']) !!}
                                             </div>
-                                            <div class="form-group">
-                                                {!! Form::label('date', 'Fecha') !!}
-                                                {!! Form::text('date', null, ['class' => 'form-control datepicker', 'placeholder' => 'Ingrese fecha', 'required']) !!}
-                                            </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -35,10 +31,17 @@
                                                 {!! Form::label('notes', 'Información adicional') !!}
                                                 {!! Form::text('notes', null, ['class' => 'form-control', 'placeholder' => 'Incluya aca cualquier información adicional de interes', 'required']) !!}
                                             </div>
+                                            <div class="form-group">
+                                                <input type="hidden" value="{{$user->id}}" name="user_id" id="user_id">
+                                            </div>
+                                            <div class="form-group">
+                                                {!! Form::hidden('date', null, ['class' => 'form-control datepicker', 'placeholder' => 'Ingrese fecha', 'required']) !!}
+                                            </div>
                                         </div>
                                     </div>
 
-                        <div class="col-md-12">
+
+<div class="col-md-12">
                             <div class="box box-danger">
                                 <div class="box-header">
                                     <h3 class="box-title">Seleccione producto o servicio</h3>
@@ -136,8 +139,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-
+    <div class="row">
         <div class="col-md-12">
             @include('admin.orders.partials.clients-data')
             <div class="col-md-6">
@@ -151,30 +153,29 @@
                     <div class="form-group">
                         <label for="discount" class="col-sm-4 control-label">Descuento</label>
                         <div class="col-sm-8">
-                            {!! Form::text('discount', $order->discount, ['class' => 'form-control discount', 'placeholder' => 'Descuento']) !!}
+                            {!! Form::text('discount', null, ['class' => 'form-control discount', 'placeholder' => 'Descuento']) !!}
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="neto" class="col-sm-4 control-label">Neto</label>
+                        <label for="iva_show" class="col-sm-4 control-label">Neto</label>
                         <div class="col-sm-8">
-                        {!! Form::text('neto_show', $order->neto, ['class' => 'form-control neto', 'placeholder' => 'Neto', 'disabled' => 'true']) !!}
-                        
-                        {!! Form::hidden('neto', $order->neto, ['class' => 'form-control neto', 'placeholder' => 'Neto']) !!}
+                        {!! Form::text('neto_show', null, ['class' => 'form-control neto', 'placeholder' => 'Neto', 'disabled' => 'true']) !!}
                         </div>
+                        {!! Form::hidden('neto', null, ['class' => 'form-control neto', 'placeholder' => 'Neto']) !!}
                     </div>
                     <div class="form-group">
                         <label for="iva_show" class="col-sm-4 control-label">Iva</label>
                         <div class="col-sm-8">
-                        {!! Form::text('iva_show', $order->iva, ['class' => 'form-control iva', 'placeholder' => 'Iva', 'disabled' => 'true']) !!}
-                        {!! Form::hidden('iva', $order->iva, ['class' => 'form-control iva', 'placeholder' => 'Neto']) !!}
+                        {!! Form::text('iva_show', null, ['class' => 'form-control iva', 'placeholder' => 'Iva', 'disabled' => 'true']) !!}
                         </div>
+                        {!! Form::hidden('iva', null, ['class' => 'form-control iva', 'placeholder' => 'Neto']) !!}
                     </div>
                     <div class="form-group">
                         <label for="total_show" class="col-sm-4 control-label">Total</label>
                         <div class="col-sm-8">
-                        {!! Form::text('total_show', $order->total, ['class' => 'form-control total', 'placeholder' => 'Total', 'disabled' => 'true']) !!}
-                        {!! Form::hidden('total', $order->total, ['class' => 'form-control total', 'placeholder' => 'Neto']) !!}
+                        {!! Form::text('total_show', null, ['class' => 'form-control total', 'placeholder' => 'Total', 'disabled' => 'true']) !!}
                         </div>
+                        {!! Form::hidden('total', null, ['class' => 'form-control total', 'placeholder' => 'Neto']) !!}
                     </div>
                 </div>
             </div>
@@ -182,9 +183,9 @@
 
     </div>
     <div class="for text-center">
-                        {!! Form::submit('EDITAR', ['class'=> 'btn btn-success  btn']) !!}
+                        {!! Form::submit('Registrar', ['class'=> 'btn btn-success  btn']) !!}
                         <a class="btn btn-danger btn" href="{{route('orders.index')}}">
-                            CANCELAR
+                            Cancelar
                         </a>
                     </div>
 </div>

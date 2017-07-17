@@ -61,7 +61,7 @@
                         @if (Auth::check())
                             @if(Auth::user()->level=='admin')
                                 <p>Crea tu presupuesto online...!!</p>
-                                <a href="{{route('select-client')}}" class="button-big">Ordena ya!</a>
+                                <a href="{{route('select-date')}}" class="button-big">Ordena ya!</a>
                             @elseif(Auth::user()->level=='member')
                                 <p>Crea tu presupuesto online...!!</p>
                                 <a href="{{route('createorder')}}" class="button-big">Ordena ya!</a>

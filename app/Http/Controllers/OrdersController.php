@@ -23,41 +23,47 @@ class OrdersController extends Controller
     {
 
         $orders = Order::orderBy('id', 'DESC')->with('user')->get();
-
-        return view('admin.orders.index', compact('orders'));
-    }
-
-    public function selectClient()
-    {
-        $users = User::orderBy('fullname', 'DESC')->get();
-
-        return view('admin.orders.select_client', compact('users'));
-    }
-
-    public function selectDate($user)
-    {
-        $user = User::find($user);
+        if (Auth()->user()->level=='admin') {
+            return view('admin.orders.index', compact('orders'));
+        }else{
+            Flash::success('ACCESO NO AUTORIZADO!!!')->important();
+            return view('/home');
+        }
         
-        return view('admin.orders.select_date', compact('user'));
     }
-    
-    public function addorder(Request $request)
-    {
 
+    public function selectDate()
+    {
+      //  $user = User::find($user);
+        if (Auth()->user()->level=='admin') {
+            return view('admin.orders.select_date');
+        }else{
+            Flash::success('ACCESO NO AUTORIZADO!!!')->important();
+            return view('/home');
+        }
+        
+    }
+
+    public function selectClient(Request $request)
+    {
+       // $d=$request->get('date');
+        
         $order = Order::create([
             'title' => '.',
             'date' => $request->get('date'),
-            'user_id' => $request->get('user_id'),
-            'event_id' => 4,
+            'user_id' => Auth()->user()->id,
+            //$request->get('user_id'),
+            'event_id' => 1,
             'locale' => '.',
             'created' => Auth()->user()->id,
             'updated' => Auth()->user()->id,
         ]);
         $order->save();
-        $id=$order->user_id;
-        $user = User::find($id);
+        $date=$order->date;
+        //dd($date);
+       $users = User::orderBy('fullname', 'DESC')->get();
        // $date = $request->get('date');
-        $events = Event::orderBy('name', 'ASC')->pluck('name', 'id')->all();
+      /*  $events = Event::orderBy('name', 'ASC')->pluck('name', 'id')->all();
         //$products = Product::orderBy('name', 'ASC')->pluck('name', 'id')->all();
         $aux = Product::orderBy('name', 'ASC')->get();
         $prod = $aux->toJson();
@@ -65,7 +71,8 @@ class OrdersController extends Controller
 
 //dinamica almacen
         $products = Product::orderBy('id', 'DESC')->get();
-        $date = $order->date;
+        */
+        $products = Product::orderBy('id', 'DESC')->get();
         $ors = Order::orderBy('title', 'ASC')->where('status', 'confirmed')->get();
         foreach ($products as $product){
             if ($product->type=='rent') {
@@ -108,8 +115,88 @@ foreach ($ors as $or){
                 }
             }
         }
+        if (Auth()->user()->level=='admin') {
+return view('admin.orders.select_client')->with('order', $order)->with('users', $users)->with('date', $date);
+        }else{
+            Flash::success('ACCESO NO AUTORIZADO!!!')->important();
+            return view('/home');
+        }
+       // $users = User::orderBy('fullname', 'DESC')->get();
+        //return view('admin.orders.select_client', compact('users'));
+    }
+    
+    public function addorder($user, $order)
+    {
 
-        return view('admin.orders.create')->with('config', $config)->with('products', $products)->with('prod', $prod)->with('events', $events)->with('order', $order)->with('user', $user);
+
+        $user = User::find($user);
+        //dd($order);
+        $order=Order::find($order);
+        //dd($order);
+       // $order->user_id = $user->id;
+
+        $request['user_id'] = $user->id;
+        $order->update($request);
+
+       // $date = $request->get('date');
+        $events = Event::orderBy('name', 'ASC')->pluck('name', 'id')->all();
+        //$products = Product::orderBy('name', 'ASC')->pluck('name', 'id')->all();
+        $aux = Product::orderBy('name', 'ASC')->get();
+        $prod = $aux->toJson();
+        $config = Configuration::first();
+
+//dinamica almacen
+        $products = Product::orderBy('id', 'DESC')->get();
+        
+        $date = $order->date;
+        $ors = Order::orderBy('title', 'ASC')->where('status', 'confirmed')->get();
+        foreach ($products as $product){
+            if ($product->type=='rent') {
+        $mount=$product->quantity;
+        $product->update(['available' => $mount]);
+    }
+}
+foreach ($ors as $or){
+            $type=$or->type;
+            $id=$or->id;
+            $status=$or->status;
+            $date_order = $or->date;
+            //$products = Product::orderBy('name', 'ASC')->get();
+            //Selecting just ids from the pivot table that is related to the id of order
+            foreach ($products as $product){
+                $products_id = DB::table('order_product')
+                    ->join('orders', 'orders.id', '=', 'order_product.order_id')
+                    ->select('order_product.product_id AS ids')
+                    ->where('order_product.product_id', $product->id)
+                    ->where('order_product.order_id', $id)
+                    ->get();
+                if ($date == $or->date) {
+                   
+                        //SUM mounts of id selected..
+                        //quantity field
+                            if ($product->type=='rent') {
+                            foreach ($products_id as $product_id){
+                                $quantity = DB::table('order_product')
+                                    ->join('products', 'products.id', '=', 'order_product.product_id')
+                                    ->select(DB::raw('sum(products.available-order_product.quantity) AS updated_quantity'))
+                                    ->where('order_product.order_id', $id)
+                                    ->where('products.id', $product_id->ids)
+                                    ->get();
+                                $req = $quantity[0]->updated_quantity;
+                                $product->update(['available' => $req]);
+                            }
+                        }
+                    
+                }
+            }
+        }
+if (Auth()->user()->level=='admin') {
+return view('admin.orders.create')->with('config', $config)->with('products', $products)->with('prod', $prod)->with('events', $events)->with('order', $order)->with('user', $user);
+        }else{
+            Flash::success('ACCESO NO AUTORIZADO!!!')->important();
+            return view('/home');
+        }
+        
 
     }
 
@@ -204,8 +291,13 @@ foreach ($ors as $or){
         }
         //fin dinamica almacen
         $net = ($order->total*10)/90;
-
+if (Auth()->user()->level=='admin') {
         return view('admin.orders.show')->with('order', $order)->with('sales', $sales)->with('net', $net);
+
+        }else{
+            Flash::success('ACCESO NO AUTORIZADO!!!')->important();
+            return view('/home');
+        }
     }
 
     public function edit($id)
@@ -266,7 +358,13 @@ foreach ($ors as $or){
                 }
             }
         }
-        return view('admin.orders.edit')->with('config', $config)->with('order', $order)->with('products', $products)->with('prod', $prod)->with('events', $events)->with('user', $user);
+       if (Auth()->user()->level=='admin') {
+return view('admin.orders.edit')->with('config', $config)->with('products', $products)->with('prod', $prod)->with('events', $events)->with('order', $order)->with('user', $user);
+        }else{
+            Flash::success('ACCESO NO AUTORIZADO!!!')->important();
+            return view('/home');
+        }
+        
     }
 
     public function update(Request $request, $id)
@@ -336,7 +434,12 @@ foreach ($ors as $or){
             }
         }
         $calendar = \Calendar::addEvents($events);
+        if (Auth()->user()->level=='admin') {
         return view('admin.orders.calendar.calendar', compact('calendar'));
+        }else{
+            Flash::success('ACCESO NO AUTORIZADO!!!')->important();
+            return view('/home');
+        }
     }
 
     public function eventconfirmed($id)
@@ -470,7 +573,14 @@ foreach ($ors as $or){
         $aux = Product::orderBy('name', 'ASC')->get();
         $prod = $aux->toJson();
         $config = Configuration::first();
-        return view('member.orders.edit')->with('config', $config)->with('order', $order)->with('products', $products)->with('prod', $prod)->with('events', $events)->with('user', $user);
+
+        if (Auth()->user()->id==$iduser) {
+return view('member.orders.edit')->with('config', $config)->with('order', $order)->with('products', $products)->with('prod', $prod)->with('events', $events)->with('user', $user);
+        }else{
+            Flash::success('ACCESO NO AUTORIZADO!!!')->important();
+            return view('/home');
+        }
+        
     }
 
     public function updateorder(OrderRequest $request, order $order, $id)
@@ -557,9 +667,17 @@ foreach ($ors as $or){
         $order = Order::find($id);
         $request['status'] = 'approved';
         $order->update($request);
+      //  auth()->user()->notify(new OrderApproved($order));
+    //    $order->user->notify(new OrderApproved($order))
+        if (Auth()->user()->level=='admin') {
+                    Flash::success('LA orden paso a APROBADA.. Ya se puede realizar el pago correspondiente')->important(); 
+
+return view('admin.orders.status.approved')->with('order', $order);
+        }else{
+            Flash::success('ACCESO NO AUTORIZADO!!!')->important();
+            return view('/home');
+        }   
         
-        Flash::success('LA orden paso a APROBADA.. Ya se puede realizar el pago correspondiente')->important();    
-        return view('admin.orders.status.approved')->with('order', $order);
     }
 
     public function rejectedEvent($id)
@@ -568,7 +686,13 @@ foreach ($ors as $or){
         $request['status'] = 'rejected';
         $order->update($request);
         
-        Flash::success('LA orden paso a RECHAZADA..')->important();    
-        return view('admin.orders.status.rejected')->with('order', $order);
+        if (Auth()->user()->level=='admin') {
+                    Flash::success('LA orden paso a RECHAZADA..')->important();    
+return view('admin.orders.status.rejected')->with('order', $order);
+        }else{
+            Flash::success('ACCESO NO AUTORIZADO!!!')->important();
+            return view('/home');
+        } 
+        
     }
 }

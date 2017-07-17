@@ -11,7 +11,7 @@
             </h3>
             <div class="box-tools">
                 <div class="btn-group">
-                  <a class="btn btn-danger btn-sm" href="{{ route('select-client') }}">
+                  <a class="btn btn-danger btn-sm" href="{{ route('select-date') }}">
                             NUEVO REGISTRO
                         </a>
                 </div>

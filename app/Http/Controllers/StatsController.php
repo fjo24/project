@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 Use App\Product;
 Use App\Order;
 use Carbon\Carbon;
+use Laracasts\Flash\Flash;
 class StatsController extends Controller
 {
     public function index()
@@ -27,7 +28,13 @@ class StatsController extends Controller
         //Fin
         $days_total_cost = $this->calculatePieCharData();
       // $days_total = $this->calculateTotalPieCharData();
-        return view('admin.stats.index', compact('orders', 'total', 'total_products', 'approved', 'confirmed', 'days_total_cost'));
+        if (Auth()->user()->level=='admin') {
+return view('admin.stats.index', compact('orders', 'total', 'total_products', 'approved', 'confirmed', 'days_total_cost'));
+        }else{
+            Flash::success('ACCESO NO AUTORIZADO!!!')->important();
+            return view('/home');
+        } 
+        
     }
 
     public function store(Request $request)
@@ -57,7 +64,13 @@ class StatsController extends Controller
         //Fin
         $days_total_cost = $this->calculatePieCharData();
         $days_total = $this->calculateTotalPieCharData();
-        return view('admin.stats.show', compact('orders', 'total', 'total_products', 'approved', 'confirmed', 'days_total_cost'));
+        if (Auth()->user()->level=='admin') {
+return view('admin.stats.show', compact('orders', 'total', 'total_products', 'approved', 'confirmed', 'days_total_cost', 'ini_date', 'end_date'));
+        }else{
+            Flash::success('ACCESO NO AUTORIZADO!!!')->important();
+            return view('/home');
+        } 
+        
     }
 
     private function calculatePieCharData()
@@ -139,5 +152,18 @@ if (is_array($orders) || is_object($orders))
         }
 
         return $days_total;
+    }
+
+    public function spdf()
+    {
+        $date = Carbon::now()->format('d-m-Y');
+        $products = Product::orderBy('type', 'ASC')->get();
+        if (Auth()->user()->level=='admin') {
+        return view('admin.stats.pdf', compact('products', 'date'));
+        }else{
+            Flash::success('ACCESO NO AUTORIZADO!!!')->important();
+            return view('/home');
+        } 
+        
     }
 }

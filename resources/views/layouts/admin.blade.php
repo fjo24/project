@@ -88,7 +88,7 @@ folder instead of downloading all of them to reduce the load. -->
                         <li><a href="{{ url('member/type') }}">REGISTRO</a></li>
                     @else
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <img alt="User Image" class="user-image" src="{{ asset ('AdminLTE/dist/img/avatar5.png') }}">
+
                                 <span class="hidden-xs">
                                     {{ Auth::user()->fullname }} <span class="caret"></span>
                                 </span>
@@ -97,7 +97,7 @@ folder instead of downloading all of them to reduce the load. -->
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                <img alt="User Image" class="img-circle" src="{{ asset ('AdminLTE/dist/img/avatar5.png') }}">
+                                <img alt="User Image" class="img-circle" src="{{ asset ('AdminLTE/dist/img/loguito.png') }}">
                                 <p>
                                     {{ Auth::user()->fullname }}  - @if(Auth::user()->level == "admin")
                                         Administrador
@@ -297,7 +297,7 @@ folder instead of downloading all of them to reduce the load. -->
                             </a>
                         </li>
                         <li>
-                            <a href="{{route('select-client')}}">
+                            <a href="{{route('select-date')}}">
                                 <i class="fa fa-circle-o">
                                 </i>
                                 Nuevo evento

@@ -26,7 +26,7 @@ class OrganizationRequest extends FormRequest
         return [
             'email'          => 'required|email|unique:users',
             'fullname'       => 'max:80|required',   
-            'identification' => 'required|numeric|min:5|unique:users',
+            'identification' => 'required|min:5|unique:users',
             'telephone'      => 'required|numeric|min:11',
         ];
     }

@@ -24,15 +24,25 @@ class PaymentsController extends Controller
     public function selectOrder()
     {
         $orders = Order::orderBy('id', 'DESC')->where('status', 'approved')->get();
-
+        if (Auth()->user()->level=='admin') {
         return view('admin.payments.select_Order', compact('orders'));
+        }else{
+            Flash::success('ACCESO NO AUTORIZADO!!!')->important();
+            return view('/home');
+        } 
     }
 
     public function addpay($order)
     {	
         $order = Order::find($order);
         $users = User::orderBy('fullname', 'ASC')->pluck('fullname', 'id')->all();
-        return view('admin.payments.create', compact('order', 'users'));
+        if (Auth()->user()->level=='admin') {
+return view('admin.payments.create', compact('order', 'users'));
+        }else{
+            Flash::success('ACCESO NO AUTORIZADO!!!')->important();
+            return view('/home');
+        } 
+        
     }
 
     public function store(PaymentsRequest $request)
@@ -90,7 +100,13 @@ class PaymentsController extends Controller
         $payment = Payment::find($id);
         $orderid = $payment->order->id;
         $order= Order::find($orderid);
+        if (Auth()->user()->level=='admin') {
         return view('admin.payments.show', compact('payment', 'order'));
+        }else{
+            Flash::success('ACCESO NO AUTORIZADO!!!')->important();
+            return view('/home');
+        } 
+        
     }
 
     public function verified($id)
@@ -150,8 +166,13 @@ class PaymentsController extends Controller
         }else{
         Flash::success('EL PAGO FUE VERIFICADO PERO ES INSUFICIENTE!.. POR FAVOR REVISE SI HAY MAS PAGOS REGISTRADOS SIN VERIFICAR PARA ESTE EVENTO')->important();    
         }
-
+if (Auth()->user()->level=='admin') {
         return view('admin.payments.verified')->with('payment', $payment)->with('order', $order);
+        }else{
+            Flash::success('ACCESO NO AUTORIZADO!!!')->important();
+            return view('/home');
+        } 
+        
     }
 
     public function edit($id)
