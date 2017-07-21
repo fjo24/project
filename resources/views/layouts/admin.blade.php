@@ -99,7 +99,8 @@ folder instead of downloading all of them to reduce the load. -->
                             <li class="user-header">
                                 <img alt="User Image" class="img-circle" src="{{ asset ('AdminLTE/dist/img/loguito.png') }}">
                                 <p>
-                                    {{ Auth::user()->fullname }}  - @if(Auth::user()->level == "admin")
+                                    {{ Auth::user()->fullname }}  - 
+                                    @if(Auth::user()->level == "admin")
                                         Administrador
                                     @else
                                         Miembro
@@ -321,7 +322,7 @@ folder instead of downloading all of them to reduce the load. -->
                 </li>
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-calendar">
+                        <i class="fa fa-money">
                         </i>
                         <span>
                                 Pagos
@@ -374,7 +375,7 @@ folder instead of downloading all of them to reduce the load. -->
                 </li>
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-info">
+                        <i class="fa fa-pencil">
                         </i>
                         <span>
                                     Configuracion
@@ -445,14 +446,14 @@ folder instead of downloading all of them to reduce the load. -->
                             <a href="{{route('indexorder')}}">
                                 <i class="fa fa-circle-o">
                                 </i>
-                                Listado
+                                Mis eventos
                             </a>
                         </li>
                     </ul>
                 </li>
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-calendar">
+                        <i class="fa fa-money">
                         </i>
                         <span>
                                 Pagos

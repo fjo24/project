@@ -7,7 +7,7 @@
         @include('partials.errors')
         <div class="box-header with-border">
             <h3 class="box-title">
-                Lista de entradas y salidas
+                Lista de eventos 
             </h3>
             <div class="box-tools">
                 <div class="btn-group">
@@ -24,7 +24,6 @@
                         <table class="table table-hover display table-responsive table-condensed" id="table">
                             <thead>
                             <tr>
-                                <th>CLIENTE</th>
                                 <th>TITULO</th>
                                 <th>UBICACION</th>
                                 <th>ESTADO</th>
@@ -36,9 +35,7 @@
                             <tbody>
                             @foreach($orders as $order)
                                     <tr>
-                                        <td>
-                                            {{ $order->user->fullname }}
-                                        </td>
+
                                         <td>
                                             {{ $order->title }}
                                         </td>

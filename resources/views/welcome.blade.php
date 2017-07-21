@@ -37,7 +37,7 @@
 
                     <!-- Nav -->
                     <nav id="nav" name="inicio">
-                        <a href="#inicio">Inicio</a>
+
                         <a href="#servicios">Productos y servicios</a>
                         <a href="#Who">Quiénes Somos</a>
                         <a href="#contactanos">Contáctanos</a>
